@@ -1,0 +1,9 @@
+F:\Projects\BetTool\BetTool\bin\Debug\BetTool.exe.config
+F:\Projects\BetTool\BetTool\bin\Debug\BetTool.exe
+F:\Projects\BetTool\BetTool\bin\Debug\BetTool.pdb
+F:\Projects\BetTool\BetTool\obj\Debug\BetTool.csprojResolveAssemblyReference.cache
+F:\Projects\BetTool\BetTool\obj\Debug\BetTool.Form1.resources
+F:\Projects\BetTool\BetTool\obj\Debug\BetTool.Properties.Resources.resources
+F:\Projects\BetTool\BetTool\obj\Debug\BetTool.csproj.GenerateResource.Cache
+F:\Projects\BetTool\BetTool\obj\Debug\BetTool.exe
+F:\Projects\BetTool\BetTool\obj\Debug\BetTool.pdb
