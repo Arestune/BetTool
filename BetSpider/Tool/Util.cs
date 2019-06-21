@@ -19,5 +19,11 @@ namespace BetSpider.Tool
         {
            return  (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
         }
+        public static string GetGBKString(string str)
+        {
+            str = str.Trim();
+            byte[] gbk = Encoding.GetEncoding("GBK").GetBytes(str);
+            return  System.Text.Encoding.ASCII.GetString(gbk);
+        }
     }
 }

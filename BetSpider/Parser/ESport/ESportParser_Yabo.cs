@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
-using Commons;
 using BetSpider.Item;
 using BetSpider.Parser;
 using BetSpider.Tool;
@@ -27,6 +26,7 @@ namespace BetSpider.Parser.ESport
         {
             //GameIds
             int index = 0;
+
             var eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
             while (!string.IsNullOrEmpty(eItem))
             {
@@ -88,7 +88,7 @@ namespace BetSpider.Parser.ESport
         {
             if (teamIds.ContainsKey(gameIndex))
             {
-                if(teamIds[gameIndex].ContainsKey(strTeam))
+                if (teamIds[gameIndex].ContainsKey(strTeam))
                 {
                     return teamIds[gameIndex][strTeam];
                 }
@@ -104,7 +104,7 @@ namespace BetSpider.Parser.ESport
             else
             {
                 int curId = 0;
-                var teamList = new Dictionary<string,int>();
+                var teamList = new Dictionary<string, int>();
                 teamList.Add(strTeam, curId);
                 teamIds.Add(gameIndex, teamList);
                 IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
@@ -135,8 +135,8 @@ namespace BetSpider.Parser.ESport
                     //IniUtil.WriteString("Game", string.Format("G{0}", index),gameName, configFile);
                     foreach(var b2 in b1[10])
                     {
-                        var team1_name = b2[5][0].ToString().Trim();
-                        var team2_name = b2[6][0].ToString().Trim();
+                        var team1_name = Util.GetGBKString(b2[5][0].ToString());
+                        var team2_name = Util.GetGBKString(b2[6][0].ToString());
                         var europeTime = DateTime.Parse(b2[7].ToString());
                         var chinaMatchTime = europeTime.AddHours(8);
                         var localTime = DateTime.Now; 
@@ -171,25 +171,24 @@ namespace BetSpider.Parser.ESport
                         var odds1 = Convert.ToDouble(b2_10_0_6_4);
                         var odds2 = Convert.ToDouble(b2_10_0_6_7);
 
-                        BetTeamItem betItem = new BetTeamItem();
-                        betItem.webID = webID;
-                        betItem.team1_index = team1_index;
-                        betItem.team2_index = team2_index;
-                        betItem.team1_name = team1_name;
-                        betItem.team2_name = team2_name;
-                        betItem.odd1 = odds1;
-                        betItem.odd2 = odds2;
-                        betItem.gameIndex = gameIndex;
-                        betItem.gameName = gameNames[gameIndex];
-                        betItem.leagueName1 = leagueName1;
-                        betItem.leagueName2 = leagueName2;
-                        betItem.value = betValue;
-
-                        betItems.Add(betItem);
+                        BetItem b = new BetItem();
+                        b.webID = webID;
+                        b.type = BetType.BT_TEAM;
+                        b.pID1 = team1_index;
+                        b.pID2 = team2_index;
+                        b.pName1 = team1_name;
+                        b.pName2 = team2_name;
+                        b.odd1 = odds1;
+                        b.odd2 = odds2;
+                        b.gameID = gameIndex;
+                        b.gameName = gameNames[gameIndex];
+                        b.leagueName1 = leagueName1;
+                        b.leagueName2 = leagueName2;
+                        b.value = betValue;
+                        betItems.Add(b);
                     }
                     index++;
                 }
-
                 ShowLog(string.Format("页面解析成功，解析个数：{0}！",betItems.Count));
             }
             catch(Exception e)

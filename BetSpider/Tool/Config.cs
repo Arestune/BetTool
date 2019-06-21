@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
-namespace Commons
+namespace BetSpider.Tool
 {
     /*
     * 姓名：叶重阳

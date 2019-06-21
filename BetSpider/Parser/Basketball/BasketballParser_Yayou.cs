@@ -9,8 +9,8 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
-using Commons;
 using BetSpider.Item;
+using BetSpider.Tool;
 using System.Windows.Forms;
 
 namespace BetSpider.Parser.Basketball
@@ -52,7 +52,7 @@ namespace BetSpider.Parser.Basketball
             foreach(var id in ids)
             {
                 html = GrabFinalHtml(string.Format(urlFormat, id));
-                List<BetPlayerItem> items = ParseOneGame(html);
+                List<BetItem> items = ParseOneGame(html);
                 betItems.AddRange(items);
             }
 
@@ -168,7 +168,7 @@ namespace BetSpider.Parser.Basketball
             IniUtil.WriteString("Players", string.Format("P{0}", playerNames.Count - 1), playerName, "D:\\Yayou.ini");
             return playerNames.Count - 1;
         }
-        public List<BetPlayerItem> ParseOneGame(string data)
+        public List<BetItem> ParseOneGame(string data)
         {
             try
             {
@@ -194,14 +194,14 @@ namespace BetSpider.Parser.Basketball
                             foreach (JToken eI in effectItem)//遍历数组
                             {
                                 var playerNameToken = eI["name"];
-                                BetPlayerItem item = new BetPlayerItem();
-                                item.compare = GetBetCompare(playerNameToken.ToString());
-                                item.playerIndex = GetPlayerIndex(playerNameToken.ToString());
-                                item.playerName = playerNames[item.playerIndex];
-                                item.value = GetBetValue(playerNameToken.ToString());
-                                item.odds = Convert.ToDouble(eI["odds"]);
-                                item.itemIndex = i;
-                                betItems.Add(item);
+                                BetItem b = new BetItem();
+                                b.compare = GetBetCompare(playerNameToken.ToString());
+                                b.pID1 = GetPlayerIndex(playerNameToken.ToString());
+                                b.pName1 = playerNames[b.pID1];
+                                b.value = GetBetValue(playerNameToken.ToString());
+                                b.odd1 = Convert.ToDouble(eI["odds"]);
+                                b.itemID = i;
+                                betItems.Add(b);
                             }
                         }
                     }

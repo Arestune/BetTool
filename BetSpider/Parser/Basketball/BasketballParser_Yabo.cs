@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
-using Commons;
-using BetSpider.Item;
 using System.Windows.Forms;
 using System.Net;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using BetSpider.Item;
+using BetSpider.Tool;
+
 
 namespace BetSpider.Parser.Basketball
 {
@@ -217,14 +218,16 @@ namespace BetSpider.Parser.Basketball
                         JToken array = baseJ["o"];
                         foreach (JToken eI in array)//遍历数组
                         {
-                            BetPlayerItem item = new BetPlayerItem();
-                            item.compare = GetBetCompare(eI[0].ToString());
-                            item.playerIndex = playerIndex;
-                            item.playerName = playerNames[item.playerIndex];
-                            item.value = GetBetValue(eI[0].ToString());
-                            item.odds = GetBetOdds(eI[2].ToString());
-                            item.itemIndex = itemIndex;
-                            betItems.Add(item);
+                            BetItem b = new BetItem();
+                            b.webID = webID;
+                            b.type = BetType.BT_SOLO;
+                            b.compare = GetBetCompare(eI[0].ToString());
+                            b.pID1 = playerIndex;
+                            b.pName1 = playerNames[playerIndex];
+                            b.value = GetBetValue(eI[0].ToString());
+                            b.odd1 = GetBetOdds(eI[2].ToString());
+                            b.itemID = itemIndex;
+                            betItems.Add(b);
                         }
                     }
                 }

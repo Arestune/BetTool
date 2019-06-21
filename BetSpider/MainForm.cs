@@ -12,7 +12,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
-using Commons;
+using BetSpider.Tool;
 using BetSpider.Item;
 using BetSpider.Parser;
 using BetSpider.Parser.Basketball;
@@ -24,13 +24,11 @@ namespace BetSpider
     {
         public delegate void ShowLogHandler(LogInfo log);
         public delegate void ShowResultHandler(List<BetWinPair> pairs);
-        public static RichTextBox tb;
         int time = 0;
         int index = 0;
         public MainForm()
         {
             InitializeComponent();
-            tb = textBox;
             this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //一步添加
             this.list.Columns.Add("Web", 150, HorizontalAlignment.Center); //一步添加
             this.list.Columns.Add("Game", 150, HorizontalAlignment.Center); //一步添加
@@ -41,9 +39,7 @@ namespace BetSpider
             this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //一步添加
             this.list.Columns.Add("Time", 175, HorizontalAlignment.Center); //一步添加
 
-            //ShowLog("");
         }
-        
         public void ShowLog(string message,ErrorLevel level = ErrorLevel.EL_NORMAL)
         {
             LogInfo info = new LogInfo();
@@ -86,15 +82,15 @@ namespace BetSpider
                 this.list.BeginUpdate();   //数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度
                 for (int i = 0; i < pair.Count; i++)   //添加10行数据
                 {
-                    BetTeamItem p1 = pair[i].team1;
-                    BetTeamItem p2 = pair[i].team2;
+                    BetItem p1 = pair[i].b1;
+                    BetItem p2 = pair[i].b2;
                     ListViewItem lvi = new ListViewItem();
                     lvi.Text = (index++).ToString();
                     lvi.SubItems.Add(StaticData.webNames[(int)p1.webID] + "|" + StaticData.webNames[(int)p2.webID]);
                     lvi.SubItems.Add(p1.gameName);
                     lvi.SubItems.Add(p1.leagueName1);
-                    lvi.SubItems.Add(p1.team1_name);
-                    lvi.SubItems.Add(p1.team2_name);
+                    lvi.SubItems.Add(p1.pName1);
+                    lvi.SubItems.Add(p1.pName2);
                     lvi.SubItems.Add(p1.odd1.ToString() + "|" + p1.odd2.ToString());
                     lvi.SubItems.Add(p2.odd1.ToString() + "|" + p2.odd2.ToString());
                     lvi.SubItems.Add(DateTime.Now.ToString());
@@ -120,8 +116,7 @@ namespace BetSpider
                 ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp2.webID]));
                 bp2.GrabAndParseHtml();
 
-                var pair = ESportParser.ParseBetWin(bp1.betItems, bp2.betItems);
-
+                var pair = BaseParser.ParseBetWin(bp1.betItems, bp2.betItems);
                 ShowResult(pair);
                 Thread.Sleep(30000);
             }

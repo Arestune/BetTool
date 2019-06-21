@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
-using Commons;
 using BetSpider.Item;
 using BetSpider.Parser;
 using BetSpider.Tool;
@@ -86,6 +85,7 @@ namespace BetSpider.Parser.ESport
         }
         protected int GetTeamIndex(int gameIndex, string strTeam)
         {
+           
             if (teamIds.ContainsKey(gameIndex))
             {
                 if (teamIds[gameIndex].ContainsKey(strTeam))
@@ -142,8 +142,8 @@ namespace BetSpider.Parser.ESport
                     }
                     //teams
                     JToken teams = record["teams"];
-                    var team1_name = teams[0]["name"].ToString().Trim();
-                    var team2_name = teams[1]["name"].ToString().Trim();
+                    var team1_name = Util.GetGBKString(teams[0]["name"].ToString());
+                    var team2_name = Util.GetGBKString(teams[1]["name"].ToString());
                     var team1_index = GetTeamIndex(gameIndex, team1_name);
                     var team2_index = GetTeamIndex(gameIndex, team2_name);
 
@@ -161,19 +161,20 @@ namespace BetSpider.Parser.ESport
                         {
                             var odd1 = Convert.ToDouble(betOptions[0]["odd"]);
                             var odd2 = Convert.ToDouble(betOptions[1]["odd"]);
-                            BetTeamItem betItem = new BetTeamItem();
-                            betItem.webID = webID;
-                            betItem.team1_index = team1_index;
-                            betItem.team2_index = team2_index;
-                            betItem.team1_name = team1_name;
-                            betItem.team2_name = team2_name;
-                            betItem.odd1 = odd1;
-                            betItem.odd2 = odd2;
-                            betItem.gameIndex = gameIndex;
-                            betItem.gameName = gameNames[gameIndex];
-                            betItem.leagueName1 = league;
-                            betItem.leagueName2 = league;
-                            betItems.Add(betItem);
+                            BetItem b = new BetItem();
+                            b.webID = webID;
+                            b.type = BetType.BT_TEAM;
+                            b.pID1 = team1_index;
+                            b.pID2 = team2_index;
+                            b.pName1 = team1_name;
+                            b.pName2 = team2_name;
+                            b.odd1 = odd1;
+                            b.odd2 = odd2;
+                            b.gameID = gameIndex;
+                            b.gameName = gameNames[gameIndex];
+                            b.leagueName1 = league;
+                            b.leagueName2 = league;
+                            betItems.Add(b);
                         }
                     }
                 }

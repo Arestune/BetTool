@@ -6,58 +6,25 @@ using System.Threading.Tasks;
 
 namespace BetSpider.Item
 {
+    public enum BetType
+    {
+        BT_TEAM = 0,
+        BT_SOLO
+    }
     public enum BetCompare
     {
         Larger = 0,
         Smaller = 1
     }
-    public class BetPlayerItem
-    {
-        public int itemIndex
-        {
-            get;
-            set;
-        }
-        public int playerIndex
-        {
-            get;
-            set;
-        }
-        public string playerName
-        {
-            get;
-            set;
-        }
-        public BetCompare compare
-        {
-            get;
-            set;
-        }
-        public double value
-        {
-            get;
-            set;
-        }
-        public double odds
-        {
-            get;
-            set;
-        }
-    }
 
-    public class BetTeamItem
+    public class BetItem
     {
         public WebID webID
         {
             set;
             get;
         }
-        public int gameIndex
-        {
-            get;
-            set;
-        }
-        public string gameName
+        public BetType type
         {
             get;
             set;
@@ -72,22 +39,58 @@ namespace BetSpider.Item
             get;
             set;
         }
-        public int team1_index
+        public int gameID
         {
             get;
             set;
         }
-        public int team2_index
+        public string gameName
         {
             get;
             set;
         }
-        public string team1_name
+        public int matchID
         {
             get;
             set;
         }
-        public string team2_name
+        public int itemID
+        {
+            get;
+            set;
+        }
+        public string itemName
+        {
+            get;
+            set;
+        }
+        public int pID1
+        {
+            get;
+            set;
+        }
+        public string pName1
+        {
+            get;
+            set;
+        }
+        public string pAbbr1
+        {
+            get;
+            set;
+        }
+        public int pID2
+        {
+            get;
+            set;
+        }
+       
+        public string pName2
+        {
+            get;
+            set;
+        }
+        public string pAbbr2
         {
             get;
             set;
@@ -112,28 +115,22 @@ namespace BetSpider.Item
             get;
             set;
         }
+        public string reserve
+        {
+            get;
+            set;
+        }
     }
 
     public class BetWinPair
     {
-        public BetPlayerItem item1
-        {
-            get;
-            set;
-        }
-        public BetPlayerItem item2
+        public BetItem b1
         {
             get;
             set;
         }
 
-        public BetTeamItem team1
-        {
-            get;
-            set;
-        }
-
-        public BetTeamItem team2
+        public BetItem b2
         {
             get;
             set;

@@ -14,12 +14,13 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using BetSpider.Item;
-using Commons;
+using BetSpider.Tool;
 namespace BetSpider.Parser
 {
    
     class BaseParser
     {
+        protected static string staticConfigFile;
         protected const int MAX_TRY_COUNT = 3;
         protected const int INVALID_ID = -1;
         protected  string configFile;
@@ -28,7 +29,7 @@ namespace BetSpider.Parser
         protected string cookie = null;
         public SportID sportID;
         public WebID webID;
-        public List<BetTeamItem> betItems = new List<BetTeamItem>();
+        public List<BetItem> betItems = new List<BetItem>();
 
         public delegate void ShowLogDelegate(LogInfo message);
         public ShowLogDelegate showLogEvent;
@@ -41,6 +42,7 @@ namespace BetSpider.Parser
         {
             configFile = System.IO.Directory.GetCurrentDirectory() + "\\Config\\" + StaticData.sportNames[(int)sportID] + "\\" + StaticData.webNames[(int)webID] + ".ini";
         }
+
         public virtual void LoadStaticData()
         {
 
@@ -192,6 +194,111 @@ namespace BetSpider.Parser
                 ShowLog(error);
             }
             return result;
+        }
+
+        public static List<BetWinPair> ParseBetWin(List<BetItem> bs1, List<BetItem> bs2)
+        {
+            List<BetWinPair> listPair = new List<BetWinPair>();
+            foreach (var b1 in bs1)
+            {
+                foreach (var b2 in bs2)
+                {
+                    //过滤同一个网站
+                    if (b1.webID == b2.webID)
+                    {
+                        continue;
+                    }
+                    //过滤不同的类型
+                    if (b1.type != b2.type)
+                    {
+                        continue;
+                    }
+
+                    if (b1.type == BetType.BT_TEAM && b2.type == BetType.BT_TEAM)
+                    {
+                        double odd1 = 0.0f;
+                        double odd2 = 0.0f;
+                        double odd3 = 0.0f;
+                        double odd4 = 0.0f;
+                        if (b1.gameID == b2.gameID)
+                        {
+                            if ((b1.pID1 == b2.pID1) && (b1.pID2 == b2.pID2))
+                            {
+                                odd1 = b1.odd1;
+                                odd2 = b2.odd2;
+                                odd3 = b1.odd2;
+                                odd4 = b2.odd1;
+                                if (b1.value >= b2.value)
+                                {
+                                    if (CanMustWin(odd3, odd4))
+                                    {
+                                        BetWinPair pair = new BetWinPair();
+                                        pair.b1 = b1;
+                                        pair.b2 = b2;
+                                        listPair.Add(pair);
+                                    }
+                                }
+                                if (b1.value <= b2.value)
+                                {
+                                    if (CanMustWin(odd1, odd2))
+                                    {
+                                        BetWinPair pair = new BetWinPair();
+                                        pair.b1 = b1;
+                                        pair.b2 = b2;
+                                        listPair.Add(pair);
+                                    }
+                                }
+                            }
+                            else if ((b1.pID1 == b2.pID2) && (b1.pID2 == b2.pID1))
+                            {
+                                odd1 = b1.odd1;
+                                odd2 = b2.odd1;
+                                odd3 = b1.odd2;
+                                odd4 = b2.odd2;
+                                b2.value = -b2.value;
+                                if (b1.value >= b2.value)
+                                {
+                                    if (CanMustWin(odd3, odd4))
+                                    {
+                                        BetWinPair pair = new BetWinPair();
+                                        pair.b1 = b1;
+                                        pair.b2 = b2;
+                                        listPair.Add(pair);
+                                    }
+                                }
+                                if (b1.value <= b2.value)
+                                {
+                                    if (CanMustWin(odd1, odd2))
+                                    {
+                                        BetWinPair pair = new BetWinPair();
+                                        pair.b1 = b1;
+                                        pair.b2 = b2;
+                                        listPair.Add(pair);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (b1.type == BetType.BT_SOLO && b2.type == BetType.BT_SOLO)
+                    {
+                        if (b1.itemID == b2.itemID && b1.pID1 == b2.pID2)
+                        {
+                            if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.value <= b2.value) ||
+                                (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.value >= b2.value))
+                            {
+                                if (CanMustWin(b1.odd1, b2.odd1))
+                                {
+                                    BetWinPair pair = new BetWinPair();
+                                    pair.b1 = b1;
+                                    pair.b2 = b2;
+                                    listPair.Add(pair);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return listPair;
         }
         public static bool CanMustWin(double odds1, double odds2)
         {

@@ -9,7 +9,6 @@ namespace BetSpider.Parser.Basketball
 {
     class BasketballParser:BaseParser
     {
-        public List<BetPlayerItem> betItems = new List<BetPlayerItem>();
         protected List<string> effectItems = new List<string>();
         protected List<string> playerNames = new List<string>();
         protected List<string> largers = new List<string>();
@@ -22,23 +21,23 @@ namespace BetSpider.Parser.Basketball
         public override void Parse()
         {
         }
-        private static List<BetWinPair> ParseBetWin(List<BetPlayerItem> items1, List<BetPlayerItem> items2)
+        private static List<BetWinPair> ParseBetWin(List<BetItem> bs1, List<BetItem> bs2)
         {
             List<BetWinPair> listPair = new List<BetWinPair>();
-            foreach (var item1 in items1)
+            foreach (var b1 in bs1)
             {
-                foreach (var item2 in items2)
+                foreach (var b2 in bs2)
                 {
-                    if (item1.itemIndex == item2.itemIndex && item1.playerIndex == item2.playerIndex)
+                    if (b1.itemID == b2.itemID && b1.pID1 == b2.pID2)
                     {
-                        if ((item1.compare == BetCompare.Larger && item2.compare == BetCompare.Smaller && item1.value <= item2.value) ||
-                            (item1.compare == BetCompare.Smaller && item2.compare == BetCompare.Larger && item1.value >= item2.value))
+                        if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.value <= b2.value) ||
+                            (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.value >= b2.value))
                         {
-                            if (CanMustWin(item1.odds, item2.odds))
+                            if (CanMustWin(b1.odd1, b2.odd1))
                             {
                                 BetWinPair pair = new BetWinPair();
-                                pair.item1 = item1;
-                                pair.item2 = item2;
+                                pair.b1 = b1;
+                                pair.b2 = b2;
                                 listPair.Add(pair);
                             }
                         }
