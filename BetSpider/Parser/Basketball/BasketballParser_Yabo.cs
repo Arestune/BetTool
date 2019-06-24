@@ -62,12 +62,12 @@ namespace BetSpider.Parser.Basketball
 
             //更新授权码
             html = RequestAction(op);
-            if (!string.IsNullOrEmpty(cookie))
+            if (!string.IsNullOrEmpty(responseCookie))
             {
-                if (cookie.Contains("Xauth"))
+                if (responseCookie.Contains("Xauth"))
                 {
-                    IniUtil.WriteString("Cookie", "cookie", cookie, configFile);
-                    Match m = Regex.Match(cookie, @"\.Xauth=(\w+)");
+                    IniUtil.WriteString("Cookie", "cookie", responseCookie, configFile);
+                    Match m = Regex.Match(responseCookie, @"\.Xauth=(\w+)");
                     xauth = m.Groups[1].ToString().Trim();
                 }
             }

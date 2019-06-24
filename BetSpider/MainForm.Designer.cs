@@ -45,9 +45,10 @@
             // lbLabel
             // 
             this.lbLabel.AutoSize = true;
-            this.lbLabel.Location = new System.Drawing.Point(12, 368);
+            this.lbLabel.Location = new System.Drawing.Point(9, 294);
+            this.lbLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbLabel.Name = "lbLabel";
-            this.lbLabel.Size = new System.Drawing.Size(67, 15);
+            this.lbLabel.Size = new System.Drawing.Size(53, 12);
             this.lbLabel.TabIndex = 3;
             this.lbLabel.Text = "打水结果";
             // 
@@ -58,9 +59,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox.BackColor = System.Drawing.Color.OldLace;
             this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox.Location = new System.Drawing.Point(1319, 90);
+            this.textBox.Location = new System.Drawing.Point(989, 72);
+            this.textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(514, 555);
+            this.textBox.Size = new System.Drawing.Size(386, 445);
             this.textBox.TabIndex = 4;
             this.textBox.Text = "";
             // 
@@ -71,9 +73,10 @@
             this.list.BackgroundImageTiled = true;
             this.list.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.list.FullRowSelect = true;
-            this.list.Location = new System.Drawing.Point(13, 386);
+            this.list.Location = new System.Drawing.Point(10, 309);
+            this.list.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.list.Name = "list";
-            this.list.Size = new System.Drawing.Size(1279, 259);
+            this.list.Size = new System.Drawing.Size(960, 208);
             this.list.TabIndex = 5;
             this.list.TileSize = new System.Drawing.Size(1, 1);
             this.list.UseCompatibleStateImageBehavior = false;
@@ -82,9 +85,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1314, 62);
+            this.label1.Location = new System.Drawing.Point(986, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 15);
+            this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 6;
             this.label1.Text = "日志窗口";
             // 
@@ -96,9 +100,10 @@
             this.listView1.BackgroundImageTiled = true;
             this.listView1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listView1.FullRowSelect = true;
-            this.listView1.Location = new System.Drawing.Point(13, 90);
+            this.listView1.Location = new System.Drawing.Point(10, 72);
+            this.listView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(627, 259);
+            this.listView1.Size = new System.Drawing.Size(471, 208);
             this.listView1.TabIndex = 7;
             this.listView1.TileSize = new System.Drawing.Size(1, 1);
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -111,9 +116,10 @@
             this.listView2.BackColor = System.Drawing.Color.AliceBlue;
             this.listView2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listView2.FullRowSelect = true;
-            this.listView2.Location = new System.Drawing.Point(665, 90);
+            this.listView2.Location = new System.Drawing.Point(499, 72);
+            this.listView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(627, 259);
+            this.listView2.Size = new System.Drawing.Size(471, 208);
             this.listView2.TabIndex = 8;
             this.listView2.TileSize = new System.Drawing.Size(1, 1);
             this.listView2.UseCompatibleStateImageBehavior = false;
@@ -122,27 +128,30 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(662, 62);
+            this.label2.Location = new System.Drawing.Point(496, 50);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 15);
+            this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 9;
             this.label2.Text = "平台2";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 62);
+            this.label3.Location = new System.Drawing.Point(9, 50);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 15);
+            this.label3.Size = new System.Drawing.Size(35, 12);
             this.label3.TabIndex = 10;
             this.label3.Text = "平台1";
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 637);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 505);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1857, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1393, 22);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -153,7 +162,7 @@
             this.btnRun});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1857, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1393, 27);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -170,9 +179,9 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1857, 659);
+            this.ClientSize = new System.Drawing.Size(1393, 527);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
@@ -183,9 +192,8 @@
             this.Controls.Add(this.list);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.lbLabel);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "Demo";
+            this.Text = "Demo v1.1";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

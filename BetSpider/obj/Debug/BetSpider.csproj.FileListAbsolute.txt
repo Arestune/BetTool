@@ -18,8 +18,6 @@ E:\VsProjects\BetTool\BetSpider\obj\Debug\BetSpider.csprojResolveAssemblyReferen
 E:\VsProjects\BetTool\BetSpider\obj\Debug\BetSpider.MainForm.resources
 E:\VsProjects\BetTool\BetSpider\obj\Debug\BetSpider.Properties.Resources.resources
 E:\VsProjects\BetTool\BetSpider\obj\Debug\BetSpider.csproj.GenerateResource.Cache
-F:\Projects\BetTool\BetSpider\bin\Debug\Config\ESport\Yayou.ini
-F:\Projects\BetTool\BetSpider\bin\Debug\Config\ESport\Yabo.ini
 E:\GitProjects\BetTool\BetSpider\bin\Debug\BetSpider.exe.config
 E:\GitProjects\BetTool\BetSpider\obj\Debug\BetSpider.exe
 E:\GitProjects\BetTool\BetSpider\obj\Debug\BetSpider.pdb

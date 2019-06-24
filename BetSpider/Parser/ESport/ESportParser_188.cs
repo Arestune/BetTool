@@ -30,7 +30,7 @@ namespace BetSpider.Parser.ESport
             while (!string.IsNullOrEmpty(eItem))
             {
                 index++;
-                gameIds.Add(Util.GetCommentString(eItem));
+                gameIds.Add(Util.GetCommentString(eItem).ToLower());
                 eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
             }
 
@@ -72,6 +72,14 @@ namespace BetSpider.Parser.ESport
                 }
             }
         }
+        public override void GrabAndParseHtml()
+        {
+            base.GrabAndParseHtml();
+            if (!string.IsNullOrEmpty(responseCookie) && responseCookie.Contains("Xauth"))
+            {
+                IniUtil.WriteString(StaticData.SN_URL, "Cookie",responseCookie,configFile);
+            }
+        }
         protected override string GetLeague1Name(string str)
         {
             int first = str.IndexOf('(');
@@ -79,14 +87,24 @@ namespace BetSpider.Parser.ESport
         }
         protected override string GetGameName(string str)
         {
-            int first_l = str.IndexOf('(');
-            int first_r = str.IndexOf(')');
-            return str.Substring(first_l+1, first_r-first_l-1);
+            str = str.ToLower();
+            for(int i =0;i<gameIds.Count;i++)
+            {
+                if (str.Contains(gameIds[i].ToLower()))
+                {
+                    return gameIds[i];
+                }
+            }
+            return "NULL";
         }
         protected override int GetBO(string str)
         {
             int first_l = str.LastIndexOf('(');
             int first_r = str.IndexOf('场');
+            if(first_l < 0 || first_r < 0)
+            {
+                return 1;
+            }
             return int.Parse(str.Substring(first_l+1, first_r - first_l-1));
         }
        
@@ -100,7 +118,6 @@ namespace BetSpider.Parser.ESport
                 }
                 JObject main = JObject.Parse(html);
                 JToken n_ot = main["n-ot"];
-
                 JArray egs = JArray.Parse(n_ot["egs"].ToString());
                 foreach(var eg in egs)
                 {
@@ -110,7 +127,6 @@ namespace BetSpider.Parser.ESport
                     var gameName = GetGameName(n.ToString());
                     var bo = GetBO(n.ToString());
                     var gameIndex = GetGameIndex(gameName);
-
                     var es = JArray.Parse(eg["es"].ToString());
                     foreach (var esSingle in es)
                     {
@@ -155,17 +171,19 @@ namespace BetSpider.Parser.ESport
                         b.gameID = gameIndex;
                         b.gameName = gameNames[gameIndex];
                         betItems.Add(b);
+
                     }
                 }
                 ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
             }
             catch(Exception e)
             {
+
                 LogInfo error = new LogInfo();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
                 error.message = e.Message;
-                ShowLog(error);
+                ShowLog("解析第"+betItems.Count+"个Error:"+error);
             }
         }
     }

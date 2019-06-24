@@ -26,7 +26,7 @@ namespace BetSpider.Parser
         protected  string configFile;
         protected  string urlFormat;
         protected  string html = null;
-        protected string cookie = null;
+        protected string responseCookie = null;
         
 
         //动态数据
@@ -71,7 +71,8 @@ namespace BetSpider.Parser
         }
         protected virtual int GetGameIndex(string gameId)
         {
-            if (gameIds.Contains(gameId))
+            gameId = gameId.ToLower();
+            if (gameIds.Contains(gameId.ToLower()))
             {
                 return gameIds.IndexOf(gameId);
             }
@@ -215,7 +216,7 @@ namespace BetSpider.Parser
                 
                 using (response = (HttpWebResponse)request.GetResponse())
                 {
-                    cookie = response.Headers.Get("Set-Cookie");
+                    responseCookie = response.Headers.Get("Set-Cookie");
                     ////获取请求响应
                     //foreach (Cookie cookie in response.Cookies)
                     //    options.CookiesContainer.Add(cookie);//将Cookie加入容器，保存登录状态

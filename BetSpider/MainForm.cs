@@ -74,11 +74,13 @@ namespace BetSpider
             }
             else
             {
-                if(pair.Count > 0 )
-                {
-                    MessageBox.Show("打到水了！");
-                }
+                //if(pair.Count > 0 )
+                //{
+                //    MessageBox.Show("打到水了！");
+                //}
                 ShowLog(string.Format("分析完毕，打水个数：{0}", pair.Count));
+                //this.list.Clear();
+             
                 this.list.BeginUpdate();   //数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度
                 for (int i = 0; i < pair.Count; i++)   //添加10行数据
                 {
@@ -106,23 +108,31 @@ namespace BetSpider
                 ShowLog("-------------------------------");
                 ShowLog(string.Format("循环第{0}次",++time));
 
-                BaseParser bp1 = new ESportParser_188();
-                bp1.showLogEvent = ShowLog;
-                bp1.GrabAndParseHtml();
-                ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp1.webID]));
-                /*
+                List<BetItem> total = new List<BetItem>();
+            
+                
                 BaseParser bp1 = new ESportParser_Yabo();
                 bp1.showLogEvent = ShowLog;
                 ShowLog(string.Format("爬取分析网站:{0}",  StaticData.webNames[(int)bp1.webID]));
                 bp1.GrabAndParseHtml();
+                total.AddRange(bp1.betItems);
 
                 BaseParser bp2 = new ESportParser_Yayou();
                 bp2.showLogEvent = ShowLog;
                 ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp2.webID]));
                 bp2.GrabAndParseHtml();
-                var pair = BaseParser.ParseBetWin(bp1.betItems, bp2.betItems);
+                total.AddRange(bp2.betItems);
+              
+
+                BaseParser bp3 = new ESportParser_188();
+                bp3.showLogEvent = ShowLog;
+                ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp3.webID]));
+                bp3.GrabAndParseHtml();
+                total.AddRange(bp3.betItems);
+
+
+                var pair = BaseParser.ParseBetWin(total, total);
                 ShowResult(pair);
-                */
                 Thread.Sleep(30000);
             }
         }
