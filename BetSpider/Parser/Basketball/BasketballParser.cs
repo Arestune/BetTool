@@ -33,7 +33,7 @@ namespace BetSpider.Parser.Basketball
                         if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.value <= b2.value) ||
                             (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.value >= b2.value))
                         {
-                            if (CanMustWin(b1.odd1, b2.odd1))
+                            if (CanMustWin(b1.odds1, b2.odds1))
                             {
                                 BetWinPair pair = new BetWinPair();
                                 pair.b1 = b1;

@@ -31,7 +31,7 @@ namespace BetSpider.Parser.ESport
             while (!string.IsNullOrEmpty(eItem))
             {
                 index++;
-                gameIds.Add(Util.GetInt(eItem));
+                gameIds.Add(Util.GetCommentInt(eItem).ToString());
                 eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
             }
 
@@ -72,17 +72,6 @@ namespace BetSpider.Parser.ESport
                     teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
                 }
             }
-        }
-        protected int GetGameIndex(string strGameId)
-        {
-            int gameId = Convert.ToInt32(strGameId);
-            if (gameIds.Contains(gameId))
-            {
-                return gameIds.IndexOf(gameId);
-            }
-            gameIds.Add(gameId);
-            IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), strGameId, configFile);
-            return gameIds.Count - 1;
         }
         protected int GetTeamIndex(int gameIndex,string strTeam)
         {
@@ -178,8 +167,8 @@ namespace BetSpider.Parser.ESport
                         b.pID2 = team2_index;
                         b.pName1 = team1_name;
                         b.pName2 = team2_name;
-                        b.odd1 = odds1;
-                        b.odd2 = odds2;
+                        b.odds1 = odds1;
+                        b.odds2 = odds2;
                         b.gameID = gameIndex;
                         b.gameName = gameNames[gameIndex];
                         b.leagueName1 = leagueName1;

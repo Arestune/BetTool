@@ -22,15 +22,21 @@ namespace BetSpider.Parser
     {
         protected static string staticConfigFile;
         protected const int MAX_TRY_COUNT = 3;
-        protected const int INVALID_ID = -1;
+        protected const int INVALID_INDEX = -1;
         protected  string configFile;
         protected  string urlFormat;
         protected  string html = null;
         protected string cookie = null;
+        
+
+        //动态数据
+        protected List<string> gameIds = new List<string>();
+        protected List<string> gameNames = new List<string>();
+        protected Dictionary<int, Dictionary<string, int>> teamIds = new Dictionary<int, Dictionary<string, int>>();
+
         public SportID sportID;
         public WebID webID;
         public List<BetItem> betItems = new List<BetItem>();
-
         public delegate void ShowLogDelegate(LogInfo message);
         public ShowLogDelegate showLogEvent;
         public  BaseParser()
@@ -47,7 +53,68 @@ namespace BetSpider.Parser
         {
 
         }
-       
+        protected virtual string GetLeague1Name(string str)
+        {
+            return null;
+        }
+        protected virtual string GetLeague2Name(string str)
+        {
+            return null;
+        }
+        protected virtual int GetBO(string str)
+        {
+            return INVALID_INDEX;
+        }
+        protected virtual string GetGameName(string str)
+        {
+            return null;
+        }
+        protected virtual int GetGameIndex(string gameId)
+        {
+            if (gameIds.Contains(gameId))
+            {
+                return gameIds.IndexOf(gameId);
+            }
+            gameIds.Add(gameId);
+            IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), gameId, configFile);
+            return INVALID_INDEX;
+        }
+        protected virtual int GetTeamIndex(int gameIndex, string strTeam)
+        {
+
+            if (teamIds.ContainsKey(gameIndex))
+            {
+                if (teamIds[gameIndex].ContainsKey(strTeam))
+                {
+                    return teamIds[gameIndex][strTeam];
+                }
+                else
+                {
+                    int curId = INVALID_INDEX;
+                    teamIds[gameIndex].Add(strTeam, curId);
+                    IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", teamIds[gameIndex].Count - 1), string.Format("{0},{1}",
+                        strTeam, curId), configFile);
+                    ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_WARNING);
+                    return curId;
+                }
+            }
+            else
+            {
+                int curId = INVALID_INDEX;
+                var teamList = new Dictionary<string, int>();
+                teamList.Add(strTeam, curId);
+                teamIds.Add(gameIndex, teamList);
+                IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", teamList.Count - 1), string.Format("{0},{1}",
+                        strTeam, curId), configFile);
+                ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_WARNING);
+                return curId;
+            }
+        }
+        protected virtual DateTime GetGameTime(string strTime)
+        {
+            DateTime time = Convert.ToDateTime("1970-1-1");
+            return time;
+        }
         protected virtual IWebProxy GetProxy()
         {
             return null;
@@ -60,7 +127,7 @@ namespace BetSpider.Parser
             op.Method = IniUtil.GetString(StaticData.SN_URL, "Method", configFile, "GET");
             op.Accept = IniUtil.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
             op.Referer = IniUtil.GetString(StaticData.SN_URL, "Referer", configFile, "");
-            op.RequestCookies = IniUtil.GetString(StaticData.SN_URL, "cookie", configFile, "");
+            op.RequestCookies = IniUtil.GetString(StaticData.SN_URL, "Cookie", configFile, "");
             op.XHRParams = IniUtil.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
             //获取网页
             html = RequestAction(op);
@@ -224,10 +291,10 @@ namespace BetSpider.Parser
                         {
                             if ((b1.pID1 == b2.pID1) && (b1.pID2 == b2.pID2))
                             {
-                                odd1 = b1.odd1;
-                                odd2 = b2.odd2;
-                                odd3 = b1.odd2;
-                                odd4 = b2.odd1;
+                                odd1 = b1.odds1;
+                                odd2 = b2.odds2;
+                                odd3 = b1.odds2;
+                                odd4 = b2.odds1;
                                 if (b1.value >= b2.value)
                                 {
                                     if (CanMustWin(odd3, odd4))
@@ -251,10 +318,10 @@ namespace BetSpider.Parser
                             }
                             else if ((b1.pID1 == b2.pID2) && (b1.pID2 == b2.pID1))
                             {
-                                odd1 = b1.odd1;
-                                odd2 = b2.odd1;
-                                odd3 = b1.odd2;
-                                odd4 = b2.odd2;
+                                odd1 = b1.odds1;
+                                odd2 = b2.odds1;
+                                odd3 = b1.odds2;
+                                odd4 = b2.odds2;
                                 b2.value = -b2.value;
                                 if (b1.value >= b2.value)
                                 {
@@ -286,7 +353,7 @@ namespace BetSpider.Parser
                             if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.value <= b2.value) ||
                                 (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.value >= b2.value))
                             {
-                                if (CanMustWin(b1.odd1, b2.odd1))
+                                if (CanMustWin(b1.odds1, b2.odds1))
                                 {
                                     BetWinPair pair = new BetWinPair();
                                     pair.b1 = b1;

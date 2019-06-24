@@ -10,10 +10,7 @@ namespace BetSpider.Parser.ESport
 {
     class ESportParser:BaseParser
     {
-        //动态数据
-        protected List<int> gameIds = new List<int>();
-        protected List<string> gameNames = new List<string>();
-        protected Dictionary<int, Dictionary<string, int>> teamIds = new Dictionary<int, Dictionary<string, int>>();
+       
         protected override void Init()
         {
             sportID = SportID.SID_ESPORT;

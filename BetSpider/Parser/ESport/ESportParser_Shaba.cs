@@ -15,7 +15,7 @@ using BetSpider.Parser;
 using BetSpider.Tool;
 namespace BetSpider.Parser.ESport
 {
-    class ESportParser_Yayou:ESportParser
+    class ESportParser_Shaba:ESportParser
     {
         protected override void Init()
         {
@@ -71,16 +71,6 @@ namespace BetSpider.Parser.ESport
                     teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
                 }
             }
-        }
-        protected int GetGameIndex(string strGameId)
-        {
-            if (gameIds.Contains(strGameId))
-            {
-                return gameIds.IndexOf(strGameId);
-            }
-            gameIds.Add(strGameId);
-            IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), strGameId, configFile);
-            return INVALID_INDEX;
         }
         protected int GetTeamIndex(int gameIndex, string strTeam)
         {

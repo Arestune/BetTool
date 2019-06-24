@@ -8,12 +8,18 @@ namespace BetSpider.Tool
 {
     class Util
     {
-        public static int GetInt(string str)
+        public static int GetCommentInt(string str)
         {
             Match match = Regex.Match(str, @"\.*(\d+)\.*");
             string strValue = match.Groups[1].ToString().Trim();
             int value = Convert.ToInt32(strValue);
             return value;
+        }
+        public static string GetCommentString(string str)
+        {
+            Match match = Regex.Match(str, @"(\w*)(//|\.*)\.*");
+            string strValue = match.Groups[1].ToString().Trim();
+            return strValue;
         }
         public static long GetCurrentTimeStamp()
         {

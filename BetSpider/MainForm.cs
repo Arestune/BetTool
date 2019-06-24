@@ -91,8 +91,8 @@ namespace BetSpider
                     lvi.SubItems.Add(p1.leagueName1);
                     lvi.SubItems.Add(p1.pName1);
                     lvi.SubItems.Add(p1.pName2);
-                    lvi.SubItems.Add(p1.odd1.ToString() + "|" + p1.odd2.ToString());
-                    lvi.SubItems.Add(p2.odd1.ToString() + "|" + p2.odd2.ToString());
+                    lvi.SubItems.Add(p1.odds1.ToString() + "|" + p1.odds2.ToString());
+                    lvi.SubItems.Add(p2.odds1.ToString() + "|" + p2.odds2.ToString());
                     lvi.SubItems.Add(DateTime.Now.ToString());
                     this.list.Items.Add(lvi);
                 }
@@ -106,6 +106,11 @@ namespace BetSpider
                 ShowLog("-------------------------------");
                 ShowLog(string.Format("循环第{0}次",++time));
 
+                BaseParser bp1 = new ESportParser_188();
+                bp1.showLogEvent = ShowLog;
+                bp1.GrabAndParseHtml();
+                ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp1.webID]));
+                /*
                 BaseParser bp1 = new ESportParser_Yabo();
                 bp1.showLogEvent = ShowLog;
                 ShowLog(string.Format("爬取分析网站:{0}",  StaticData.webNames[(int)bp1.webID]));
@@ -115,9 +120,9 @@ namespace BetSpider
                 bp2.showLogEvent = ShowLog;
                 ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp2.webID]));
                 bp2.GrabAndParseHtml();
-
                 var pair = BaseParser.ParseBetWin(bp1.betItems, bp2.betItems);
                 ShowResult(pair);
+                */
                 Thread.Sleep(30000);
             }
         }

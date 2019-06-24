@@ -225,7 +225,7 @@ namespace BetSpider.Parser.Basketball
                             b.pID1 = playerIndex;
                             b.pName1 = playerNames[playerIndex];
                             b.value = GetBetValue(eI[0].ToString());
-                            b.odd1 = GetBetOdds(eI[2].ToString());
+                            b.odds1 = GetBetOdds(eI[2].ToString());
                             b.itemID = itemIndex;
                             betItems.Add(b);
                         }

@@ -29,6 +29,11 @@ namespace BetSpider.Item
             get;
             set;
         }
+        public int bo
+        {
+            get;
+            set;
+        }
         public string leagueName1
         {
             get;
@@ -105,12 +110,17 @@ namespace BetSpider.Item
             get;
             set;
         }
-        public double odd1
+        public double odds1
         {
             get;
             set;
         }
-        public double odd2
+        public double odds2
+        {
+            get;
+            set;
+        }
+        public DateTime time
         {
             get;
             set;
