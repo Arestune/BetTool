@@ -7,3 +7,12 @@ F:\Projects\BetTool\BetTool\obj\Debug\BetTool.Properties.Resources.resources
 F:\Projects\BetTool\BetTool\obj\Debug\BetTool.csproj.GenerateResource.Cache
 F:\Projects\BetTool\BetTool\obj\Debug\BetTool.exe
 F:\Projects\BetTool\BetTool\obj\Debug\BetTool.pdb
+E:\GitProjects\BetTool\BetTool\bin\Debug\BetTool.exe.config
+E:\GitProjects\BetTool\BetTool\obj\Debug\BetTool.exe
+E:\GitProjects\BetTool\BetTool\obj\Debug\BetTool.pdb
+E:\GitProjects\BetTool\BetTool\bin\Debug\BetTool.exe
+E:\GitProjects\BetTool\BetTool\bin\Debug\BetTool.pdb
+E:\GitProjects\BetTool\BetTool\obj\Debug\BetTool.csprojResolveAssemblyReference.cache
+E:\GitProjects\BetTool\BetTool\obj\Debug\BetTool.Form1.resources
+E:\GitProjects\BetTool\BetTool\obj\Debug\BetTool.Properties.Resources.resources
+E:\GitProjects\BetTool\BetTool\obj\Debug\BetTool.csproj.GenerateResource.Cache

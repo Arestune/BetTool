@@ -10,7 +10,7 @@ namespace BetSpider.Parser
 {
     class ParseFactory
     {
-        public BaseParser GetParser( SportID sportId,WebID siteID)
+        public static BaseParser GetParser( SportID sportId,WebID siteID)
         {
             switch(sportId)
             {
@@ -29,9 +29,13 @@ namespace BetSpider.Parser
                     {
                         return new ESportParser_Yabo();
                     }
-                    if (siteID == WebID.WID_YAYOU)
+                    else if (siteID == WebID.WID_YAYOU)
                     {
                         return new ESportParser_Yayou();
+                    }
+                    else if(siteID == WebID.WID_188)
+                    {
+                        return new ESportParser_188();
                     }
                     break;
             }

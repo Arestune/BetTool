@@ -143,11 +143,11 @@ namespace BetSpider.Parser.ESport
                             int v = Convert.ToInt32(winhandcap.Split('-')[1]);
                             if(winhandcap.Contains("A"))
                             {
-                                betValue = v / 10.0f;
+                                betValue = -v / 10.0f;
                             }
                             else if(winhandcap.Contains("B"))
                             {
-                                betValue = -v / 10.0f;
+                                betValue = v / 10.0f;
                             }
                         }
                         var team1_index = GetTeamIndex(gameIndex, team1_name);
@@ -162,6 +162,7 @@ namespace BetSpider.Parser.ESport
 
                         BetItem b = new BetItem();
                         b.webID = webID;
+                        b.sportID = sportID;
                         b.type = BetType.BT_TEAM;
                         b.pID1 = team1_index;
                         b.pID2 = team2_index;
@@ -173,7 +174,7 @@ namespace BetSpider.Parser.ESport
                         b.gameName = gameNames[gameIndex];
                         b.leagueName1 = leagueName1;
                         b.leagueName2 = leagueName2;
-                        b.value = betValue;
+                        b.handicap = betValue;
                         betItems.Add(b);
                     }
                     index++;

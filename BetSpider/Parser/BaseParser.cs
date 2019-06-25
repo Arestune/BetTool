@@ -264,15 +264,24 @@ namespace BetSpider.Parser
             return result;
         }
 
-        public static List<BetWinPair> ParseBetWin(List<BetItem> bs1, List<BetItem> bs2)
+        public static List<BetWinPair> ParseBetWin(List<BetItem> bs)
         {
             List<BetWinPair> listPair = new List<BetWinPair>();
-            foreach (var b1 in bs1)
+            if (bs.Count < 2) return listPair;
+            for (int i = 0; i < bs.Count;i++ )
             {
-                foreach (var b2 in bs2)
+                BetItem b1 = bs[i];
+                for(int j = i+1;j< bs.Count;j++)
                 {
+                    BetItem b2 = bs[j];
+
                     //过滤同一个网站
                     if (b1.webID == b2.webID)
+                    {
+                        continue;
+                    }
+                    //过滤不同的体育项目
+                    if (b1.sportID != b2.sportID)
                     {
                         continue;
                     }
@@ -281,8 +290,13 @@ namespace BetSpider.Parser
                     {
                         continue;
                     }
+                    //过滤没有注册的teamID
+                    if (b1.pID1 == INVALID_INDEX || b1.pID2 == INVALID_INDEX || b2.pID1 == INVALID_INDEX || b2.pID2 == INVALID_INDEX)
+                    {
+                        continue;
+                    }
 
-                    if (b1.type == BetType.BT_TEAM && b2.type == BetType.BT_TEAM)
+                    if (b1.type == BetType.BT_TEAM)
                     {
                         double odd1 = 0.0f;
                         double odd2 = 0.0f;
@@ -296,9 +310,10 @@ namespace BetSpider.Parser
                                 odd2 = b2.odds2;
                                 odd3 = b1.odds2;
                                 odd4 = b2.odds1;
-                                if (b1.value >= b2.value)
+                                //B1让B2分
+                                if (b1.handicap >= b2.handicap)
                                 {
-                                    if (CanMustWin(odd3, odd4))
+                                    if (CanMustWin(odd1, odd2))
                                     {
                                         BetWinPair pair = new BetWinPair();
                                         pair.b1 = b1;
@@ -306,9 +321,9 @@ namespace BetSpider.Parser
                                         listPair.Add(pair);
                                     }
                                 }
-                                if (b1.value <= b2.value)
+                                if (b1.handicap <= b2.handicap)
                                 {
-                                    if (CanMustWin(odd1, odd2))
+                                    if (CanMustWin(odd3, odd4))
                                     {
                                         BetWinPair pair = new BetWinPair();
                                         pair.b1 = b1;
@@ -323,10 +338,10 @@ namespace BetSpider.Parser
                                 odd2 = b2.odds1;
                                 odd3 = b1.odds2;
                                 odd4 = b2.odds2;
-                                b2.value = -b2.value;
-                                if (b1.value >= b2.value)
+                                b2.handicap = -b2.handicap;
+                                if (b1.handicap >= b2.handicap)
                                 {
-                                    if (CanMustWin(odd3, odd4))
+                                    if (CanMustWin(odd1, odd2))
                                     {
                                         BetWinPair pair = new BetWinPair();
                                         pair.b1 = b1;
@@ -334,9 +349,9 @@ namespace BetSpider.Parser
                                         listPair.Add(pair);
                                     }
                                 }
-                                if (b1.value <= b2.value)
+                                if (b1.handicap <= b2.handicap)
                                 {
-                                    if (CanMustWin(odd1, odd2))
+                                    if (CanMustWin(odd3, odd4))
                                     {
                                         BetWinPair pair = new BetWinPair();
                                         pair.b1 = b1;
@@ -347,12 +362,12 @@ namespace BetSpider.Parser
                             }
                         }
                     }
-                    else if (b1.type == BetType.BT_SOLO && b2.type == BetType.BT_SOLO)
+                    else if (b1.type == BetType.BT_SOLO)
                     {
-                        if (b1.itemID == b2.itemID && b1.pID1 == b2.pID2)
+                        if (b1.itemID == b2.itemID && b1.pID1 == b2.pID1)
                         {
-                            if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.value <= b2.value) ||
-                                (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.value >= b2.value))
+                            if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.handicap <= b2.handicap) ||
+                                (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.handicap >= b2.handicap))
                             {
                                 if (CanMustWin(b1.odds1, b2.odds1))
                                 {

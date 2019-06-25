@@ -149,7 +149,7 @@ namespace BetSpider.Parser.Basketball
             }
             return BetCompare.Smaller;
         }
-        protected override double GetBetValue(string parseString)
+        protected override double GetBetHandicap(string parseString)
         {
             Match match = Regex.Match(parseString, @"(.*)[大|小](.*)");
             string strValue = match.Groups[2].ToString().Trim();
@@ -198,7 +198,7 @@ namespace BetSpider.Parser.Basketball
                                 b.compare = GetBetCompare(playerNameToken.ToString());
                                 b.pID1 = GetPlayerIndex(playerNameToken.ToString());
                                 b.pName1 = playerNames[b.pID1];
-                                b.value = GetBetValue(playerNameToken.ToString());
+                                b.handicap = GetBetHandicap(playerNameToken.ToString());
                                 b.odds1 = Convert.ToDouble(eI["odds"]);
                                 b.itemID = i;
                                 betItems.Add(b);

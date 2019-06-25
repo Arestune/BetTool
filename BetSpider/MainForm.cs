@@ -103,56 +103,90 @@ namespace BetSpider
         }
         private void Start()
         {
+            int webNum = 3;
+            List<Thread> threads = new List<Thread>();
             while(true)
             {
                 ShowLog("-------------------------------");
                 ShowLog(string.Format("循环第{0}次",++time));
 
                 List<BetItem> total = new List<BetItem>();
-            
+                threads.Clear();
+                for (int i = 0; i < webNum; i++)
+                {
+                    int x = i;
+                    Thread s = new Thread(() => {
+                        BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, (WebID)x);
+                        bp.showLogEvent = ShowLog;
+                        ShowLog(string.Format("线程{0},爬取分析网站:{1}", x.ToString(), StaticData.webNames[(int)bp.webID]));
+                        bp.GrabAndParseHtml();
+                        total.AddRange(bp.betItems);
+                    });
+                    s.Name = StaticData.webNames[i];
+                    s.IsBackground = true;
+                    s.Start();
+                    threads.Add(s);
+                }
+
+                for (int i = 0; i < webNum; i++)
+                {
+                    threads[i].Join();
+                }
                 
-                BaseParser bp1 = new ESportParser_Yabo();
-                bp1.showLogEvent = ShowLog;
-                ShowLog(string.Format("爬取分析网站:{0}",  StaticData.webNames[(int)bp1.webID]));
-                bp1.GrabAndParseHtml();
-                total.AddRange(bp1.betItems);
-
-                BaseParser bp2 = new ESportParser_Yayou();
-                bp2.showLogEvent = ShowLog;
-                ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp2.webID]));
-                bp2.GrabAndParseHtml();
-                total.AddRange(bp2.betItems);
-              
-
-                BaseParser bp3 = new ESportParser_188();
-                bp3.showLogEvent = ShowLog;
-                ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp3.webID]));
-                bp3.GrabAndParseHtml();
-                total.AddRange(bp3.betItems);
-
-
-                var pair = BaseParser.ParseBetWin(total, total);
+                var pair = BaseParser.ParseBetWin(total);
                 ShowResult(pair);
                 Thread.Sleep(30000);
             }
         }
         private void btnRun_Click(object sender, EventArgs e)
         {
+            //Test();
+            //return;
             index = 0;
-            Thread[] threads = new Thread[1];
-            for (int i = 0; i < threads.Length; i++)
-            {
-                threads[i] = new Thread(new ThreadStart(Start));
-                threads[i].Name = (i + 1).ToString();
-                threads[i].IsBackground = true;
-                threads[i].Start();
-                ShowLog(string.Format("启动线程{0}", i));
-            }
-            // BaseParser p = new YayouParser();
-            // p.LoadStaticData();
-            // p.GrabAndParseHtml("https://b79.lpxin.cn/server/rest/event-tree/prelive/specials?lang=zh&currency=CNY&duration=&marketUID=hdp-ou");
-            // List<BetItem> items1 = p.Parse();
+            Thread startThread = new Thread(Start);
+            startThread.Name = "Main";
+            startThread.IsBackground = true;
+            startThread.Start();
+            ShowLog("启动主抓取线程");
         }
+        private void Test()
+        {
+            List<BetItem> total = new List<BetItem>();
+            BetItem b1 = new BetItem();
+            b1.webID = WebID.WID_188;
+            b1.sportID = SportID.SID_ESPORT;
+            b1.type = BetType.BT_TEAM;
+            b1.pID1 = 3;
+            b1.pID2 = 5;
+            b1.odds1 = 2.2;
+            b1.odds2 = 1.95;
+            b1.handicap = 0;
 
+            BetItem b2 = new BetItem();
+            b2.webID = WebID.WID_YABO;
+            b2.sportID = SportID.SID_ESPORT;
+            b2.type = BetType.BT_TEAM;
+            b2.pID1 = 3;
+            b2.pID2 = 5;
+            b2.odds1 = 2.1;
+            b2.odds2 = 2;
+            b2.handicap = 0;
+
+            BetItem b3 = new BetItem();
+            b3.webID = WebID.WID_188;
+            b3.sportID = SportID.SID_ESPORT;
+            b3.type = BetType.BT_TEAM;
+            b3.pID1 = 3;
+            b3.pID2 = 5;
+            b3.odds1 = 2.2;
+            b3.odds2 = 1.95;
+            b3.handicap = 0;
+
+            total.Add(b1);
+            total.Add(b2);
+            total.Add(b3);
+            var pair = BaseParser.ParseBetWin(total);
+            ShowResult(pair);
+        }
     }
 }

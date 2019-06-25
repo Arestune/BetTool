@@ -162,6 +162,7 @@ namespace BetSpider.Parser.ESport
                             var odd2 = Convert.ToDouble(betOptions[1]["odd"]);
                             BetItem b = new BetItem();
                             b.webID = webID;
+                            b.sportID = sportID;
                             b.type = BetType.BT_TEAM;
                             b.pID1 = team1_index;
                             b.pID2 = team2_index;

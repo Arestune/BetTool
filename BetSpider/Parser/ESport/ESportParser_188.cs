@@ -74,7 +74,40 @@ namespace BetSpider.Parser.ESport
         }
         public override void GrabAndParseHtml()
         {
+            //今日
             base.GrabAndParseHtml();
+
+            //早盘
+            int nTryCount = 0;
+            string uri = IniUtil.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
+            RequestOptions op = new RequestOptions(uri);
+            op.Method = IniUtil.GetString(StaticData.SN_URL, "Method", configFile, "GET");
+            op.Accept = IniUtil.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            op.Referer = IniUtil.GetString(StaticData.SN_URL, "Referer", configFile, "");
+            op.RequestCookies = IniUtil.GetString(StaticData.SN_URL, "Cookie", configFile, "");
+            op.XHRParams = IniUtil.GetString(StaticData.SN_URL, "XHRParams1", configFile, "");
+            //获取网页
+            html = RequestAction(op);
+            while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
+            {
+                html = RequestAction(op);
+                nTryCount++;
+            }
+            if (nTryCount == MAX_TRY_COUNT)
+            {
+                ShowLog("抓取失败！");
+                html = "";
+            }
+            else
+            {
+                Parse();
+            }
+
+            if(betItems.Count> 0)
+            {
+                ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
+            }
+
             if (!string.IsNullOrEmpty(responseCookie) && responseCookie.Contains("Xauth"))
             {
                 IniUtil.WriteString(StaticData.SN_URL, "Cookie",responseCookie,configFile);
@@ -156,10 +189,15 @@ namespace BetSpider.Parser.ESport
 
                         var o = esSingle["o"];
                         var ml = o["ml"];
+                        if(ml == null)
+                        {
+                            continue;
+                        }
                         var odds1 = Convert.ToDouble(ml[1]);
                         var odds2 = Convert.ToDouble(ml[3]);
 
                         BetItem b = new BetItem();
+                        b.sportID = sportID;
                         b.webID = webID;
                         b.type = BetType.BT_TEAM;
                         b.pID1 = team1_index;
@@ -169,16 +207,14 @@ namespace BetSpider.Parser.ESport
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;
+                        b.handicap = 0;
                         b.gameName = gameNames[gameIndex];
                         betItems.Add(b);
-
                     }
                 }
-                ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
             }
             catch(Exception e)
             {
-
                 LogInfo error = new LogInfo();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;

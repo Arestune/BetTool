@@ -30,8 +30,8 @@ namespace BetSpider.Parser.Basketball
                 {
                     if (b1.itemID == b2.itemID && b1.pID1 == b2.pID2)
                     {
-                        if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.value <= b2.value) ||
-                            (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.value >= b2.value))
+                        if ((b1.compare == BetCompare.Larger && b2.compare == BetCompare.Smaller && b1.handicap <= b2.handicap) ||
+                            (b1.compare == BetCompare.Smaller && b2.compare == BetCompare.Larger && b1.handicap >= b2.handicap))
                         {
                             if (CanMustWin(b1.odds1, b2.odds1))
                             {
@@ -50,7 +50,7 @@ namespace BetSpider.Parser.Basketball
         {
             return BetCompare.Larger;
         }
-        protected virtual double GetBetValue(string parseString)
+        protected virtual double GetBetHandicap(string parseString)
         {
             return 0.0;
         }

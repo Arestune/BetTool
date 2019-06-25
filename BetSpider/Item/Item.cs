@@ -6,6 +6,24 @@ using System.Threading.Tasks;
 
 namespace BetSpider.Item
 {
+    public enum SportID
+    {
+        SID_NULL = -1,
+        SID_BASKETBALL = 0,
+        SID_ESPORT
+    }
+    public enum WebID
+    {
+        WID_NULL = -1,
+        WID_YABO = 0,
+        WID_YAYOU,
+        WID_188,
+        WID_FANYA,
+        WID_RAY,
+        WID_SHABA,
+        WID_365,
+    }
+
     public enum BetType
     {
         BT_TEAM = 0,
@@ -19,10 +37,21 @@ namespace BetSpider.Item
 
     public class BetItem
     {
+        public BetItem()
+        {
+            handicap = 0;
+            odds1 = 0;
+            odds2 = 0;
+        }
         public WebID webID
         {
             set;
             get;
+        }
+        public SportID sportID
+        {
+            get;
+            set;
         }
         public BetType type
         {
@@ -105,7 +134,7 @@ namespace BetSpider.Item
             get;
             set;
         }
-        public double value
+        public double handicap
         {
             get;
             set;
