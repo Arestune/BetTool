@@ -103,7 +103,7 @@ namespace BetSpider
         }
         private void Start()
         {
-            int webNum = 3;
+            int webNum = 4;
             List<Thread> threads = new List<Thread>();
             while(true)
             {
@@ -140,14 +140,22 @@ namespace BetSpider
         }
         private void btnRun_Click(object sender, EventArgs e)
         {
-            //Test();
-            //return;
+            //TestWeb();
+           // return;
             index = 0;
             Thread startThread = new Thread(Start);
             startThread.Name = "Main";
             startThread.IsBackground = true;
             startThread.Start();
             ShowLog("启动主抓取线程");
+        }
+        private void TestWeb()
+        {
+            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, WebID.WID_FANYA);
+            bp.showLogEvent = ShowLog;
+            ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp.webID]));
+            bp.GrabAndParseHtml();
+           
         }
         private void Test()
         {

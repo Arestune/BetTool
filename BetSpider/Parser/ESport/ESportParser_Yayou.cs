@@ -72,7 +72,7 @@ namespace BetSpider.Parser.ESport
                 }
             }
         }
-        protected int GetGameIndex(string strGameId)
+        protected override int GetGameIndex(string strGameId)
         {
             if (gameIds.Contains(strGameId))
             {
@@ -82,7 +82,7 @@ namespace BetSpider.Parser.ESport
             IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), strGameId, configFile);
             return INVALID_INDEX;
         }
-        protected int GetTeamIndex(int gameIndex, string strTeam)
+        protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
            
             if (teamIds.ContainsKey(gameIndex))

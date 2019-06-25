@@ -72,7 +72,7 @@ namespace BetSpider.Parser.ESport
                 }
             }
         }
-        protected int GetTeamIndex(int gameIndex, string strTeam)
+        protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
            
             if (teamIds.ContainsKey(gameIndex))

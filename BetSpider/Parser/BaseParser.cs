@@ -20,11 +20,11 @@ namespace BetSpider.Parser
    
     class BaseParser
     {
-        protected static string staticConfigFile;
+        protected static string staticConfigFile = null;
         protected const int MAX_TRY_COUNT = 3;
         protected const int INVALID_INDEX = -1;
         protected  string configFile;
-        protected  string urlFormat;
+        protected  string urlFormat = null;
         protected  string html = null;
         protected string responseCookie = null;
         

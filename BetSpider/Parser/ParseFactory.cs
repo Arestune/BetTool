@@ -37,6 +37,10 @@ namespace BetSpider.Parser
                     {
                         return new ESportParser_188();
                     }
+                    else if(siteID == WebID.WID_FANYA)
+                    {
+                        return new ESportParser_Fanya();
+                    }
                     break;
             }
             return new BaseParser();
