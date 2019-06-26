@@ -99,7 +99,7 @@ namespace BetSpider.Parser.ESport
             }
             return "NULL";
         }
-        protected virtual DateTime GetGameTime(string strTime)
+        protected override DateTime GetGameTime(string strTime)
         {
             DateTime time = Convert.ToDateTime(strTime);
             return time;
@@ -118,13 +118,13 @@ namespace BetSpider.Parser.ESport
             return 1;
         }
        
-        public override void Parse()
+        public override int Parse()
         {
             try
             {
                 if (string.IsNullOrEmpty(html))
                 {
-                    return;
+                    return 0;
                 }
                 JObject main = JObject.Parse(html);
                 var infos = main["info"];
@@ -166,14 +166,15 @@ namespace BetSpider.Parser.ESport
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;
-
+                        b.leagueName1 = leagueName;
                         b.handicap = 0;
                         b.gameName = gameNames[gameIndex];
+                        b.time = gameTime;
                         betItems.Add(b);
-                        if(betItems.Count == 53)
-                        {
-                            int a = 1;
-                        }
+                        //if(betItems.Count == 53)
+                        //{
+                        //    int a = 1;
+                        //}
                     }
                     catch (Exception e)
                     {
@@ -193,6 +194,8 @@ namespace BetSpider.Parser.ESport
                 error.message = e.Message;
                 ShowLog("解析第" + betItems.Count + "个Error:" + error.message);
             }
+
+            return betItems.Count;
         }
     }    
 }

@@ -17,9 +17,6 @@ namespace BetSpider.Parser.ESport
             base.Init();
         }
  
-        public override void Parse()
-        {
-        }
         protected virtual BetCompare GetBetCompare(string parseString)
         {
             return BetCompare.Larger;

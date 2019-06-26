@@ -103,7 +103,7 @@ namespace BetSpider.Parser.ESport
                 return curId;
             }
         }
-        public override void Parse()
+        public override int Parse()
         {
             try
             {
@@ -112,7 +112,7 @@ namespace BetSpider.Parser.ESport
                 //html = sr1.ReadToEnd();
                 if(string.IsNullOrEmpty(html))
                 {
-                    return;
+                    return 0;
                 }
                 JObject main = JObject.Parse(html);
                 JToken data = main["data"];
@@ -177,6 +177,8 @@ namespace BetSpider.Parser.ESport
                 error.message = e.Message;
                 ShowLog(error);
             }
+
+            return betItems.Count;
         }
     }
      

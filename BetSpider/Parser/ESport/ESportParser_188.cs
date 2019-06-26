@@ -141,13 +141,13 @@ namespace BetSpider.Parser.ESport
             return int.Parse(str.Substring(first_l+1, first_r - first_l-1));
         }
        
-        public override void Parse()
+        public override int Parse()
         {
             try
             {
                 if(string.IsNullOrEmpty(html))
                 {
-                    return;
+                    return 0;
                 }
                 JObject main = JObject.Parse(html);
                 JToken n_ot = main["n-ot"];
@@ -209,6 +209,9 @@ namespace BetSpider.Parser.ESport
                         b.gameID = gameIndex;
                         b.handicap = 0;
                         b.gameName = gameNames[gameIndex];
+                        b.leagueName1 = leagueName;
+                        b.time = gameTime;
+
                         betItems.Add(b);
                     }
                 }
@@ -221,6 +224,8 @@ namespace BetSpider.Parser.ESport
                 error.message = e.Message;
                 ShowLog("解析第"+betItems.Count+"个Error:"+error);
             }
+
+            return betItems.Count;
         }
     }
      

@@ -113,16 +113,13 @@ namespace BetSpider.Parser.ESport
                 return curId;
             }
         }
-        public override void Parse()
+        public override int Parse()
         {
             try
             {
-                //string fullName = "D:\\1.json";
-                //System.IO.StreamReader sr1 = new StreamReader(fullName);
-                //html = sr1.ReadToEnd();
                 if(string.IsNullOrEmpty(html))
                 {
-                    return;
+                    return 0;
                 }
                 JObject main = JObject.Parse(html);
                 JToken data = main["data"];
@@ -146,12 +143,6 @@ namespace BetSpider.Parser.ESport
                     var team1_index = GetTeamIndex(gameIndex, team1_name);
                     var team2_index = GetTeamIndex(gameIndex, team2_name);
 
-                    //若有新的队发现，则暂时不做处理
-                    //if (team1_index == INVALID_ID || team2_index == INVALID_ID)
-                    //{
-                    //    continue;
-                    //}
-                    //odds
                     JToken odds = record["odds"];
                     if(odds != null)
                     {
@@ -188,6 +179,7 @@ namespace BetSpider.Parser.ESport
                 error.message = e.Message;
                 ShowLog(error);
             }
+            return betItems.Count;
         }
     }
      

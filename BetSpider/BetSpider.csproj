@@ -55,6 +55,7 @@
       <HintPath>Plugins\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -79,6 +80,7 @@
     <Compile Include="Parser\Basketball\BasketballParser_Yabo.cs" />
     <Compile Include="Parser\Basketball\BasketballParser_Yayou.cs" />
     <Compile Include="Parser\ESport\ESportParser.cs" />
+    <Compile Include="Parser\ESport\ESportParser_Ray.cs" />
     <Compile Include="Parser\ESport\ESportParser_Fanya.cs" />
     <Compile Include="Parser\ESport\ESportParser_188.cs" />
     <Compile Include="Parser\ESport\ESportParser_Shaba.cs" />

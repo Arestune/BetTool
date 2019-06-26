@@ -77,7 +77,7 @@ namespace BetSpider.Parser
                 return gameIds.IndexOf(gameId);
             }
             gameIds.Add(gameId);
-            IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), gameId, configFile);
+            //IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), gameId, configFile);
             return INVALID_INDEX;
         }
         protected virtual int GetTeamIndex(int gameIndex, string strTeam)
@@ -120,6 +120,10 @@ namespace BetSpider.Parser
         {
             return null;
         }
+        protected virtual SecurityProtocolType GetSecurityProtocal()
+        {
+            return SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+        }
         public virtual void GrabAndParseHtml()
         {
             int nTryCount = 0;
@@ -161,7 +165,7 @@ namespace BetSpider.Parser
                     request.Proxy = proxy;//设置代理服务器IP，伪装请求地址
                 }
                 request.Accept = options.Accept;
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                ServicePointManager.SecurityProtocol = GetSecurityProtocal();
                 //在使用curl做POST的时候, 当要POST的数据大于1024字节的时候, curl并不会直接就发起POST请求, 而是会分为俩步,
                 //发送一个请求, 包含一个Expect: 100 -continue, 询问Server使用愿意接受数据
                 //接收到Server返回的100 - continue应答以后, 才把数据POST给Server
@@ -392,8 +396,9 @@ namespace BetSpider.Parser
             return (odds1 * odds2) / (odds1 + odds2) > 1;
         }
       
-        public virtual void Parse()
+        public virtual int Parse()
         {
+            return 0;
         }
 
         public virtual void ShowLog(LogInfo log)

@@ -102,7 +102,7 @@ namespace BetSpider.Parser.ESport
             }
         }
       
-        public override void Parse()
+        public override int Parse()
         {
             try
             {
@@ -111,7 +111,7 @@ namespace BetSpider.Parser.ESport
                 //html = sr1.ReadToEnd();
                 if (string.IsNullOrEmpty(html))
                 {
-                    return;
+                    return 0;
                 }
                 JObject mObj = JObject.Parse(html);
                 JToken d = mObj["d"];
@@ -175,6 +175,7 @@ namespace BetSpider.Parser.ESport
                         b.leagueName1 = leagueName1;
                         b.leagueName2 = leagueName2;
                         b.handicap = betValue;
+                        b.time = chinaMatchTime;
                         betItems.Add(b);
                     }
                     index++;
@@ -189,6 +190,8 @@ namespace BetSpider.Parser.ESport
                 error.message = e.Message;
                 ShowLog(error);
             }
+
+            return betItems.Count;
         }
     }
      

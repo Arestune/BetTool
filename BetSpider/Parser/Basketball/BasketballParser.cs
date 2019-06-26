@@ -18,9 +18,6 @@ namespace BetSpider.Parser.Basketball
             sportID = SportID.SID_BASKETBALL;
             base.Init();
         }
-        public override void Parse()
-        {
-        }
         private static List<BetWinPair> ParseBetWin(List<BetItem> bs1, List<BetItem> bs2)
         {
             List<BetWinPair> listPair = new List<BetWinPair>();

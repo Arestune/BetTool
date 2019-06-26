@@ -186,7 +186,7 @@ namespace BetSpider.Parser.Basketball
             return value;
         }
 
-        public override void Parse()
+        public override int Parse()
         {
             betItems.Clear();
 
@@ -233,7 +233,7 @@ namespace BetSpider.Parser.Basketball
                 }
                 index++;
             }
-            //return betItems;
+            return betItems.Count;
         }
     }
 }
