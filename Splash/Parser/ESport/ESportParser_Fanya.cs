@@ -147,6 +147,8 @@ namespace Splash.Parser.ESport
                         if(player.Count == 0) continue;
                         var team_name1 = player[0]["Name"].ToString().Trim();
                         var team_name2 = player[1]["Name"].ToString().Trim();
+                        var team_abbr1 = player[0]["Code"].ToString().Trim();
+                        var team_abbr2 = player[1]["Code"].ToString().Trim();
                         var team_id1 = GetTeamIndex(gameIndex, team_name1);
                         var team_id2 = GetTeamIndex(gameIndex, team_name2);
 
@@ -163,6 +165,8 @@ namespace Splash.Parser.ESport
                         b.pID2 = team_id2;
                         b.pName1 = team_name1;
                         b.pName2 = team_name2;
+                        b.pAbbr1 = team_abbr1;
+                        b.pAbbr2 = team_abbr2;
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;

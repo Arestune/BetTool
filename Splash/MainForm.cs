@@ -31,15 +31,16 @@ namespace Splash
         {
             InitializeComponent();
             ShowBetPanel(false);
-            this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Web", 150, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Game", 150, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("League", 200, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Team1", 150, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Team2", 150, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Odds1", 120, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //一步添加
-            this.list.Columns.Add("Time", 175, HorizontalAlignment.Center); //一步添加
+            this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //索引
+            this.list.Columns.Add("Web", 100, HorizontalAlignment.Center); //网站
+            this.list.Columns.Add("Game", 100, HorizontalAlignment.Center); //电竞名称
+            this.list.Columns.Add("League", 200, HorizontalAlignment.Center); //联赛
+            this.list.Columns.Add("Team1", 200, HorizontalAlignment.Center); //队伍1
+            this.list.Columns.Add("Team2", 200, HorizontalAlignment.Center); //队伍2
+            this.list.Columns.Add("Odds1", 120, HorizontalAlignment.Center); //赔率1
+            this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //赔率2
+            this.list.Columns.Add("GameTime", 175, HorizontalAlignment.Center); //比赛开始时间
+            this.list.Columns.Add("GrabTime", 175, HorizontalAlignment.Center); //抓取数据时间
 
             this.list.Click += listView_Click;
             this.tbBet1.KeyPress += tb_Keypressed;
@@ -119,23 +120,12 @@ namespace Splash
                 }
                 lbWebName1.Text = StaticData.webNames[(int)pair.b1.webID];
                 lbWebName2.Text = StaticData.webNames[(int)pair.b2.webID];
-               
-                //if(pair.orderForward)
-                //{
-                    
-                   
-                //}
-                //else
-                //{
-                //    lbHandicap1.Text = Util.GetNumericSymbolString(-pair.b1.handicap);
-                //    lbHandicap2.Text = Util.GetNumericSymbolString(pair.b2.handicap);
-                //}
                 lbHandicap1.Text = Util.GetNumericSymbolString(pair.handicap1);
                 lbHandicap2.Text = Util.GetNumericSymbolString(pair.handicap2);
                 lbOdds1.Text = pair.odds1.ToString();
                 lbOdds2.Text = pair.odds2.ToString();
-                lbPName1.Text = pair.pName1;
-                lbPName2.Text = pair.pName2;
+                lbPName1.Text = pair.pAbbr1;
+                lbPName2.Text = pair.pAbbr2;
                 ShowBetWin(pair.odds1, pair.odds2);
             }
         }
@@ -148,11 +138,11 @@ namespace Splash
                 {
                     int bet1 = int.Parse(tbBet1.Text);
                     int bet2 = int.Parse(tbBet2.Text);
-                    lbBetWin.Text = string.Format("盈利率为 {0}%,盈利 {1} 元", (winPer*100).ToString("F2"), (int)(winPer * (bet1 + bet2)));
+                    lbBetWin.Text = string.Format("盈利率:{0}%,奖金:{1},盈利:{2} ", (winPer*100).ToString("F2"),(bet1*odds1).ToString("F2"), (int)(winPer * (bet1 + bet2)));
                 }
                 else
                 {
-                    lbBetWin.Text = string.Format("盈利率为 {0}%", (winPer * 100).ToString("F2"));
+                    lbBetWin.Text = string.Format("盈利率:{0}%", (winPer * 100).ToString("F2"));
                 }
             }
             else
@@ -212,11 +202,12 @@ namespace Splash
                     lvi.Text = (index++).ToString();
                     lvi.SubItems.Add(StaticData.webNames[(int)p1.webID] + "|" + StaticData.webNames[(int)p2.webID]);
                     lvi.SubItems.Add(p1.gameName);
-                    lvi.SubItems.Add(p1.leagueName1);
-                    lvi.SubItems.Add(p1.pName1);
-                    lvi.SubItems.Add(p1.pName2);
+                    lvi.SubItems.Add(p1.leagueName1); 
+                    lvi.SubItems.Add(p1.pName1 + "(" + p1.pAbbr1 + ")");
+                    lvi.SubItems.Add(p1.pName2 + "(" + p1.pAbbr2 + ")");
                     lvi.SubItems.Add(p1.odds1.ToString() + "|" + p1.odds2.ToString());
                     lvi.SubItems.Add(p2.odds1.ToString() + "|" + p2.odds2.ToString());
+                    lvi.SubItems.Add(p1.time.ToString());
                     lvi.SubItems.Add(DateTime.Now.ToString());
                     this.list.Items.Add(lvi);
                 }
@@ -225,7 +216,7 @@ namespace Splash
         }
         private void Start()
         {
-            int webNum = 4;
+            int webNum = 5;
             List<Thread> threads = new List<Thread>();
             while(true)
             {

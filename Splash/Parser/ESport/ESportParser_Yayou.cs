@@ -136,13 +136,16 @@ namespace Splash.Parser.ESport
                     {
                         continue;
                     }
+                    //time
+                    var gameTime = Convert.ToDateTime(record["startTime"].ToString());
                     //teams
                     JToken teams = record["teams"];
+                    var team1_abbr = Util.GetGBKString(teams[0]["abbr"].ToString());
+                    var team2_abbr = Util.GetGBKString(teams[1]["abbr"].ToString());
                     var team1_name = Util.GetGBKString(teams[0]["name"].ToString());
                     var team2_name = Util.GetGBKString(teams[1]["name"].ToString());
                     var team1_index = GetTeamIndex(gameIndex, team1_name);
                     var team2_index = GetTeamIndex(gameIndex, team2_name);
-
                     JToken odds = record["odds"];
                     if(odds != null)
                     {
@@ -171,6 +174,8 @@ namespace Splash.Parser.ESport
                             b.pID2 = team2_index;
                             b.pName1 = team1_name;
                             b.pName2 = team2_name;
+                            b.pAbbr1 = team1_abbr;
+                            b.pAbbr2 = team2_abbr;
                             b.odds1 = odd1;
                             b.odds2 = odd2;
                             b.gameID = gameIndex;
@@ -178,6 +183,7 @@ namespace Splash.Parser.ESport
                             b.leagueName1 = league;
                             b.leagueName2 = league;
                             b.handicap = handicap;
+                            b.time = gameTime;
                             betItems.Add(b);
                         }
                     }

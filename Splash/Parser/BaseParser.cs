@@ -327,6 +327,8 @@ namespace Splash.Parser
                                         pair.odds2 = odd2;
                                         pair.pName1 = b1.pName1;
                                         pair.pName2 = b2.pName2;
+                                        pair.pAbbr1 = b1.pAbbr1;
+                                        pair.pAbbr2 = b2.pAbbr2;
                                         pair.handicap1 = b1.handicap;
                                         pair.handicap2 = -b2.handicap;
                                         listPair.Add(pair);
@@ -344,6 +346,8 @@ namespace Splash.Parser
                                         pair.odds2 = odd4;
                                         pair.pName1 = b1.pName2;
                                         pair.pName2 = b2.pName1;
+                                        pair.pAbbr1 = b1.pAbbr2;
+                                        pair.pAbbr2 = b2.pAbbr1;
                                         pair.handicap1 = -b1.handicap;
                                         pair.handicap2 = b2.handicap;
                                         listPair.Add(pair);
@@ -369,6 +373,8 @@ namespace Splash.Parser
                                         pair.odds2 = odd2;
                                         pair.pName1 = b1.pName1;
                                         pair.pName2 = b2.pName1;
+                                        pair.pAbbr1 = b1.pAbbr1;
+                                        pair.pAbbr2 = b2.pAbbr1;
                                         pair.handicap1 = b1.handicap;
                                         pair.handicap2 = b2.handicap;
                                         listPair.Add(pair);
@@ -386,6 +392,8 @@ namespace Splash.Parser
                                         pair.odds2 = odd4;
                                         pair.pName1 = b1.pName2;
                                         pair.pName2 = b2.pName2;
+                                        pair.pAbbr1 = b1.pAbbr2;
+                                        pair.pAbbr2 = b2.pAbbr2;
                                         pair.handicap1 = -b1.handicap;
                                         pair.handicap2 = -b2.handicap;
                                         listPair.Add(pair);

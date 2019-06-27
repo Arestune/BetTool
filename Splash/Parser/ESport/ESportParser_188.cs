@@ -204,6 +204,8 @@ namespace Splash.Parser.ESport
                         b.pID2 = team2_index;
                         b.pName1 = team1_name;
                         b.pName2 = team2_name;
+                        b.pAbbr1 = team1_name;
+                        b.pAbbr2 = team2_name;
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;

@@ -183,6 +183,23 @@ namespace Splash.Item
             get;
             set;
         }
+        public string pName2
+        {
+            get;
+            set;
+        }
+
+        public string pAbbr1
+        {
+            get;
+            set;
+        }
+
+        public string pAbbr2
+        {
+            get;
+            set;
+        }
         public double handicap1
         {
             get;
@@ -193,11 +210,7 @@ namespace Splash.Item
             get;
             set;
         }
-        public string pName2
-        {
-            get;
-            set;
-        }
+      
         public BetItem b1
         {
             get;

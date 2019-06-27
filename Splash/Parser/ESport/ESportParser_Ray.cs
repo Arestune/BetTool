@@ -226,6 +226,20 @@ namespace Splash.Parser.ESport
                 {
                     try
                     {
+                        //odds
+                        var odds = result["odds"];
+                        if (odds == null)
+                        {
+                            continue;
+                        }
+                        var status = result["status"];
+                        if(status != null && Convert.ToInt32(status.ToString()) == 2)
+                        {
+                            continue;
+                        }
+                        var odds1 = Convert.ToDouble(odds[0]["odds"].ToString());
+                        var odds2 = Convert.ToDouble(odds[1]["odds"].ToString());
+                       
                         var leagueName = result["tournament_name"].ToString();
                         var gameTime = GetGameTime(result["start_time"].ToString());
                         var gameName = GetGameName(result["game_name"].ToString());
@@ -244,10 +258,6 @@ namespace Splash.Parser.ESport
                         var team_id1 = GetTeamIndex(gameIndex, team_name1);
                         var team_id2 = GetTeamIndex(gameIndex, team_name2);
                         
-                        //odds
-                        var odds = result["odds"];
-                        var odds1 = Convert.ToDouble(odds[0]["odds"].ToString());
-                        var odds2 = Convert.ToDouble(odds[1]["odds"].ToString());
 
                         BetItem b = new BetItem();
                         b.sportID = sportID;
@@ -257,6 +267,8 @@ namespace Splash.Parser.ESport
                         b.pID2 = team_id2;
                         b.pName1 = team_name1;
                         b.pName2 = team_name2;
+                        b.pAbbr1 = team_short_name1;
+                        b.pAbbr2 = team_short_name2;
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;
@@ -265,7 +277,7 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
                         b.leagueName1 = leagueName;
                         betItems.Add(b);
-                        if(betItems.Count == 58)
+                        if(betItems.Count == 135)
                         {
                             int a = 1;
                         }

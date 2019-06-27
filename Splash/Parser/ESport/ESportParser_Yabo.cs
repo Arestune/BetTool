@@ -150,6 +150,8 @@ namespace Splash.Parser.ESport
                                 betValue = v / 10.0f;
                             }
                         }
+                        var team1_abbr = b2[37].ToString();
+                        var team2_abbr = b2[38].ToString();
                         var team1_index = GetTeamIndex(gameIndex, team1_name);
                         var team2_index = GetTeamIndex(gameIndex, team2_name);
                         JArray b2_10 = JArray.Parse(b2[10].ToString());
@@ -168,6 +170,8 @@ namespace Splash.Parser.ESport
                         b.pID2 = team2_index;
                         b.pName1 = team1_name;
                         b.pName2 = team2_name;
+                        b.pAbbr1 = team1_abbr;
+                        b.pAbbr2 = team2_abbr;
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;

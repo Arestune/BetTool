@@ -17,3 +17,13 @@ E:\GitProjects\BetTool\Splash\obj\Debug\Splash.csprojResolveAssemblyReference.ca
 E:\GitProjects\BetTool\Splash\obj\Debug\Splash.MainForm.resources
 E:\GitProjects\BetTool\Splash\obj\Debug\Splash.Properties.Resources.resources
 E:\GitProjects\BetTool\Splash\obj\Debug\Splash.csproj.GenerateResource.Cache
+F:\Projects\BetTool\Splash\bin\Debug\Splash.exe.config
+F:\Projects\BetTool\Splash\obj\Debug\Splash.exe
+F:\Projects\BetTool\Splash\obj\Debug\Splash.pdb
+F:\Projects\BetTool\Splash\bin\Debug\Splash.exe
+F:\Projects\BetTool\Splash\bin\Debug\Splash.pdb
+F:\Projects\BetTool\Splash\bin\Debug\Newtonsoft.Json.dll
+F:\Projects\BetTool\Splash\obj\Debug\Splash.csprojResolveAssemblyReference.cache
+F:\Projects\BetTool\Splash\obj\Debug\Splash.MainForm.resources
+F:\Projects\BetTool\Splash\obj\Debug\Splash.Properties.Resources.resources
+F:\Projects\BetTool\Splash\obj\Debug\Splash.csproj.GenerateResource.Cache
