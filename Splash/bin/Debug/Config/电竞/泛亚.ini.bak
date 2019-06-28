@@ -345,7 +345,7 @@ T26=LONDON SPITFIRE,30
 T27=Toronto Defiant,63
 T28=LOS ANGELES GLADIATORS,62
 T29=HOUSTON OUTLAWS,11
-T30=Washington Justice,64
+T30=Washington Justice,-1
 [8]
 T0=Team one esports,35
 T1=Immortals,6

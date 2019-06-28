@@ -132,6 +132,10 @@ namespace Splash.Parser.ESport
                     return gameIds[i];
                 }
             }
+            if (str.Contains("绝地求生"))
+            {
+                return "绝地求生";
+            }
             return "NULL";
         }
         protected override int GetBO(string str)
@@ -144,7 +148,19 @@ namespace Splash.Parser.ESport
             }
             return int.Parse(str.Substring(first_l+1, first_r - first_l-1));
         }
-       
+        protected override int GetGameIndex(string gameName)
+        {
+            gameName = gameName.ToLower();
+            if (gameIds.Contains(gameName.ToLower()))
+            {
+                return gameIds.IndexOf(gameName);
+            }
+            if (gameName.Contains("绝地求生"))
+            {
+                return 4;
+            }
+            return INVALID_INDEX;
+        }
         public override int Parse()
         {
             try
@@ -228,6 +244,10 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
 
                         betItems.Add(b);
+                        if(betItems.Count == 6)
+                        {
+                            int a = 1;
+                        }
                     }
                 }
             }

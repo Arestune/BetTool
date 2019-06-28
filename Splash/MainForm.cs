@@ -182,6 +182,10 @@ namespace Splash
             }
             else
             {
+                //设置光标的位置到文本尾   
+                textBox.Select(textBox.TextLength, 0);
+                //滚动到控件光标处   
+                textBox.ScrollToCaret();
                 if (log.webID != WebID.WID_NULL)
                 {
                     textBox.AppendText(DateTime.Now.ToString("HH:mm:ss") + " " + StaticData.webNames[(int)log.webID] + ":" + log.message+"\r\n");
@@ -231,7 +235,7 @@ namespace Splash
         }
         private void Start()
         {
-            int webNum = 4;
+            int webNum = 5;
             List<Thread> threads = new List<Thread>();
             while(true)
             {

@@ -251,13 +251,12 @@ namespace Splash.Parser.ESport
                         }
                         //team
                         var team = result["team"];
-                        var team_name1 = Util.GetGBKString(team[0]["team_name"].ToString());//.Trim();
-                        var team_name2 = Util.GetGBKString(team[1]["team_name"].ToString());//.Trim();
-                        var team_short_name1 = Util.GetGBKString(team[0]["team_short_name"].ToString());//Trim();
-                        var team_short_name2 = Util.GetGBKString(team[1]["team_short_name"].ToString());//Trim();
+                        var team_name1 = Util.GetGBKString(odds[0]["name"].ToString());//.Trim();
+                        var team_name2 = Util.GetGBKString(odds[1]["name"].ToString());//.Trim();
+                        var team_short_name1 = team_name1;//Trim();
+                        var team_short_name2 = team_name2;//Trim();
                         var team_id1 = GetTeamIndex(gameIndex, team_name1);
                         var team_id2 = GetTeamIndex(gameIndex, team_name2);
-                        
 
                         BetItem b = new BetItem();
                         b.sportID = sportID;
