@@ -20,15 +20,13 @@ namespace Splash.Parser
    
     class BaseParser
     {
-        protected static string staticConfigFile = null;
         protected const int MAX_TRY_COUNT = 3;
         protected const int INVALID_INDEX = -1;
-        protected  string configFile;
+        protected static string staticConfigFile = null;
+        protected  string configFile = null;
         protected  string urlFormat = null;
         protected  string html = null;
         protected string responseCookie = null;
-        
-
         //动态数据
         protected List<string> gameIds = new List<string>();
         protected List<string> gameNames = new List<string>();
@@ -37,6 +35,7 @@ namespace Splash.Parser
         public SportID sportID;
         public WebID webID;
         public List<BetItem> betItems = new List<BetItem>();
+
         public delegate void ShowLogDelegate(LogInfo message);
         public ShowLogDelegate showLogEvent;
         public  BaseParser()

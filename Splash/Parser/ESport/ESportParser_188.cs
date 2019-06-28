@@ -116,6 +116,10 @@ namespace Splash.Parser.ESport
         protected override string GetLeague1Name(string str)
         {
             int first = str.IndexOf('(');
+            if(first < 0)
+            {
+                return str;
+            }
             return str.Substring(0,first);
         }
         protected override string GetGameName(string str)
@@ -151,7 +155,16 @@ namespace Splash.Parser.ESport
                 }
                 JObject main = JObject.Parse(html);
                 JToken n_ot = main["n-ot"];
+                if(n_ot == null)
+                {
+                    return 0;
+                }
+                if(n_ot["egs"] == null)
+                {
+                    return 0;
+                }
                 JArray egs = JArray.Parse(n_ot["egs"].ToString());
+
                 foreach(var eg in egs)
                 {
                     var c = eg["c"];

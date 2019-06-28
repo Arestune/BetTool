@@ -31,6 +31,7 @@ namespace Splash
         {
             InitializeComponent();
             ShowBetPanel(false);
+            tbSleepTime.Text = "30";
             this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //索引
             this.list.Columns.Add("Web", 100, HorizontalAlignment.Center); //网站
             this.list.Columns.Add("Game", 100, HorizontalAlignment.Center); //电竞名称
@@ -41,16 +42,15 @@ namespace Splash
             this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //赔率2
             this.list.Columns.Add("GameTime", 175, HorizontalAlignment.Center); //比赛开始时间
             this.list.Columns.Add("GrabTime", 175, HorizontalAlignment.Center); //抓取数据时间
-
             this.list.Click += listView_Click;
             this.tbBet1.KeyPress += tb_Keypressed;
             this.tbBet2.KeyPress += tb_Keypressed;
+            this.tbSleepTime.KeyPress += tb_Keypressed;
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
             //Test();
-
             //return;
             index = 0;
             Thread startThread = new Thread(Start);
@@ -61,11 +61,10 @@ namespace Splash
         }
         public void tb_Keypressed(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar < 48 || e.KeyChar >57))
+            if ((e.KeyChar < 48 || e.KeyChar >57 ) && e.KeyChar != 8)
             {
                 e.Handled = true;
             }
-           
         }
         public void listView_Click(object sender, EventArgs e)
         {
@@ -86,6 +85,22 @@ namespace Splash
                 ShowBetWin(odds1, odds2);
             }
         
+        }
+        private void tbClearData_Click(object sender, EventArgs e)
+        {
+            listPairs.Clear();
+            this.list.Clear();
+            index = 0;
+            this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //索引
+            this.list.Columns.Add("Web", 100, HorizontalAlignment.Center); //网站
+            this.list.Columns.Add("Game", 100, HorizontalAlignment.Center); //电竞名称
+            this.list.Columns.Add("League", 200, HorizontalAlignment.Center); //联赛
+            this.list.Columns.Add("Team1", 200, HorizontalAlignment.Center); //队伍1
+            this.list.Columns.Add("Team2", 200, HorizontalAlignment.Center); //队伍2
+            this.list.Columns.Add("Odds1", 120, HorizontalAlignment.Center); //赔率1
+            this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //赔率2
+            this.list.Columns.Add("GameTime", 175, HorizontalAlignment.Center); //比赛开始时间
+            this.list.Columns.Add("GrabTime", 175, HorizontalAlignment.Center); //抓取数据时间
         }
 
         private void btnBet2_Click(object sender, EventArgs e)
@@ -216,7 +231,7 @@ namespace Splash
         }
         private void Start()
         {
-            int webNum = 5;
+            int webNum = 4;
             List<Thread> threads = new List<Thread>();
             while(true)
             {
@@ -247,7 +262,12 @@ namespace Splash
                 
                 var pair = BaseParser.ParseBetWin(total);
                 ShowResult(pair);
-                Thread.Sleep(30000);
+
+                //延迟时间
+                if(!string.IsNullOrEmpty(tbSleepTime.Text))
+                {
+                    Thread.Sleep(Convert.ToInt32(tbSleepTime.Text)*1000);
+                }
             }
         }
        
@@ -289,13 +309,14 @@ namespace Splash
             b2.odds2 = 2;
             b2.handicap = 0;
 
-
             total.Add(b1);
             total.Add(b2);
 
             var pair = BaseParser.ParseBetWin(total);
             ShowResult(pair);
         }
+
+   
 
      
     }
