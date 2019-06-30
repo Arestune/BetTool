@@ -39,7 +39,7 @@ namespace Splash.Parser.Basketball
             op.Method = "GET";
             op.KeepAlive = true;
             op.Referer = "https://www.yabox10.com/app/sport";
-            op.RequestCookies = IniUtil.GetString("Cookie", "cookie", configFile);
+            op.RequestCookies = Config.GetString("Cookie", "cookie", configFile);
             if(!string.IsNullOrEmpty(op.RequestCookies))
             {
                 if(op.RequestCookies.Contains(".Xauth"))
@@ -66,7 +66,7 @@ namespace Splash.Parser.Basketball
             {
                 if (responseCookie.Contains("Xauth"))
                 {
-                    IniUtil.WriteString("Cookie", "cookie", responseCookie, configFile);
+                    Config.WriteString("Cookie", "cookie", responseCookie, configFile);
                     Match m = Regex.Match(responseCookie, @"\.Xauth=(\w+)");
                     xauth = m.Groups[1].ToString().Trim();
                 }
@@ -102,27 +102,27 @@ namespace Splash.Parser.Basketball
             
             //EffectiveItem
             int index = 0;
-            var eItem = IniUtil.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
+            var eItem = Config.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
             while (!string.IsNullOrEmpty(eItem))
             {
                 index++;
                 effectItems.Add(eItem);
-                eItem = IniUtil.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
+                eItem = Config.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
             }
 
             //Player
             index = 0;
-            var player = IniUtil.GetString("Players", string.Format("P{0}", index), configFile);
+            var player = Config.GetString("Players", string.Format("P{0}", index), configFile);
             while (!string.IsNullOrEmpty(player))
             {
                 index++;
                 playerNames.Add(player);
-                player = IniUtil.GetString("Players", string.Format("P{0}", index), configFile);
+                player = Config.GetString("Players", string.Format("P{0}", index), configFile);
             }
 
             //Equal
-            var largerPair = IniUtil.GetString("Compare", "C0", configFile).Split('|');
-            var smallerPair = IniUtil.GetString("Compare", "C1", configFile).Split('|');
+            var largerPair = Config.GetString("Compare", "C0", configFile).Split('|');
+            var smallerPair = Config.GetString("Compare", "C1", configFile).Split('|');
             foreach (var larger in largerPair)
             {
                 largers.Add(larger);
@@ -151,7 +151,7 @@ namespace Splash.Parser.Basketball
                 return playerNames.IndexOf(playerName);
             }
             playerNames.Add(playerName);
-            IniUtil.WriteString("Players", string.Format("P{0}", playerNames.Count - 1), playerName, configFile);
+            Config.WriteString("Players", string.Format("P{0}", playerNames.Count - 1), playerName, configFile);
             return playerNames.Count - 1;
         }
         protected override BetCompare GetBetCompare(string parseString)
@@ -203,7 +203,7 @@ namespace Splash.Parser.Basketball
             foreach (JToken baseJ in po)//遍历数组
             {
                 var n = baseJ["n"];
-                IniUtil.WriteString("Items", string.Format("I{0}", index), n.ToString(), configFile);
+                Config.WriteString("Items", string.Format("I{0}", index), n.ToString(), configFile);
                 var itemIndex = GetBetItemIndex(n.ToString());
                 if(itemIndex < 0)
                 {

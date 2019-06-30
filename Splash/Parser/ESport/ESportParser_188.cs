@@ -22,56 +22,6 @@ namespace Splash.Parser.ESport
             webID = WebID.WID_188;
             base.Init();
         }
-        public override void LoadStaticData()
-        {
-            //GameIds
-            int index = 0;
-            var eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
-            while (!string.IsNullOrEmpty(eItem))
-            {
-                index++;
-                gameIds.Add(Util.GetCommentString(eItem).ToLower());
-                eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
-            }
-
-            //GameNames
-            index = 0;
-            var gameName = IniUtil.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), configFile);
-            while (!string.IsNullOrEmpty(gameName))
-            {
-                index++;
-                gameNames.Add(gameName);
-                gameName = IniUtil.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), configFile);
-            }
-
-            //Teams
-            for (int i = 0; i < gameIds.Count; i++)
-            {
-                int teamIndex = 0;
-                string teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
-                while (!string.IsNullOrEmpty(teamAndId))
-                {
-                    var array = teamAndId.Split(',');
-                    var teamName = array[0].Trim();
-                    var id = Convert.ToInt32(array[1].Trim());
-                    if (!teamIds.ContainsKey(i))
-                    {
-                        Dictionary<string, int> teamList = new Dictionary<string, int>();
-                        teamList.Add(teamName, id);
-                        teamIds.Add(i, teamList);
-                    }
-                    else
-                    {
-                        if (!teamIds[i].ContainsKey(teamName))
-                        {
-                            teamIds[i].Add(teamName, id);
-                        }
-                    }
-                    teamIndex++;
-                    teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
-                }
-            }
-        }
         public override void GrabAndParseHtml()
         {
             //今日
@@ -79,13 +29,13 @@ namespace Splash.Parser.ESport
 
             //早盘
             int nTryCount = 0;
-            string uri = IniUtil.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
+            string uri = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
             RequestOptions op = new RequestOptions(uri);
-            op.Method = IniUtil.GetString(StaticData.SN_URL, "Method", configFile, "GET");
-            op.Accept = IniUtil.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-            op.Referer = IniUtil.GetString(StaticData.SN_URL, "Referer", configFile, "");
-            op.RequestCookies = IniUtil.GetString(StaticData.SN_URL, "Cookie", configFile, "");
-            op.XHRParams = IniUtil.GetString(StaticData.SN_URL, "XHRParams1", configFile, "");
+            op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
+            op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
+            op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
+            op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams1", configFile, "");
             //获取网页
             html = RequestAction(op);
             while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
@@ -110,7 +60,7 @@ namespace Splash.Parser.ESport
 
             if (!string.IsNullOrEmpty(responseCookie) && responseCookie.Contains("Xauth"))
             {
-                IniUtil.WriteString(StaticData.SN_URL, "Cookie",responseCookie,configFile);
+                Config.WriteString(StaticData.SN_URL, "Cookie",responseCookie,configFile);
             }
         }
         protected override string GetLeague1Name(string str)
@@ -122,7 +72,7 @@ namespace Splash.Parser.ESport
             }
             return str.Substring(0,first);
         }
-        protected override string GetGameName(string str)
+        protected override string GetGameID(string str)
         {
             str = str.ToLower();
             for(int i =0;i<gameIds.Count;i++)
@@ -186,15 +136,15 @@ namespace Splash.Parser.ESport
                     var c = eg["c"];
                     var n = c["n"];
                     var leagueName = GetLeague1Name(n.ToString());
-                    var gameName = GetGameName(n.ToString());
+                    var gameName = GetGameID(n.ToString());
                     var bo = GetBO(n.ToString());
                     var gameIndex = GetGameIndex(gameName);
                     var es = JArray.Parse(eg["es"].ToString());
                     foreach (var esSingle in es)
                     {
                         var i = esSingle["i"];
-                        var team1_name = Util.GetGBKString(i[0].ToString());
-                        var team2_name = Util.GetGBKString(i[1].ToString());
+                        var team1_name = i[0].ToString().Trim();
+                        var team2_name = i[1].ToString().Trim();
                         var team1_index = GetTeamIndex(gameIndex, team1_name);
                         var team2_index = GetTeamIndex(gameIndex, team2_name);
                         var monthDay = i[4];
@@ -239,7 +189,7 @@ namespace Splash.Parser.ESport
                         b.odds2 = odds2;
                         b.gameID = gameIndex;
                         b.handicap = 0;
-                        b.gameName = gameNames[gameIndex];
+                        b.gameName = gameStaticNames[gameIndex];
                         b.leagueName1 = leagueName;
                         b.time = gameTime;
 

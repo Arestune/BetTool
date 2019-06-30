@@ -22,15 +22,11 @@ namespace Splash.Parser
     {
         protected const int MAX_TRY_COUNT = 3;
         protected const int INVALID_INDEX = -1;
-        protected static string staticConfigFile = null;
+        protected const string INVALID_VALUE = "NULL";
         protected  string configFile = null;
         protected  string urlFormat = null;
         protected  string html = null;
         protected string responseCookie = null;
-        //动态数据
-        protected List<string> gameIds = new List<string>();
-        protected List<string> gameNames = new List<string>();
-        protected Dictionary<int, Dictionary<string, int>> teamIds = new Dictionary<int, Dictionary<string, int>>();
 
         public SportID sportID;
         public WebID webID;
@@ -52,6 +48,10 @@ namespace Splash.Parser
         {
 
         }
+        public virtual int Parse()
+        {
+            return 0;
+        }
         protected virtual string GetLeague1Name(string str)
         {
             return null;
@@ -64,51 +64,21 @@ namespace Splash.Parser
         {
             return INVALID_INDEX;
         }
-        protected virtual string GetGameName(string str)
+        protected virtual string GetGameID(string str)
         {
             return null;
         }
         protected virtual int GetGameIndex(string gameId)
         {
-            gameId = gameId.ToLower();
-            if (gameIds.Contains(gameId.ToLower()))
-            {
-                return gameIds.IndexOf(gameId);
-            }
-            gameIds.Add(gameId);
-            //IniUtil.WriteString(StaticData.SN_GAME_ID, string.Format("G{0}", gameIds.Count - 1), gameId, configFile);
             return INVALID_INDEX;
+        }
+        protected virtual string GetGameName(int index)
+        {
+            return null;
         }
         protected virtual int GetTeamIndex(int gameIndex, string strTeam)
         {
-
-            if (teamIds.ContainsKey(gameIndex))
-            {
-                if (teamIds[gameIndex].ContainsKey(strTeam))
-                {
-                    return teamIds[gameIndex][strTeam];
-                }
-                else
-                {
-                    int curId = INVALID_INDEX;
-                    teamIds[gameIndex].Add(strTeam, curId);
-                    IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", teamIds[gameIndex].Count - 1), string.Format("{0},{1}",
-                        strTeam, curId), configFile);
-                    ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_WARNING);
-                    return curId;
-                }
-            }
-            else
-            {
-                int curId = INVALID_INDEX;
-                var teamList = new Dictionary<string, int>();
-                teamList.Add(strTeam, curId);
-                teamIds.Add(gameIndex, teamList);
-                IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", teamList.Count - 1), string.Format("{0},{1}",
-                        strTeam, curId), configFile);
-                ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_WARNING);
-                return curId;
-            }
+             return INVALID_INDEX;
         }
         protected virtual DateTime GetGameTime(string strTime)
         {
@@ -126,13 +96,13 @@ namespace Splash.Parser
         public virtual void GrabAndParseHtml()
         {
             int nTryCount = 0;
-            string uri = IniUtil.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
+            string uri = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
             RequestOptions op = new RequestOptions(uri);
-            op.Method = IniUtil.GetString(StaticData.SN_URL, "Method", configFile, "GET");
-            op.Accept = IniUtil.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-            op.Referer = IniUtil.GetString(StaticData.SN_URL, "Referer", configFile, "");
-            op.RequestCookies = IniUtil.GetString(StaticData.SN_URL, "Cookie", configFile, "");
-            op.XHRParams = IniUtil.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
+            op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
+            op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+            op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
+            op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
+            op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
             //获取网页
             html = RequestAction(op);
             while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
@@ -431,11 +401,7 @@ namespace Splash.Parser
             return (odds1 * odds2) / (odds1 + odds2) > 1;
         }
       
-        public virtual int Parse()
-        {
-            return 0;
-        }
-
+ 
         public virtual void ShowLog(LogInfo log)
         {
             if (showLogEvent != null)

@@ -14,6 +14,7 @@ namespace Splash.Parser
         public static List<string> sportNames = new List<string> { "篮球", "电竞"};
         public static List<string> webNames = new List<string> {"亚博","亚游","188","泛亚","Ray","沙巴","365"};
 
+
   
     }
 }

@@ -22,56 +22,6 @@ namespace Splash.Parser.ESport
             webID = WebID.WID_FANYA;
             base.Init();
         }
-        public override void LoadStaticData()
-        {
-            //GameIds
-            int index = 0;
-            var eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
-            while (!string.IsNullOrEmpty(eItem))
-            {
-                index++;
-                gameIds.Add(Util.GetCommentString(eItem).ToLower());
-                eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
-            }
-
-            //GameNames
-            index = 0;
-            var gameName = IniUtil.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), configFile);
-            while (!string.IsNullOrEmpty(gameName))
-            {
-                index++;
-                gameNames.Add(gameName);
-                gameName = IniUtil.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), configFile);
-            }
-
-            //Teams
-            for (int i = 0; i < gameIds.Count; i++)
-            {
-                int teamIndex = 0;
-                string teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
-                while (!string.IsNullOrEmpty(teamAndId))
-                {
-                    var array = teamAndId.Split(',');
-                    var teamName = array[0].Trim();
-                    var id = Convert.ToInt32(array[1].Trim());
-                    if (!teamIds.ContainsKey(i))
-                    {
-                        Dictionary<string, int> teamList = new Dictionary<string, int>();
-                        teamList.Add(teamName, id);
-                        teamIds.Add(i, teamList);
-                    }
-                    else
-                    {
-                        if (!teamIds[i].ContainsKey(teamName))
-                        {
-                            teamIds[i].Add(teamName, id);
-                        }
-                    }
-                    teamIndex++;
-                    teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
-                }
-            }
-        }
         public override void GrabAndParseHtml()
         {
           
@@ -87,7 +37,7 @@ namespace Splash.Parser.ESport
             int first = str.IndexOf('(');
             return str.Substring(0,first);
         }
-        protected override string GetGameName(string str)
+        protected override string GetGameID(string str)
         {
             str = str.ToLower();
             for(int i =0;i<gameIds.Count;i++)
@@ -97,7 +47,7 @@ namespace Splash.Parser.ESport
                     return gameIds[i];
                 }
             }
-            return "NULL";
+            return INVALID_VALUE;
         }
         protected override DateTime GetGameTime(string strTime)
         {
@@ -138,9 +88,18 @@ namespace Splash.Parser.ESport
                         {
                             continue;
                         }
+                        //锁住了
+                        if(info["IsLock"] != null &&  int.Parse(info["IsLock"].ToString()) == 1)
+                        {
+                            continue;
+                        }
                         var leagueName = info["League"].ToString();
                         var gameTime = GetGameTime(info["StartAt"].ToString());
-                        var gameName = GetGameName(info["Category"].ToString());
+                        var gameName = GetGameID(info["Category"].ToString());
+                        if(gameName == INVALID_VALUE)
+                        {
+                            continue;
+                        }
                         var bo = GetBO(info["Title"].ToString());
                         var gameIndex = GetGameIndex(gameName);
                         var player = JArray.Parse(info["Player"].ToString());
@@ -154,6 +113,12 @@ namespace Splash.Parser.ESport
 
                         var bet = JArray.Parse(info["Bet"].ToString());
                         var items = bet[0]["Items"];
+                        //第二个锁住了
+                        var isLock = bet[0]["IsLock"];
+                        if(isLock != null && int.Parse(isLock.ToString()) == 1)
+                        {
+                            continue;
+                        }
                         var odds1 = Convert.ToDouble(items[0]["Odds"].ToString());
                         var odds2 = Convert.ToDouble(items[1]["Odds"].ToString());
 
@@ -172,13 +137,13 @@ namespace Splash.Parser.ESport
                         b.gameID = gameIndex;
                         b.leagueName1 = leagueName;
                         b.handicap = 0;
-                        b.gameName = gameNames[gameIndex];
+                        b.gameName = gameStaticNames[gameIndex];
                         b.time = gameTime;
                         betItems.Add(b);
-                        //if(betItems.Count == 53)
-                        //{
-                        //    int a = 1;
-                        //}
+                        if (betItems.Count == 10)
+                        {
+                            int a = 1;
+                        }
                     }
                     catch (Exception e)
                     {

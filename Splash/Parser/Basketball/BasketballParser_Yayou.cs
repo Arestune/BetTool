@@ -100,27 +100,27 @@ namespace Splash.Parser.Basketball
             
             //EffectiveItem
             int index = 0;
-            var eItem = IniUtil.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
+            var eItem = Config.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
             while (!string.IsNullOrEmpty(eItem))
             {
                 index++;
                 effectItems.Add(eItem);
-                eItem = IniUtil.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
+                eItem = Config.GetString("EffectiveItem", string.Format("I{0}", index), configFile);
             }
 
             //Player
             index = 0;
-            var player = IniUtil.GetString("Players", string.Format("P{0}", index), configFile);
+            var player = Config.GetString("Players", string.Format("P{0}", index), configFile);
             while (!string.IsNullOrEmpty(player))
             {
                 index++;
                 playerNames.Add(player);
-                player = IniUtil.GetString("Players", string.Format("P{0}", index), configFile);
+                player = Config.GetString("Players", string.Format("P{0}", index), configFile);
             }
 
             //Equal
-            var largerPair = IniUtil.GetString("Compare", "C0", configFile).Split('|');
-            var smallerPair = IniUtil.GetString("Compare", "C1", configFile).Split('|');
+            var largerPair = Config.GetString("Compare", "C0", configFile).Split('|');
+            var smallerPair = Config.GetString("Compare", "C1", configFile).Split('|');
             foreach(var larger in largerPair)
             {
                 largers.Add(larger);
@@ -165,7 +165,7 @@ namespace Splash.Parser.Basketball
                 return playerNames.IndexOf(playerName);
             }
             playerNames.Add(playerName);
-            IniUtil.WriteString("Players", string.Format("P{0}", playerNames.Count - 1), playerName, "D:\\Yayou.ini");
+            Config.WriteString("Players", string.Format("P{0}", playerNames.Count - 1), playerName, "D:\\Yayou.ini");
             return playerNames.Count - 1;
         }
         public List<BetItem> ParseOneGame(string data)
@@ -185,7 +185,7 @@ namespace Splash.Parser.Basketball
                 {
                     var live = baseJ["live"];
                     var itemName = baseJ["name"];
-                    IniUtil.WriteString("Items", string.Format("I{0}", itemIndex), itemName.ToString(), configFile);
+                    Config.WriteString("Items", string.Format("I{0}", itemIndex), itemName.ToString(), configFile);
                     for (int i = 0; i < effectItems.Count; i++)
                     {
                         if (itemName.ToString() == effectItems[i])

@@ -22,70 +22,20 @@ namespace Splash.Parser.ESport
             webID = WebID.WID_YABO;
             base.Init();
         }
-        public override void LoadStaticData()
-        {
-            //GameIds
-            int index = 0;
-
-            var eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
-            while (!string.IsNullOrEmpty(eItem))
-            {
-                index++;
-                gameIds.Add(Util.GetCommentInt(eItem).ToString());
-                eItem = IniUtil.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
-            }
-
-            //GameNames
-            index = 0;
-            var gameName = IniUtil.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), configFile);
-            while (!string.IsNullOrEmpty(gameName))
-            {
-                index++;
-                gameNames.Add(gameName);
-                gameName = IniUtil.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), configFile);
-            }
-
-            //Teams
-            for(int i =0 ;i<gameIds.Count;i++)
-            {
-                int teamIndex = 0;
-                string teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
-                while (!string.IsNullOrEmpty(teamAndId))
-                {
-                     var array = teamAndId.Split(',');
-                     var teamName = array[0].Trim();
-                    var id = Convert.ToInt32(array[1].Trim());
-                    if(!teamIds.ContainsKey(i))
-                    {
-                        Dictionary<string, int> teamList = new Dictionary<string, int>();
-                        teamList.Add(teamName,id);
-                        teamIds.Add(i, teamList);
-                    }
-                    else
-                    {
-                        if (!teamIds[i].ContainsKey(teamName))
-                        {
-                            teamIds[i].Add(teamName, id);
-                        }
-                    }
-                    teamIndex++;
-                    teamAndId = IniUtil.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
-                }
-            }
-        }
         protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
+            string strLowerTeam = strTeam.ToLower();
             if (teamIds.ContainsKey(gameIndex))
             {
-                if (teamIds[gameIndex].ContainsKey(strTeam))
+                if (teamIds[gameIndex].ContainsKey(strLowerTeam))
                 {
-                    return teamIds[gameIndex][strTeam];
+                    return teamIds[gameIndex][strLowerTeam];
                 }
                 else
                 {
                     int curId = teamIds[gameIndex].Count;
-                    teamIds[gameIndex].Add(strTeam, curId);
-                    IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
+                    teamIds[gameIndex].Add(strLowerTeam, curId);
+                    Config.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
                         strTeam, curId), configFile);
                     return curId;
                 }
@@ -94,9 +44,9 @@ namespace Splash.Parser.ESport
             {
                 int curId = 0;
                 var teamList = new Dictionary<string, int>();
-                teamList.Add(strTeam, curId);
+                teamList.Add(strLowerTeam, curId);
                 teamIds.Add(gameIndex, teamList);
-                IniUtil.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
+                Config.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
                         strTeam, curId), configFile);
                 return curId;
             }
@@ -124,8 +74,8 @@ namespace Splash.Parser.ESport
                     //IniUtil.WriteString("Game", string.Format("G{0}", index),gameName, configFile);
                     foreach(var b2 in b1[10])
                     {
-                        var team1_name = Util.GetGBKString(b2[5][0].ToString());
-                        var team2_name = Util.GetGBKString(b2[6][0].ToString());
+                        var team1_name = b2[5][0].ToString().Trim();
+                        var team2_name = b2[6][0].ToString().Trim();
                         var europeTime = DateTime.Parse(b2[7].ToString());
                         var chinaMatchTime = europeTime.AddHours(8);
                         var localTime = DateTime.Now; 
@@ -152,6 +102,7 @@ namespace Splash.Parser.ESport
                         }
                         var team1_abbr = b2[37].ToString();
                         var team2_abbr = b2[38].ToString();
+                        team1_name = "Team Flash.Vietnam";
                         var team1_index = GetTeamIndex(gameIndex, team1_name);
                         var team2_index = GetTeamIndex(gameIndex, team2_name);
                         JArray b2_10 = JArray.Parse(b2[10].ToString());
@@ -175,7 +126,7 @@ namespace Splash.Parser.ESport
                         b.odds1 = odds1;
                         b.odds2 = odds2;
                         b.gameID = gameIndex;
-                        b.gameName = gameNames[gameIndex];
+                        b.gameName = gameStaticNames[gameIndex];
                         b.leagueName1 = leagueName1;
                         b.leagueName2 = leagueName2;
                         b.handicap = betValue;

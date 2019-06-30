@@ -42,7 +42,7 @@
             this.lbHandicap2 = new System.Windows.Forms.Label();
             this.lbPName2 = new System.Windows.Forms.Label();
             this.lbOdds2 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lbTime2 = new System.Windows.Forms.Label();
             this.tbBet2 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.lbWebName2 = new System.Windows.Forms.Label();
@@ -52,7 +52,7 @@
             this.lbHandicap1 = new System.Windows.Forms.Label();
             this.lbPName1 = new System.Windows.Forms.Label();
             this.lbOdds1 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lbTime1 = new System.Windows.Forms.Label();
             this.tbBet1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lbWebName1 = new System.Windows.Forms.Label();
@@ -85,7 +85,7 @@
             this.textBox.BackColor = System.Drawing.Color.OldLace;
             this.textBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox.Location = new System.Drawing.Point(1096, 314);
-            this.textBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox.Margin = new System.Windows.Forms.Padding(2);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(288, 194);
             this.textBox.TabIndex = 4;
@@ -101,7 +101,7 @@
             this.list.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.list.FullRowSelect = true;
             this.list.Location = new System.Drawing.Point(10, 54);
-            this.list.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.list.Margin = new System.Windows.Forms.Padding(2);
             this.list.Name = "list";
             this.list.Size = new System.Drawing.Size(1082, 454);
             this.list.TabIndex = 5;
@@ -149,9 +149,9 @@
             this.gbBetForm.Controls.Add(this.panelBet2);
             this.gbBetForm.Controls.Add(this.panelBet1);
             this.gbBetForm.Location = new System.Drawing.Point(1096, 46);
-            this.gbBetForm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbBetForm.Margin = new System.Windows.Forms.Padding(2);
             this.gbBetForm.Name = "gbBetForm";
-            this.gbBetForm.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbBetForm.Padding = new System.Windows.Forms.Padding(2);
             this.gbBetForm.Size = new System.Drawing.Size(288, 242);
             this.gbBetForm.TabIndex = 14;
             this.gbBetForm.TabStop = false;
@@ -191,14 +191,14 @@
             this.panelBet2.Controls.Add(this.lbHandicap2);
             this.panelBet2.Controls.Add(this.lbPName2);
             this.panelBet2.Controls.Add(this.lbOdds2);
-            this.panelBet2.Controls.Add(this.label9);
+            this.panelBet2.Controls.Add(this.lbTime2);
             this.panelBet2.Controls.Add(this.tbBet2);
             this.panelBet2.Controls.Add(this.label10);
             this.panelBet2.Controls.Add(this.lbWebName2);
             this.panelBet2.Controls.Add(this.label12);
             this.panelBet2.Controls.Add(this.btnBet2);
             this.panelBet2.Location = new System.Drawing.Point(155, 41);
-            this.panelBet2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelBet2.Margin = new System.Windows.Forms.Padding(2);
             this.panelBet2.Name = "panelBet2";
             this.panelBet2.Size = new System.Drawing.Size(122, 171);
             this.panelBet2.TabIndex = 10;
@@ -206,7 +206,7 @@
             // lbHandicap2
             // 
             this.lbHandicap2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbHandicap2.Location = new System.Drawing.Point(68, 62);
+            this.lbHandicap2.Location = new System.Drawing.Point(77, 11);
             this.lbHandicap2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbHandicap2.Name = "lbHandicap2";
             this.lbHandicap2.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -214,6 +214,7 @@
             this.lbHandicap2.TabIndex = 9;
             this.lbHandicap2.Text = "-44";
             this.lbHandicap2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbHandicap2.Visible = false;
             // 
             // lbPName2
             // 
@@ -238,20 +239,20 @@
             this.lbOdds2.Text = "3.33";
             this.lbOdds2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label9
+            // lbTime2
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(17, 66);
-            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 12);
-            this.label9.TabIndex = 5;
-            this.label9.Text = "盘口：";
+            this.lbTime2.Location = new System.Drawing.Point(2, 66);
+            this.lbTime2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbTime2.Name = "lbTime2";
+            this.lbTime2.Size = new System.Drawing.Size(117, 12);
+            this.lbTime2.TabIndex = 5;
+            this.lbTime2.Text = "盘口：";
+            this.lbTime2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tbBet2
             // 
             this.tbBet2.Location = new System.Drawing.Point(66, 110);
-            this.tbBet2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbBet2.Margin = new System.Windows.Forms.Padding(2);
             this.tbBet2.Name = "tbBet2";
             this.tbBet2.Size = new System.Drawing.Size(45, 21);
             this.tbBet2.TabIndex = 2;
@@ -289,7 +290,7 @@
             // btnBet2
             // 
             this.btnBet2.Location = new System.Drawing.Point(8, 110);
-            this.btnBet2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBet2.Margin = new System.Windows.Forms.Padding(2);
             this.btnBet2.Name = "btnBet2";
             this.btnBet2.Size = new System.Drawing.Size(46, 20);
             this.btnBet2.TabIndex = 1;
@@ -305,14 +306,14 @@
             this.panelBet1.Controls.Add(this.lbHandicap1);
             this.panelBet1.Controls.Add(this.lbPName1);
             this.panelBet1.Controls.Add(this.lbOdds1);
-            this.panelBet1.Controls.Add(this.label6);
+            this.panelBet1.Controls.Add(this.lbTime1);
             this.panelBet1.Controls.Add(this.tbBet1);
             this.panelBet1.Controls.Add(this.label5);
             this.panelBet1.Controls.Add(this.lbWebName1);
             this.panelBet1.Controls.Add(this.label4);
             this.panelBet1.Controls.Add(this.btnBet1);
             this.panelBet1.Location = new System.Drawing.Point(12, 41);
-            this.panelBet1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelBet1.Margin = new System.Windows.Forms.Padding(2);
             this.panelBet1.Name = "panelBet1";
             this.panelBet1.Size = new System.Drawing.Size(122, 171);
             this.panelBet1.TabIndex = 5;
@@ -320,7 +321,7 @@
             // lbHandicap1
             // 
             this.lbHandicap1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbHandicap1.Location = new System.Drawing.Point(68, 62);
+            this.lbHandicap1.Location = new System.Drawing.Point(79, 10);
             this.lbHandicap1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbHandicap1.Name = "lbHandicap1";
             this.lbHandicap1.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -328,6 +329,7 @@
             this.lbHandicap1.TabIndex = 9;
             this.lbHandicap1.Text = "-44";
             this.lbHandicap1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbHandicap1.Visible = false;
             // 
             // lbPName1
             // 
@@ -352,20 +354,20 @@
             this.lbOdds1.Text = "3.33";
             this.lbOdds1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label6
+            // lbTime1
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 66);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(41, 12);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "盘口：";
+            this.lbTime1.Location = new System.Drawing.Point(2, 66);
+            this.lbTime1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbTime1.Name = "lbTime1";
+            this.lbTime1.Size = new System.Drawing.Size(117, 12);
+            this.lbTime1.TabIndex = 5;
+            this.lbTime1.Text = "盘口：";
+            this.lbTime1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tbBet1
             // 
             this.tbBet1.Location = new System.Drawing.Point(66, 110);
-            this.tbBet1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbBet1.Margin = new System.Windows.Forms.Padding(2);
             this.tbBet1.Name = "tbBet1";
             this.tbBet1.Size = new System.Drawing.Size(45, 21);
             this.tbBet1.TabIndex = 2;
@@ -403,7 +405,7 @@
             // btnBet1
             // 
             this.btnBet1.Location = new System.Drawing.Point(8, 110);
-            this.btnBet1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBet1.Margin = new System.Windows.Forms.Padding(2);
             this.btnBet1.Name = "btnBet1";
             this.btnBet1.Size = new System.Drawing.Size(46, 20);
             this.btnBet1.TabIndex = 1;
@@ -415,7 +417,7 @@
             // 
             this.tbClearData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbClearData.Location = new System.Drawing.Point(1004, 24);
-            this.tbClearData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbClearData.Margin = new System.Windows.Forms.Padding(2);
             this.tbClearData.Name = "tbClearData";
             this.tbClearData.Size = new System.Drawing.Size(87, 26);
             this.tbClearData.TabIndex = 15;
@@ -450,7 +452,7 @@
             // 
             this.tbSleepTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSleepTime.Location = new System.Drawing.Point(955, 28);
-            this.tbSleepTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbSleepTime.Margin = new System.Windows.Forms.Padding(2);
             this.tbSleepTime.Name = "tbSleepTime";
             this.tbSleepTime.Size = new System.Drawing.Size(37, 21);
             this.tbSleepTime.TabIndex = 18;
@@ -473,7 +475,7 @@
             this.Controls.Add(this.lbLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "Splash v1.2";
+            this.Text = "Splash v1.3";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -505,12 +507,12 @@
         private System.Windows.Forms.Label lbHandicap1;
         private System.Windows.Forms.Label lbPName1;
         private System.Windows.Forms.Label lbOdds1;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbTime1;
         private System.Windows.Forms.Panel panelBet2;
         private System.Windows.Forms.Label lbHandicap2;
         private System.Windows.Forms.Label lbPName2;
         private System.Windows.Forms.Label lbOdds2;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lbTime2;
         private System.Windows.Forms.TextBox tbBet2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbWebName2;
