@@ -160,7 +160,6 @@ T67=NONAME,124
 T68=EOX,105
 T69=Tenerife Titans,127
 T70=eXploit Esports,128
-T71=Team Liquid,-1
 [0]
 T0=Wisla Plock,201
 T1=Rogue,70
@@ -356,7 +355,7 @@ T190=Clutch Gaming,80
 T191=eMonkeyz,139
 T192=Golden Guardins,75
 T193=Counter Logic Gaming,78
-T194=Rogue Academy,202
+T194=Rogue Academy,-1
 [12]
 T0=UYU,1
 T1=Enigma6,2

@@ -118,6 +118,7 @@ namespace Splash.Parser.ESport
                         }
 
                         var items = bet[0]["Items"];
+
                         //第二个锁住了
                         var isLock = bet[0]["IsLock"];
                         if(isLock != null && int.Parse(isLock.ToString()) == 1)
@@ -126,6 +127,14 @@ namespace Splash.Parser.ESport
                         }
                         var odds1 = Convert.ToDouble(items[0]["Odds"].ToString());
                         var odds2 = Convert.ToDouble(items[1]["Odds"].ToString());
+                        var team_final_abbr1 = items[0]["Name"].ToString();
+                        var team_final_abbr2 = items[1]["Name"].ToString();
+                        if(team_abbr1 == team_final_abbr2 && team_abbr2 == team_final_abbr1)
+                        {
+                            var odds3 = odds1;
+                            odds1 = odds2;
+                            odds2 = odds3;
+                        }
 
                         BetItem b = new BetItem();
                         b.sportID = sportID;

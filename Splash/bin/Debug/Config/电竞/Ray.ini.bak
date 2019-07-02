@@ -191,7 +191,6 @@ T145=piratesports,198
 T146=Wisla Plock eSports,201
 T147=PRIDE,197
 T148=devils.one,200
-T149=Solary,35
 [7]
 T0=HANAGUMI TENKYU,1
 T1=Justice Esports Zero,0
@@ -266,9 +265,9 @@ T41=Signify,-1
 T42=Nordavind,79
 T43=Aristocracy,76
 T44=New Identity,36
-T45=INTZ eSports,111
+T45=INTZ eSports,-1
 T46=Isurus,145
-T47=Team Reapers,109
+T47=Team Reapers,-1
 T48=Redemption POA,144
 T49=EOX,170
 [11]
@@ -358,7 +357,7 @@ T33=LGE.Huya,-1
 T34=RunAway,53
 T35=GC Busan Wave,46
 T36=Fusion University,54
-T37=World Game Star,58
+T37=World Game Star,-1
 [6]
 T0=Vanya,44
 T1=ArT,45

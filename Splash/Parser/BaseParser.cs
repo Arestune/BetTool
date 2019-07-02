@@ -292,6 +292,13 @@ namespace Splash.Parser
                     {
                         continue;
                     }
+                    //时间不能相差太多
+                    TimeSpan timeSpan = b1.time-b2.time;
+                    if (timeSpan.Hours > 6 || timeSpan.Hours < -6)
+                    {
+                        continue;
+                    }
+
 
                     if (b1.type == BetType.BT_TEAM)
                     {
