@@ -95,29 +95,40 @@ namespace Splash.Parser
         }
         public virtual void GrabAndParseHtml()
         {
-            int nTryCount = 0;
-            string uri = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
-            RequestOptions op = new RequestOptions(uri);
-            op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
-            op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-            op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
-            op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
-            op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
-            //获取网页
-            html = RequestAction(op);
-            while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
+            try
             {
+                int nTryCount = 0;
+                string uri = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
+                RequestOptions op = new RequestOptions(uri);
+                op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
+                op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
+                op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
+                op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
+                //获取网页
                 html = RequestAction(op);
-                nTryCount++;
+                while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
+                {
+                    html = RequestAction(op);
+                    nTryCount++;
+                }
+                if (nTryCount == MAX_TRY_COUNT)
+                {
+                    ShowLog("抓取失败！");
+                    html = "";
+                }
+                else
+                {
+                    Parse();
+                }
             }
-            if (nTryCount == MAX_TRY_COUNT)
+            catch(Exception e)
             {
-                ShowLog("抓取失败！");
-                html = "";
-            }
-            else
-            {
-                Parse();
+                LogInfo error = new LogInfo();
+                error.webID = webID;
+                error.level = ErrorLevel.EL_ERROR;
+                error.message = e.Message;
+                ShowLog(error);
             }
         }
 
@@ -228,9 +239,17 @@ namespace Splash.Parser
             }
             catch (WebException exp)
             {
-                LogInfo error = new LogInfo();
+                LogInfo error = new LogInfo();  
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
+                error.message = exp.Message;
+                ShowLog(error);
+            }
+            catch(Exception exp)
+            {
+                LogInfo error = new LogInfo();
+                error.webID = webID;
+                error.level = ErrorLevel.EL_ERROR;
                 error.message = exp.Message;
                 ShowLog(error);
             }
@@ -265,6 +284,11 @@ namespace Splash.Parser
                     }
                     //过滤没有注册的teamID
                     if (b1.pID1 == INVALID_INDEX || b1.pID2 == INVALID_INDEX || b2.pID1 == INVALID_INDEX || b2.pID2 == INVALID_INDEX)
+                    {
+                        continue;
+                    }
+                    //过滤bo不同的
+                    if(b1.bo != b2.bo)
                     {
                         continue;
                     }

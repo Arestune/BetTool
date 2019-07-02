@@ -149,6 +149,16 @@ namespace Splash.Item
             get;
             set;
         }
+        public int betLimit1
+        {
+            get;
+            set;
+        }
+        public int betLimit2
+        {
+            get;
+            set;
+        }
         public DateTime time
         {
             get;

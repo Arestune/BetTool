@@ -92,6 +92,7 @@ namespace Splash.Parser.ESport
                         //
                         if (array.Length != 2)
                         {
+                            teamIds[i].Add("Tmp_"+teamIndex.ToString(),-1);
                             teamIndex++;
                             teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
                             continue;
@@ -110,6 +111,10 @@ namespace Splash.Parser.ESport
                             if (!teamIds[i].ContainsKey(teamLowerName))
                             {
                                 teamIds[i].Add(teamLowerName, id);
+                            }
+                            else
+                            {
+                                teamIds[i].Add("Tmp_" + teamIndex.ToString(), -1);
                             }
                         }
                         //如果是-1，扫描主列表
@@ -135,6 +140,10 @@ namespace Splash.Parser.ESport
                 error.message = exp.Message;
                 ShowLog(error);
             }
+        }
+        protected virtual int GetBO(string str)
+        {
+            return 1;
         }
         protected override string GetGameID(string str)
         {

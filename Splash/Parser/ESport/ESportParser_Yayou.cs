@@ -40,6 +40,7 @@ namespace Splash.Parser.ESport
                     var gameId = record["gameId"].ToString();
                     var league = record["league"]["name"].ToString();
                     var gameIndex = GetGameIndex(gameId);
+                    var bo =Convert.ToInt32(record["bo"].ToString());
                     //过滤掉进行中的比赛
                     if (record["status"].ToString() == "ongoing")
                     {
@@ -75,6 +76,8 @@ namespace Splash.Parser.ESport
                         {
                             var odd1 = Convert.ToDouble(betOptions[0]["odd"]);
                             var odd2 = Convert.ToDouble(betOptions[1]["odd"]);
+                            var betLimit1 = Convert.ToDouble(betOptions[0]["userSingleBetProfitLimit"]) / (odd1 - 1.0f);
+                            var betLimit2 = Convert.ToDouble(betOptions[1]["userSingleBetProfitLimit"]) / (odd2 - 1.0f);
                             BetItem b = new BetItem();
                             b.webID = webID;
                             b.sportID = sportID;
@@ -93,6 +96,9 @@ namespace Splash.Parser.ESport
                             b.leagueName2 = league;
                             b.handicap = handicap;
                             b.time = gameTime;
+                            b.bo = bo;
+                            b.betLimit1 = (int)betLimit1;
+                            b.betLimit2 = (int)betLimit2;
                             betItems.Add(b);
                         }
                     }

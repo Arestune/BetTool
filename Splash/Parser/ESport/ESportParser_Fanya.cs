@@ -112,6 +112,11 @@ namespace Splash.Parser.ESport
                         var team_id2 = GetTeamIndex(gameIndex, team_name2);
 
                         var bet = JArray.Parse(info["Bet"].ToString());
+                        if(bet[0]["Name"] != null && bet[0]["Name"].ToString() != "比赛获胜" )
+                        {
+                            continue;
+                        }
+
                         var items = bet[0]["Items"];
                         //第二个锁住了
                         var isLock = bet[0]["IsLock"];
@@ -139,6 +144,7 @@ namespace Splash.Parser.ESport
                         b.handicap = 0;
                         b.gameName = gameStaticNames[gameIndex];
                         b.time = gameTime;
+                        b.bo = bo;
                         betItems.Add(b);
                         if (betItems.Count == 10)
                         {

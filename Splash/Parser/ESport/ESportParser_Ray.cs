@@ -148,7 +148,7 @@ namespace Splash.Parser.ESport
         }
         protected override int GetBO(string str)
         {
-            Match match = Regex.Match(str, @"\bo(\d+)",RegexOptions.IgnoreCase);
+            Match match = Regex.Match(str, @"bo(\d+)",RegexOptions.IgnoreCase);
             if(match != null && match.Groups[1] != null)
             {
                 int bo = 0;
@@ -189,7 +189,7 @@ namespace Splash.Parser.ESport
                         }
                         var odds1 = Convert.ToDouble(odds[0]["odds"].ToString());
                         var odds2 = Convert.ToDouble(odds[1]["odds"].ToString());
-                       
+                        
                         var leagueName = result["tournament_name"].ToString();
                         var gameTime = GetGameTime(result["start_time"].ToString());
                         var gameName = GetGameID(result["game_name"].ToString());
@@ -199,6 +199,11 @@ namespace Splash.Parser.ESport
                         {
                             continue;
                         }
+                        //bo
+                        var round = result["round"];
+                        //betlimit
+                        var betLimit1 = Convert.ToInt32(odds[0]["bet_limit"][1]);
+                        var betLimit2 = Convert.ToInt32(odds[1]["bet_limit"][1]);
                         //team
                         var team = result["team"];
                         var team_name1 = odds[0]["name"].ToString();
@@ -220,6 +225,9 @@ namespace Splash.Parser.ESport
                         b.pAbbr2 = team_short_name2;
                         b.odds1 = odds1;
                         b.odds2 = odds2;
+                        b.bo = bo;
+                        b.betLimit1 = betLimit1;
+                        b.betLimit2 = betLimit2;
                         b.gameID = gameIndex;
                         b.handicap = 0;
                         b.gameName = gameStaticNames[gameIndex];

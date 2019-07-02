@@ -137,8 +137,6 @@ namespace Splash
                 }
                 lbWebName1.Text = StaticData.webNames[(int)pair.b1.webID];
                 lbWebName2.Text = StaticData.webNames[(int)pair.b2.webID];
-               // lbHandicap1.Text = Util.GetNumericSymbolString(pair.handicap1);
-               // lbHandicap2.Text = Util.GetNumericSymbolString(pair.handicap2);
                 lbOdds1.Text = pair.odds1.ToString();
                 lbOdds2.Text = pair.odds2.ToString();
                 lbPName1.Text = pair.pAbbr1;
@@ -234,7 +232,10 @@ namespace Splash
                     lvi.SubItems.Add(DateTime.Now.ToString());
                     this.list.Items.Add(lvi);
                 }
-                list.Items[list.Items.Count - 1].EnsureVisible();
+                if(list.Items.Count > 0)
+                {
+                    list.Items[list.Items.Count - 1].EnsureVisible();
+                }
                 this.list.EndUpdate();  //结束数据处理，UI界面一次性绘制。
             }
         }

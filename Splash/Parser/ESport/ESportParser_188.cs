@@ -192,7 +192,7 @@ namespace Splash.Parser.ESport
                         b.gameName = gameStaticNames[gameIndex];
                         b.leagueName1 = leagueName;
                         b.time = gameTime;
-
+                        b.bo = bo;
                         betItems.Add(b);
                         if(betItems.Count == 6)
                         {

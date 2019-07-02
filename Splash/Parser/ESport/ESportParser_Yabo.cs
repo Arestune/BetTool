@@ -51,7 +51,20 @@ namespace Splash.Parser.ESport
                 return curId;
             }
         }
-      
+
+        protected override int GetBO(string str)
+        {
+            Match match = Regex.Match(str, @"BO(\d+)", RegexOptions.IgnoreCase);
+            if (match != null && match.Groups[1] != null)
+            {
+                int bo = 0;
+                if (int.TryParse(match.Groups[1].ToString(), out bo))
+                {
+                    return bo;
+                }
+            }
+            return 1;
+        }
         public override int Parse()
         {
             try
@@ -84,10 +97,9 @@ namespace Splash.Parser.ESport
                         {
                             continue;
                         }
-                        var Bo2 = b2[33].ToString() ;
-                        bool isBo2 = Bo2 == "BO2";
+                        int bo = GetBO(b2[33].ToString()) ;
                         double betValue = 0.0;
-                        if(isBo2)
+                        if(bo%2 == 0)
                         {
                             var winhandcap = b2[28].ToString();
                             int v = Convert.ToInt32(winhandcap.Split('-')[1]);
@@ -102,7 +114,6 @@ namespace Splash.Parser.ESport
                         }
                         var team1_abbr = b2[37].ToString();
                         var team2_abbr = b2[38].ToString();
-                        team1_name = "Team Flash.Vietnam";
                         var team1_index = GetTeamIndex(gameIndex, team1_name);
                         var team2_index = GetTeamIndex(gameIndex, team2_name);
                         JArray b2_10 = JArray.Parse(b2[10].ToString());
@@ -131,6 +142,7 @@ namespace Splash.Parser.ESport
                         b.leagueName2 = leagueName2;
                         b.handicap = betValue;
                         b.time = chinaMatchTime;
+                        b.bo = bo;
                         betItems.Add(b);
                     }
                     index++;
