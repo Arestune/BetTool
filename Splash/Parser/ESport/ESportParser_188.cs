@@ -194,7 +194,7 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
                         b.bo = bo;
                         betItems.Add(b);
-                        if(betItems.Count == 6)
+                        if (betItems.Count == 0)
                         {
                             int a = 1;
                         }

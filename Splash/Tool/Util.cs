@@ -37,11 +37,18 @@ namespace Splash.Tool
         {
            return  (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
         }
-        //public static string GetGBKString(string str)
-        //{
-        //    str = str.Trim();
-        //    byte[] gbk = Encoding.GetEncoding("GBK").GetBytes(str);
-        //    return  System.Text.Encoding.ASCII.GetString(gbk);
-        //}
+        public static List<string> GetFilesCount(string configDir,string sufDir,string suffix = "*.ini")
+        {
+            string dir = configDir + "\\" + sufDir;
+            List<string> fileNames = new List<string>();
+            System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(dir);
+            System.IO.FileInfo[] info = dirInfo.GetFiles(suffix);
+            int num  =info.Length;//获取某种格式
+            for (int i = 0; i < num;i++ )
+            {
+                fileNames.Add(info[i].Name.Split('.')[0]);
+            }
+            return fileNames;
+        }
     }
 }

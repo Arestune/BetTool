@@ -21,14 +21,17 @@ namespace Splash
 {
     public partial class MainForm : Form
     {
+        public string configDir = null;
         public List<BetWinPair> listPairs = new List<BetWinPair>();
         public delegate void ShowLogHandler(LogInfo log);
         public delegate void ShowResultHandler(List<BetWinPair> pairs);
         int time = 0;
         int index = 0;
+        
         public MainForm()
         {
             InitializeComponent();
+            configDir = System.IO.Directory.GetCurrentDirectory() + "\\Config";
             ShowBetPanel(false);
             tbSleepTime.Text = "30";
             this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //索引
@@ -241,19 +244,20 @@ namespace Splash
         }
         private void Start()
         {
-            int webNum = 5;
             List<Thread> threads = new List<Thread>();
             while(true)
             {
+                //int webNum = 3;
+                List<string> webs = Util.GetFilesCount(configDir,StaticData.sportNames[(int)SportID.SID_ESPORT],"*.ini");
                 ShowLog("-------------------------------");
-                ShowLog(string.Format("循环第{0}次",++time));
+                ShowLog(string.Format("循环第{0}次,爬取{1}个网站...",++time,webs.Count));
                 List<BetItem> total = new List<BetItem>();
                 threads.Clear();
-                for (int i = 0; i < webNum; i++)
+                for (int i = 0; i < webs.Count; i++)
                 {
                     int x = i;
                     Thread s = new Thread(() => {
-                        BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, (WebID)x);
+                        BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, webs[x]);
                         bp.showLogEvent = ShowLog;
                         ShowLog(string.Format("线程{0},爬取分析网站:{1}", x.ToString(), StaticData.webNames[(int)bp.webID]));
                         bp.GrabAndParseHtml();
@@ -265,7 +269,7 @@ namespace Splash
                     threads.Add(s);
                 }
 
-                for (int i = 0; i < webNum; i++)
+                for (int i = 0; i < webs.Count; i++)
                 {
                     threads[i].Join();
                 }
@@ -284,7 +288,7 @@ namespace Splash
   
         private void TestWeb()
         {
-            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, WebID.WID_YAYOU);
+            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_YAYOU]);
             bp.showLogEvent = ShowLog;
             ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp.webID]));
             bp.GrabAndParseHtml();

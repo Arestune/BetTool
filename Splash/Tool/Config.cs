@@ -126,7 +126,7 @@ namespace Splash.Tool
         {
             return null == s ? null : Encoding.GetEncoding(encodingName).GetBytes(s);
         }
-        public static string GetString(string section, string key, string fileName, string def = "", string encodingName = "utf-8", int size = 1024)
+        public static string GetString(string section, string key, string fileName, string def = "", string encodingName = "utf-8", int size = 2048)
         {
             byte[] buffer = new byte[size];
             int count = GetPrivateProfileString(getBytes(section, encodingName), getBytes(key, encodingName), getBytes(def, encodingName), buffer, size, fileName);
