@@ -25,44 +25,52 @@ namespace Splash.Parser.ESport
         }
         public static void LoadMainData()
         {
-            staticConfigFile = System.IO.Directory.GetCurrentDirectory() +"\\Config\\电竞\\亚博.ini";
-
-            //GameNames
-            int index = 0;
-            var gameName = Config.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), staticConfigFile);
-            while (!string.IsNullOrEmpty(gameName))
+            try
             {
-                index++;
-                gameStaticNames.Add(gameName);
-                gameName = Config.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), staticConfigFile);
-            }
-
-            //Teams
-            for (int i = 0; i < gameStaticNames.Count; i++)
-            {
-                int teamIndex = 0;
-                string teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), staticConfigFile);
-                while (!string.IsNullOrEmpty(teamAndId))
+                staticConfigFile = System.IO.Directory.GetCurrentDirectory() + @"\\Config\\电竞\\亚博.ini";
+                //GameNames
+                int index = 0;
+                gameStaticNames.Clear();
+                var gameName = Config.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), staticConfigFile);
+                while (!string.IsNullOrEmpty(gameName))
                 {
-                    var array = teamAndId.Split(',');
-                    var teamName = array[0].Trim().ToLower();
-                    var id = Convert.ToInt32(array[1].Trim());
-                    if (!mainTeamIds.ContainsKey(i))
+                    index++;
+                    gameStaticNames.Add(gameName);
+                    gameName = Config.GetString(StaticData.SN_GAME_NAME, string.Format("G{0}", index), staticConfigFile);
+                }
+
+                var fileNames = Util.GetFileNames(System.IO.Directory.GetCurrentDirectory() + "\\Config\\" + StaticData.sportNames[(int)SportID.SID_ESPORT], "*.ini");
+                //Teams create empty
+                mainTeamIds.Clear();
+                for (int i = 0; i < gameStaticNames.Count; i++)
+                {
+                    Dictionary<string, int> teamList = new Dictionary<string, int>();
+                    mainTeamIds.Add(i, teamList);
+                }
+                //匹配
+                for (int fileIndex = 0; fileIndex < fileNames.Count; fileIndex++)
+                {
+                    for (int i = 0; i < gameStaticNames.Count; i++)
                     {
-                        Dictionary<string, int> teamList = new Dictionary<string, int>();
-                        teamList.Add(teamName, id);
-                        mainTeamIds.Add(i, teamList);
-                    }
-                    else
-                    {
-                        if (!mainTeamIds[i].ContainsKey(teamName))
+                        int teamIndex = 0;
+                        string teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), fileNames[fileIndex]);
+                        while (!string.IsNullOrEmpty(teamAndId))
                         {
-                            mainTeamIds[i].Add(teamName, id);  //这边都要小写
+                            var array = teamAndId.Split(',');
+                            var teamName = array[0].Trim().ToLower();
+                            var id = Convert.ToInt32(array[1].Trim());
+                            if (!mainTeamIds[i].ContainsKey(teamName) && id != INVALID_INDEX)
+                            {
+                                mainTeamIds[i].Add(teamName, id);  //这边都要小写
+                            }
+                            teamIndex++;
+                            teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), fileNames[fileIndex]);
                         }
                     }
-                    teamIndex++;
-                    teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), staticConfigFile);
                 }
+            }
+            catch (Exception exp)
+            {
             }
         }
         public override void LoadStaticData()
@@ -79,6 +87,13 @@ namespace Splash.Parser.ESport
                     index++;
                     gameIds.Add(Util.GetCommentString(eItem).ToLower());
                     eItem = Config.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
+                }
+
+                //Teams create empty
+                for (int i = 0; i < gameStaticNames.Count; i++)
+                {
+                    Dictionary<string, int> teamList = new Dictionary<string, int>();
+                    teamIds.Add(i, teamList);
                 }
 
                 //Teams
@@ -100,22 +115,14 @@ namespace Splash.Parser.ESport
                         var teamName = array[0].Trim();
                         var teamLowerName = teamName.ToLower();
                         var id = Convert.ToInt32(array[1].Trim());
-                        if (!teamIds.ContainsKey(i))
+
+                        if (!teamIds[i].ContainsKey(teamLowerName))
                         {
-                            Dictionary<string, int> teamList = new Dictionary<string, int>();
-                            teamList.Add(teamLowerName, id);
-                            teamIds.Add(i, teamList);
+                            teamIds[i].Add(teamLowerName, id);
                         }
                         else
                         {
-                            if (!teamIds[i].ContainsKey(teamLowerName))
-                            {
-                                teamIds[i].Add(teamLowerName, id);
-                            }
-                            else
-                            {
-                                teamIds[i].Add("Tmp_" + teamIndex.ToString(), -1);
-                            }
+                            teamIds[i].Add("Tmp_" + teamIndex.ToString(), -1);
                         }
                         //如果是-1，扫描主列表
                         if (id == INVALID_INDEX)
@@ -169,63 +176,37 @@ namespace Splash.Parser.ESport
         }
         protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
+            if (gameIndex >= teamIds.Count) return INVALID_INDEX;
             string strLowerTeam = strTeam.ToLower().Trim();
-            if (teamIds.ContainsKey(gameIndex))
+
+            if (teamIds[gameIndex].ContainsKey(strLowerTeam))
             {
-                if (teamIds[gameIndex].ContainsKey(strLowerTeam))
-                {
-                    return teamIds[gameIndex][strLowerTeam];
-                }
-                else
-                {
-                    int curId = GetMainTeamIndex(gameIndex, strLowerTeam);
-                    teamIds[gameIndex].Add(strLowerTeam, curId);
-                    Config.WriteString(gameIndex.ToString(), string.Format("T{0}", teamIds[gameIndex].Count - 1), string.Format("{0},{1}",
-                        strTeam, curId), configFile);
-                    if(curId == INVALID_INDEX)
-                    {
-                        ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_NORMAL);
-                    }
-                    else
-                    {
-                        ShowLog(string.Format("匹配[{0}]队伍:{1},ID:{2}！", gameIndex, strTeam, curId), ErrorLevel.EL_NORMAL);
-                    }
-                    return curId;
-                }
+                return teamIds[gameIndex][strLowerTeam];
             }
             else
             {
                 int curId = GetMainTeamIndex(gameIndex, strLowerTeam);
-                var teamList = new Dictionary<string, int>();
-                teamList.Add(strLowerTeam, curId);
-                teamIds.Add(gameIndex, teamList);
-                Config.WriteString(gameIndex.ToString(), string.Format("T{0}", teamList.Count - 1), string.Format("{0},{1}",
-                        strTeam, curId), configFile);
-                 if(curId == INVALID_INDEX)
-                 {
-                     ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_WARNING);
-                 }
-                 else
-                 {
-                     ShowLog(string.Format("匹配[{0}]队伍:{1},ID:{2}！", gameIndex, strTeam, curId), ErrorLevel.EL_WARNING);
-                 }
+                teamIds[gameIndex].Add(strLowerTeam, curId);
+                Config.WriteString(gameIndex.ToString(), string.Format("T{0}", teamIds[gameIndex].Count - 1), string.Format("{0},{1}",
+                    strTeam, curId), configFile);
+                if (curId == INVALID_INDEX)
+                {
+                    ShowLog(string.Format("新增[{0}]队伍:{1},请在配置文件配置ID！", gameIndex, strTeam), ErrorLevel.EL_NORMAL);
+                }
+                else
+                {
+                    ShowLog(string.Format("匹配[{0}]队伍:{1},ID:{2}！", gameIndex, strTeam, curId), ErrorLevel.EL_NORMAL);
+                }
                 return curId;
             }
+          
         }
         protected virtual int GetMainTeamIndex(int gameIndex, string strTeam)
         {
             strTeam = strTeam.ToLower().Trim();
-            if (mainTeamIds.ContainsKey(gameIndex))
+            if (mainTeamIds[gameIndex].ContainsKey(strTeam))
             {
-                //完美匹配
-                if (mainTeamIds[gameIndex].ContainsKey(strTeam))
-                {
-                    return mainTeamIds[gameIndex][strTeam];
-                }
-            //    else
-            //    {
-            //        return curId;
-            //    }
+                return mainTeamIds[gameIndex][strTeam];
             }
             return INVALID_INDEX;
         }

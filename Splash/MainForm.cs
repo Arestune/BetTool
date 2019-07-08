@@ -37,13 +37,14 @@ namespace Splash
             this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //索引
             this.list.Columns.Add("Web", 100, HorizontalAlignment.Center); //网站
             this.list.Columns.Add("Game", 100, HorizontalAlignment.Center); //电竞名称
-            this.list.Columns.Add("League", 200, HorizontalAlignment.Center); //联赛
+            this.list.Columns.Add("League", 170, HorizontalAlignment.Center); //联赛
             this.list.Columns.Add("Team1", 200, HorizontalAlignment.Center); //队伍1
             this.list.Columns.Add("Team2", 200, HorizontalAlignment.Center); //队伍2
             this.list.Columns.Add("Odds1", 120, HorizontalAlignment.Center); //赔率1
             this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //赔率2
             this.list.Columns.Add("GameTime", 175, HorizontalAlignment.Center); //比赛开始时间
             this.list.Columns.Add("GrabTime", 175, HorizontalAlignment.Center); //抓取数据时间
+            this.list.Columns.Add("Profit", 100, HorizontalAlignment.Center); //抓取数据时间
             this.list.Click += listView_Click;
             this.tbBet1.KeyPress += tb_Keypressed;
             this.tbBet2.KeyPress += tb_Keypressed;
@@ -57,7 +58,7 @@ namespace Splash
             //TestWeb();
            // return;
             //
-            ESportParser.LoadMainData();
+           // ESportParser.LoadMainData();
             Thread startThread = new Thread(Start);
             startThread.Name = "Main";
             startThread.IsBackground = true;
@@ -75,6 +76,8 @@ namespace Splash
         {
             ListView list = (ListView)sender;
             int index =  Convert.ToInt32(list.SelectedItems[0].Text);
+            tbBet1.Text = "";
+            tbBet2.Text = "";
             ShowBetPanel(true, listPairs[index]);
         }
         private void btnBet1_Click(object sender, EventArgs e)
@@ -89,7 +92,19 @@ namespace Splash
                 tbBet1.SelectAll();
                 ShowBetWin(odds1, odds2);
             }
-        
+        }
+        private void btnBet2_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(tbBet2.Text))
+            {
+                int bet2 = Convert.ToInt32(tbBet2.Text);
+                double odds1 = Convert.ToDouble(lbOdds1.Text);
+                double odds2 = Convert.ToDouble(lbOdds2.Text);
+                tbBet1.Text = ((int)(bet2 * odds2 / odds1)).ToString();
+                tbBet2.Focus();
+                tbBet2.SelectAll();
+                ShowBetWin(odds1, odds2);
+            }
         }
         private void tbClearData_Click(object sender, EventArgs e)
         {
@@ -99,28 +114,17 @@ namespace Splash
             this.list.Columns.Add("Index", 60, HorizontalAlignment.Center); //索引
             this.list.Columns.Add("Web", 100, HorizontalAlignment.Center); //网站
             this.list.Columns.Add("Game", 100, HorizontalAlignment.Center); //电竞名称
-            this.list.Columns.Add("League", 200, HorizontalAlignment.Center); //联赛
+            this.list.Columns.Add("League", 170, HorizontalAlignment.Center); //联赛
             this.list.Columns.Add("Team1", 200, HorizontalAlignment.Center); //队伍1
             this.list.Columns.Add("Team2", 200, HorizontalAlignment.Center); //队伍2
             this.list.Columns.Add("Odds1", 120, HorizontalAlignment.Center); //赔率1
             this.list.Columns.Add("Odds2", 120, HorizontalAlignment.Center); //赔率2
             this.list.Columns.Add("GameTime", 175, HorizontalAlignment.Center); //比赛开始时间
             this.list.Columns.Add("GrabTime", 175, HorizontalAlignment.Center); //抓取数据时间
+            this.list.Columns.Add("Profit", 100, HorizontalAlignment.Center); //抓取数据时间
         }
 
-        private void btnBet2_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(tbBet2.Text))
-            {
-                int bet2 = Convert.ToInt32(tbBet2.Text);
-                double odds1 = Convert.ToDouble(lbOdds1.Text);
-                double odds2 = Convert.ToDouble(lbOdds2.Text);
-                tbBet1.Text =((int)(bet2 * odds2 / odds1)).ToString();
-                tbBet2.Focus();
-                tbBet2.SelectAll();
-                ShowBetWin(odds1, odds2);
-            }
-        }
+      
         public void ShowBetPanel(bool bShow,BetWinPair pair = null)
         {
             lbGameName.Visible = bShow;
@@ -140,12 +144,14 @@ namespace Splash
                 }
                 lbWebName1.Text = StaticData.webNames[(int)pair.b1.webID];
                 lbWebName2.Text = StaticData.webNames[(int)pair.b2.webID];
-                lbOdds1.Text = pair.odds1.ToString();
-                lbOdds2.Text = pair.odds2.ToString();
+                lbOdds1.Text = pair.odds1.ToString("F3");
+                lbOdds2.Text = pair.odds2.ToString("F3");
                 lbPName1.Text = pair.pAbbr1;
                 lbPName2.Text = pair.pAbbr2;
                 lbTime1.Text = pair.b1.time.ToString();
                 lbTime2.Text = pair.b2.time.ToString();
+                lbLimit1.Text = pair.betLimit1 == 0?  "N/A" : pair.betLimit1.ToString();
+                lbLimit2.Text = pair.betLimit2 == 0 ? "N/A" : pair.betLimit2.ToString();
                 ShowBetWin(pair.odds1, pair.odds2);
             }
         }
@@ -233,6 +239,7 @@ namespace Splash
                     lvi.SubItems.Add(p2.odds1.ToString() + "|" + p2.odds2.ToString());
                     lvi.SubItems.Add(p1.time.ToString());
                     lvi.SubItems.Add(DateTime.Now.ToString());
+                    lvi.SubItems.Add(string.Format("{0}%",(pair[i].profit*100).ToString("F2")));
                     this.list.Items.Add(lvi);
                 }
                 if(list.Items.Count > 0)
@@ -247,18 +254,20 @@ namespace Splash
             List<Thread> threads = new List<Thread>();
             while(true)
             {
-                //int webNum = 3;
-                List<string> webs = Util.GetFilesCount(configDir,StaticData.sportNames[(int)SportID.SID_ESPORT],"*.ini");
+                List<string> webs = Util.GetFilesCount(configDir+"\\"+StaticData.sportNames[(int)SportID.SID_ESPORT],"*.ini");
                 ShowLog("-------------------------------");
                 ShowLog(string.Format("循环第{0}次,爬取{1}个网站...",++time,webs.Count));
                 List<BetItem> total = new List<BetItem>();
                 threads.Clear();
+                ESportParser.LoadMainData();
+                ShowLog(string.Format("加载主列表队列..."));
                 for (int i = 0; i < webs.Count; i++)
                 {
                     int x = i;
                     Thread s = new Thread(() => {
                         BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, webs[x]);
                         bp.showLogEvent = ShowLog;
+                        bp.LoadStaticData();
                         ShowLog(string.Format("线程{0},爬取分析网站:{1}", x.ToString(), StaticData.webNames[(int)bp.webID]));
                         bp.GrabAndParseHtml();
                         total.AddRange(bp.betItems);
@@ -309,7 +318,7 @@ namespace Splash
             b1.odds1 = 2.2;
             b1.odds2 = 1.95;
             b1.handicap = 0;
-
+                
             BetItem b2 = new BetItem();
             b2.webID = WebID.WID_YABO;
             b2.sportID = SportID.SID_ESPORT;
@@ -329,9 +338,5 @@ namespace Splash
             var pair = BaseParser.ParseBetWin(total);
             ShowResult(pair);
         }
-
-   
-
-     
     }
 }

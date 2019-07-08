@@ -37,7 +37,7 @@ namespace Splash.Parser
         public  BaseParser()
         {
             Init();
-            LoadStaticData();
+          //  LoadStaticData();
         }
         protected virtual void Init()
         {
@@ -329,8 +329,11 @@ namespace Splash.Parser
                                         pair.pName2 = b2.pName2;
                                         pair.pAbbr1 = b1.pAbbr1;
                                         pair.pAbbr2 = b2.pAbbr2;
+                                        pair.betLimit1 = b1.betLimit1;
+                                        pair.betLimit2 = b2.betLimit2;
                                         pair.handicap1 = b1.handicap;
                                         pair.handicap2 = -b2.handicap;
+                                        pair.profit = GetProfit(pair.odds1, pair.odds2);
                                         listPair.Add(pair);
                                     }
                                 }
@@ -348,8 +351,11 @@ namespace Splash.Parser
                                         pair.pName2 = b2.pName1;
                                         pair.pAbbr1 = b1.pAbbr2;
                                         pair.pAbbr2 = b2.pAbbr1;
+                                        pair.betLimit1 = b1.betLimit2;
+                                        pair.betLimit2 = b2.betLimit1;
                                         pair.handicap1 = -b1.handicap;
                                         pair.handicap2 = b2.handicap;
+                                        pair.profit = GetProfit(pair.odds1, pair.odds2);
                                         listPair.Add(pair);
                                     }
                                 }
@@ -375,8 +381,11 @@ namespace Splash.Parser
                                         pair.pName2 = b2.pName1;
                                         pair.pAbbr1 = b1.pAbbr1;
                                         pair.pAbbr2 = b2.pAbbr1;
+                                        pair.betLimit1 = b1.betLimit1;
+                                        pair.betLimit2 = b2.betLimit1;
                                         pair.handicap1 = b1.handicap;
                                         pair.handicap2 = b2.handicap;
+                                        pair.profit = GetProfit(pair.odds1, pair.odds2);
                                         listPair.Add(pair);
                                     }
                                 }
@@ -394,8 +403,11 @@ namespace Splash.Parser
                                         pair.pName2 = b2.pName2;
                                         pair.pAbbr1 = b1.pAbbr2;
                                         pair.pAbbr2 = b2.pAbbr2;
+                                        pair.betLimit1 = b1.betLimit2;
+                                        pair.betLimit2 = b2.betLimit2;
                                         pair.handicap1 = -b1.handicap;
                                         pair.handicap2 = -b2.handicap;
+                                        pair.profit = GetProfit(pair.odds1, pair.odds2); 
                                         listPair.Add(pair);
                                     }
                                 }
@@ -422,6 +434,14 @@ namespace Splash.Parser
                 }
             }
             return listPair;
+        }
+        public static double GetProfit(double odds1, double odds2)
+        {
+            if (odds1 == 0 || odds2 == 0)
+            {
+                return 0.0;
+            }
+            return (odds1 * odds2) / (odds1 + odds2) -1;
         }
         public static bool CanMustWin(double odds1, double odds2)
         {

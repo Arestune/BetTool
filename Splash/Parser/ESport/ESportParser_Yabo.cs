@@ -25,29 +25,16 @@ namespace Splash.Parser.ESport
         protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
             string strLowerTeam = strTeam.ToLower();
-            if (teamIds.ContainsKey(gameIndex))
+            if (teamIds[gameIndex].ContainsKey(strLowerTeam))
             {
-                if (teamIds[gameIndex].ContainsKey(strLowerTeam))
-                {
-                    return teamIds[gameIndex][strLowerTeam];
-                }
-                else
-                {
-                    int curId = teamIds[gameIndex].Count;
-                    teamIds[gameIndex].Add(strLowerTeam, curId);
-                    Config.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
-                        strTeam, curId), configFile);
-                    return curId;
-                }
+                return teamIds[gameIndex][strLowerTeam];
             }
             else
             {
-                int curId = 0;
-                var teamList = new Dictionary<string, int>();
-                teamList.Add(strLowerTeam, curId);
-                teamIds.Add(gameIndex, teamList);
+                int curId = teamIds[gameIndex].Count;
+                teamIds[gameIndex].Add(strLowerTeam, curId);
                 Config.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
-                        strTeam, curId), configFile);
+                    strTeam, curId), configFile);
                 return curId;
             }
         }

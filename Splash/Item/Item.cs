@@ -198,7 +198,16 @@ namespace Splash.Item
             get;
             set;
         }
-
+        public int betLimit1
+        {
+            get;
+            set;
+        }
+        public int betLimit2
+        {
+            get;
+            set;
+        }
         public string pAbbr1
         {
             get;
@@ -220,7 +229,13 @@ namespace Splash.Item
             get;
             set;
         }
-      
+
+        public double profit
+        {
+            get;
+            set;
+        }
+
         public BetItem b1
         {
             get;

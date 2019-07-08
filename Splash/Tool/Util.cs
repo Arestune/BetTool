@@ -37,16 +37,28 @@ namespace Splash.Tool
         {
            return  (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
         }
-        public static List<string> GetFilesCount(string configDir,string sufDir,string suffix = "*.ini")
+        public static List<string> GetFilesCount(string configDir,string suffix = "*.ini")
         {
-            string dir = configDir + "\\" + sufDir;
             List<string> fileNames = new List<string>();
-            System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(dir);
+            System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(configDir);
             System.IO.FileInfo[] info = dirInfo.GetFiles(suffix);
             int num  =info.Length;//获取某种格式
             for (int i = 0; i < num;i++ )
             {
                 fileNames.Add(info[i].Name.Split('.')[0]);
+            }
+            return fileNames;
+        }
+
+        public static List<string> GetFileNames(string configDir, string suffix = "*.ini")
+        {
+            List<string> fileNames = new List<string>();
+            System.IO.DirectoryInfo dirInfo = new System.IO.DirectoryInfo(configDir);
+            System.IO.FileInfo[] info = dirInfo.GetFiles(suffix);
+            int num = info.Length;//获取某种格式
+            for (int i = 0; i < num; i++)
+            {
+                fileNames.Add(info[i].FullName);
             }
             return fileNames;
         }
