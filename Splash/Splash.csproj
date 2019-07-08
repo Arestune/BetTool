@@ -69,10 +69,11 @@
   <ItemGroup>
     <Compile Include="Item\LogInfo.cs" />
     <Compile Include="Item\Item.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Parser\DynamicData.cs" />
+    <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Parser\BaseParser.cs" />
@@ -98,7 +99,13 @@
     <Compile Include="Tool\Config.cs" />
     <Compile Include="Item\Request.cs" />
     <Compile Include="Tool\Util.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <Compile Include="Views\SelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SelectForm.Designer.cs">
+      <DependentUpon>SelectForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -106,6 +113,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SelectForm.resx">
+      <DependentUpon>SelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

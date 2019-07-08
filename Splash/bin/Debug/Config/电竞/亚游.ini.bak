@@ -112,13 +112,6 @@ T54=Epsilon Esports,16
 T55=forZe,102
 T56=Digital Chaos,106
 T57=Unique,41
-T58=Divine Soldiers,12
-T59=Chiefs,122
-T60=Ground Zero,123
-T61=Genuine,120
-T62=rewound,121
-T63=Gambit Youngsters,59
-T64=buaksib,55
 [1]
 T0=Invictus Gaming,4
 T1=Team Destiny,5
@@ -285,7 +278,7 @@ T78=Havan Liberty,168
 T79=RED Canids,167
 T80=Falkol,170
 T81=Rensga eSports,169
-T82=ProGaming Esports,179
+T82=ProGaming Esports,-1
 T83=Vivo Keyd,173
 [11]
 T0=Viper,12
