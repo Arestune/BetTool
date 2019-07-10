@@ -53,7 +53,7 @@ namespace Splash.Parser.ESport
                     for (int i = 0; i < gameStaticNames.Count; i++)
                     {
                         int teamIndex = 0;
-                        string teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), fileNames[fileIndex]);
+                        string teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}",i, teamIndex), fileNames[fileIndex]);
                         while (!string.IsNullOrEmpty(teamAndId))
                         {
                             var array = teamAndId.Split(',');
@@ -64,7 +64,7 @@ namespace Splash.Parser.ESport
                                 mainTeamIds[i].Add(teamName, id);  //这边都要小写
                             }
                             teamIndex++;
-                            teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), fileNames[fileIndex]);
+                            teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}", i, teamIndex), fileNames[fileIndex]);
                         }
                     }
                 }
@@ -100,7 +100,7 @@ namespace Splash.Parser.ESport
                 for (int i = 0; i < gameIds.Count; i++)
                 {
                     int teamIndex = 0;
-                    string teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
+                    string teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}", i, teamIndex), configFile);
                     while (!string.IsNullOrEmpty(teamAndId))
                     {
                         var array = teamAndId.Split(',');
@@ -109,7 +109,7 @@ namespace Splash.Parser.ESport
                         {
                             teamIds[i].Add("Tmp_"+teamIndex.ToString(),-1);
                             teamIndex++;
-                            teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
+                            teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}", i, teamIndex), configFile);
                             continue;
                         }
                         var teamName = array[0].Trim();
@@ -130,12 +130,12 @@ namespace Splash.Parser.ESport
                             if (i < mainTeamIds.Count && mainTeamIds[i].ContainsKey(teamLowerName))
                             {
                                 var value = teamName + "," + mainTeamIds[i][teamLowerName].ToString();
-                                Config.WriteString(i.ToString(), string.Format("T{0}", teamIndex), value, configFile);
+                                Config.WriteString(i.ToString(), string.Format("T{0}-{1}",i, teamIndex), value, configFile);
                                 ShowLog(string.Format("识别[{0}]队伍:{1},ID:{2}！", i, teamName, mainTeamIds[i][teamLowerName]), ErrorLevel.EL_NORMAL);
                             }
                         }
                         teamIndex++;
-                        teamAndId = Config.GetString(i.ToString(), string.Format("T{0}", teamIndex), configFile);
+                        teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}",i, teamIndex), configFile);
                     }
                 }
             }
@@ -187,7 +187,7 @@ namespace Splash.Parser.ESport
             {
                 int curId = GetMainTeamIndex(gameIndex, strLowerTeam);
                 teamIds[gameIndex].Add(strLowerTeam, curId);
-                Config.WriteString(gameIndex.ToString(), string.Format("T{0}", teamIds[gameIndex].Count - 1), string.Format("{0},{1}",
+                Config.WriteString(gameIndex.ToString(), string.Format("T{0}-{1}", gameIndex, teamIds[gameIndex].Count - 1), string.Format("{0},{1}",
                     strTeam, curId), configFile);
                 if (curId == INVALID_INDEX)
                 {

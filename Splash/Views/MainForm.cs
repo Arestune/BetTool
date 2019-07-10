@@ -32,6 +32,7 @@ namespace Splash.Views
         public MainForm()
         {
             InitializeComponent();
+            this.Text = StaticData.SW_Version;
             configDir = System.IO.Directory.GetCurrentDirectory() + "\\Config";
             ShowBetPanel(false);
             tbSleepTime.Text = "30";
@@ -44,6 +45,7 @@ namespace Splash.Views
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            
             //ESportParser.LoadMainData();
 
             //TestWeb();
@@ -129,8 +131,8 @@ namespace Splash.Views
                 {
                     lbGameName.Text = lbGameName.Text + "(" + pair.b2.leagueName1 + ")";
                 }
-                lbWebName1.Text = StaticData.webNames[(int)pair.b1.webID];
-                lbWebName2.Text = StaticData.webNames[(int)pair.b2.webID];
+                lbWebName1.Text = StaticData.webNames[(int)pair.b1.webID]+"-[BO"+pair.b1.bo+"]";
+                lbWebName2.Text = StaticData.webNames[(int)pair.b2.webID]+"-[BO"+pair.b2.bo+"]";
                 lbOdds1.Text = pair.odds1.ToString("F3");
                 lbOdds2.Text = pair.odds2.ToString("F3");
                 lbPName1.Text = pair.pAbbr1;
@@ -210,6 +212,23 @@ namespace Splash.Views
                 }
             }
         }
+        public List<BetWinPair>  FilterResult(List<BetWinPair> pairs)
+        {
+            List<BetWinPair> filter = new List<BetWinPair>();
+            foreach(var pair in pairs)
+            {
+                //过滤时间
+                if (DateTime.Compare(pair.b1.time, DynamicData.startDate) < 0 
+                    || DateTime.Compare(pair.b2.time, DynamicData.startDate) < 0
+                     || DateTime.Compare(pair.b1.time, DynamicData.endDate) > 0
+                     || DateTime.Compare(pair.b2.time, DynamicData.endDate) > 0)
+                {
+                    continue;
+                }
+                filter.Add(pair);
+            }
+            return filter;
+        }
         public void ShowResult( List<BetWinPair> pair)
         {
             if (list.InvokeRequired)
@@ -225,6 +244,8 @@ namespace Splash.Views
                     ClearList();
                     listPairs.Clear();
                 }
+
+
                 listPairs.AddRange(pair);
                 this.list.BeginUpdate();   //数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度
                 for (int i = 0; i < pair.Count; i++)   //添加10行数据
@@ -287,7 +308,8 @@ namespace Splash.Views
                 }
                 
                 var pair = BaseParser.ParseBetWin(total);
-                ShowResult(pair);
+                var finals = FilterResult(pair);
+                ShowResult(finals);
 
                 //延迟时间
                 if(!string.IsNullOrEmpty(tbSleepTime.Text))
@@ -340,6 +362,12 @@ namespace Splash.Views
 
             var pair = BaseParser.ParseBetWin(total);
             ShowResult(pair);
+        }
+
+        private void btnUpdateLog_Click(object sender, EventArgs e)
+        {
+            UpdateLogForm logForm = new UpdateLogForm();
+            logForm.Show();
         }
 
  

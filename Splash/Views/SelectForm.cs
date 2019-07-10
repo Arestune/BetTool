@@ -19,11 +19,15 @@ namespace Splash.Views
         {
             InitializeComponent();
             cbRefresh.Checked = DynamicData.bFresh;
+            dtStart.Value = DynamicData.startDate;
+            dtEnd.Value = DynamicData.endDate;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
             DynamicData.bFresh = cbRefresh.Checked;
+            DynamicData.startDate = dtStart.Value;
+            DynamicData.endDate = dtEnd.Value;
             Close();
         }
     }

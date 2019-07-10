@@ -33,7 +33,7 @@ namespace Splash.Parser.ESport
             {
                 int curId = teamIds[gameIndex].Count;
                 teamIds[gameIndex].Add(strLowerTeam, curId);
-                Config.WriteString(gameIndex.ToString(), string.Format("T{0}", curId), string.Format("{0},{1}",
+                Config.WriteString(gameIndex.ToString(), string.Format("T{0}-{1}", gameIndex, curId), string.Format("{0},{1}",
                     strTeam, curId), configFile);
                 return curId;
             }

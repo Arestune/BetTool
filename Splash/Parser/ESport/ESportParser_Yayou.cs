@@ -59,9 +59,15 @@ namespace Splash.Parser.ESport
                     JToken odds = record["odds"];
                     if(odds != null)
                     {
+                        JToken groupName = odds["groupName"];
                         JToken betOptions = odds["betOptions"];
                         var markValue = odds["markValue"];
                         var switchStatus = odds["switchStatus"];
+                        //不是胜负盘
+                        if (groupName.ToString() == "奇偶")
+                        {
+                            continue;
+                        }
                         //未开盘
                         if(!Convert.ToBoolean(switchStatus.ToString()))
                         {
