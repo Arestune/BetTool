@@ -207,7 +207,7 @@ namespace Splash.Parser.ESport
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
                 error.message = e.Message;
-                ShowLog("解析第"+betItems.Count+"个Error:"+error);
+                ShowLog("解析第"+betItems.Count+"个Error:"+error.message);
             }
 
             return betItems.Count;

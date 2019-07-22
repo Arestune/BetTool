@@ -30,9 +30,9 @@ namespace Splash.Item
                 Method = "GET";
             }
             KeepAlive = false;
-            ContentType = "application/json;charset=utf-8";
+            ContentType = "application/json";
             WebHeader.Add("Accept-Language", "zh-CN,zh;q=0.9");
-            WebHeader.Add("Accept-Encoding", "gzip");
+            WebHeader.Add("Accept-Encoding", "gzip, deflate, br");
         }
         /// <summary>
         /// 请求方式，GET或POST

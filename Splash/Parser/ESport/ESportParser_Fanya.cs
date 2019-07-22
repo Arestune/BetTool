@@ -110,7 +110,10 @@ namespace Splash.Parser.ESport
                         var team_abbr2 = player[1]["Code"].ToString().Trim();
                         var team_id1 = GetTeamIndex(gameIndex, team_name1);
                         var team_id2 = GetTeamIndex(gameIndex, team_name2);
-
+                        if(team_id1 == 160 && team_id2 == 60 ||( team_id1 == 60 && team_id2 == 160))
+                        {
+                            int xx =  0;
+                        }
                         var bet = JArray.Parse(info["Bet"].ToString());
                         if(bet[0]["Name"] != null && bet[0]["Name"].ToString() != "比赛获胜" )
                         {
@@ -127,8 +130,8 @@ namespace Splash.Parser.ESport
                         }
                         var odds1 = Convert.ToDouble(items[0]["Odds"].ToString());
                         var odds2 = Convert.ToDouble(items[1]["Odds"].ToString());
-                        var team_final_abbr1 = items[0]["Name"].ToString();
-                        var team_final_abbr2 = items[1]["Name"].ToString();
+                        var team_final_abbr1 = items[0]["Name"].ToString().Trim();
+                        var team_final_abbr2 = items[1]["Name"].ToString().Trim();
                         if(team_abbr1 == team_final_abbr2 && team_abbr2 == team_final_abbr1)
                         {
                             var odds3 = odds1;

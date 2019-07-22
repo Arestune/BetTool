@@ -45,6 +45,10 @@ namespace Splash.Parser
                     {
                         return new ESportParser_Ray();
                     }
+                    else if (webName == StaticData.webNames[(int)WebID.WID_UWIN])
+                    {
+                        return new ESportParser_UWin();
+                    }
                     break;
             }
             return new BaseParser();

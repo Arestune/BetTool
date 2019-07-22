@@ -13,7 +13,7 @@ namespace Splash.Parser
         public const string SN_GAME_NAME = "GameName";
         public const string SN_URL = "URL";
         public static List<string> sportNames = new List<string> { "篮球", "电竞"};
-        public static List<string> webNames = new List<string> {"亚博","亚游","188","泛亚","Ray","沙巴","365"};
+        public static List<string> webNames = new List<string> {"亚博","亚游","188","泛亚","Ray","U赢","365"};
         //public static List<string> webUrls = new List<string>{
         //    "https://www.yabox13.com/app/eGaming",
         //    ""

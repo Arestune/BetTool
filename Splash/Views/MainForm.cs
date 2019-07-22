@@ -48,9 +48,9 @@ namespace Splash.Views
             
             //ESportParser.LoadMainData();
 
-            //TestWeb();
-           // return;
-            //
+           // TestWeb();
+          //  return;
+           
            // ESportParser.LoadMainData();
             Thread startThread = new Thread(Start);
             startThread.Name = "Main";
@@ -322,7 +322,7 @@ namespace Splash.Views
   
         private void TestWeb()
         {
-            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_YAYOU]);
+            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_UWIN]);
             bp.showLogEvent = ShowLog;
             ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp.webID]));
             bp.GrabAndParseHtml();

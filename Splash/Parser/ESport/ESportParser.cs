@@ -27,7 +27,7 @@ namespace Splash.Parser.ESport
         {
             try
             {
-                staticConfigFile = System.IO.Directory.GetCurrentDirectory() + @"\\Config\\电竞\\亚博.ini";
+                staticConfigFile = System.IO.Directory.GetCurrentDirectory() + @"\Config\电竞\亚博.ini";
                 //GameNames
                 int index = 0;
                 gameStaticNames.Clear();

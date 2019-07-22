@@ -168,8 +168,6 @@ T2-109=Fanta,172
 T2-110=Bizarre,173
 T2-111=absolute mad lads,48
 T2-112=Copenhagen Flames,60
-T2-113=Chiefs,106
-T2-114=Youngsters,137
 [1]
 T1-0=Infamous,24
 T1-1=EgoBoys,25
@@ -229,7 +227,6 @@ T1-54=496 Gaming,108
 T1-55=Avalon,109
 T1-56=Team Elephant,105
 T1-57=FTD.Guys,107
-T1-58=FrozenDawn Club,-1
 [0]
 T0-0=Solary,101
 T0-1=Team MCES,100
@@ -470,5 +467,5 @@ T12-9=100 Thieves,6
 T12-10=Gen.G,4
 T12-11=Splyce,5
 T12-12=Team Reciprocity,-1
-T12-13=eUnited,3
+T12-13=eUnited,-1
 T12-14=Optic Gaming,-1

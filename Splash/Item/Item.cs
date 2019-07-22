@@ -20,7 +20,7 @@ namespace Splash.Item
         WID_188,
         WID_FANYA,
         WID_RAY,
-        WID_SHABA,
+        WID_UWIN,
         WID_365,
     }
 

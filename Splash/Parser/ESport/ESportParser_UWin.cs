@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,12 +15,54 @@ using Splash.Parser;
 using Splash.Tool;
 namespace Splash.Parser.ESport
 {
-    class ESportParser_Shaba:ESportParser
+    class ESportParser_UWin:ESportParser
     {
         protected override void Init()
         {
-            webID = WebID.WID_YAYOU;
+            webID = WebID.WID_UWIN;
             base.Init();
+        }
+        public override void GrabAndParseHtml()
+        {
+            //½ñÈÕ
+            int i = 0;
+            do
+            {
+                long dateTime = 1563811200;
+                //long dateTime = Util.GetCurrentTimeStamp();
+                int nTryCount = 0;
+                string uriFormat = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
+                string uri = string.Format(uriFormat, dateTime);
+                RequestOptions op = new RequestOptions(uri);
+                op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
+                op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
+                //»ñÈ¡ÍøÒ³
+                html = RequestAction(op);
+                while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
+                {
+                    html = RequestAction(op);
+                    nTryCount++;
+                }
+                if (nTryCount == MAX_TRY_COUNT)
+                {
+                    ShowLog("×¥È¡Ê§°Ü£¡");
+                    html = "";
+                }
+                else
+                {
+                    Parse();
+                }
+                i++; 
+            } while (i== 1);
+
+            //ÈüÇ°
+
+
+            if (betItems.Count > 0)
+            {
+                ShowLog(string.Format("Ò³Ãæ½âÎö³É¹¦£¬½âÎö¸öÊı£º{0}£¡", betItems.Count));
+            }
         }
         public override int Parse()
         {
@@ -43,7 +85,7 @@ namespace Splash.Parser.ESport
                     var gameId = record["gameId"].ToString();
                     var league = record["league"]["name"].ToString();
                     var gameIndex = GetGameIndex(gameId);
-                    //è¿‡æ»¤æ‰è¿›è¡Œä¸­çš„æ¯”èµ›
+                    //¹ıÂËµô½øĞĞÖĞµÄ±ÈÈü
                     if (record["status"].ToString() == "ongoing")
                     {
                         continue;
@@ -55,7 +97,7 @@ namespace Splash.Parser.ESport
                     var team1_index = GetTeamIndex(gameIndex, team1_name);
                     var team2_index = GetTeamIndex(gameIndex, team2_name);
 
-                    //è‹¥æœ‰æ–°çš„é˜Ÿå‘ç°ï¼Œåˆ™æš‚æ—¶ä¸åšå¤„ç†
+                    //ÈôÓĞĞÂµÄ¶Ó·¢ÏÖ£¬ÔòÔİÊ±²»×ö´¦Àí
                     //if (team1_index == INVALID_ID || team2_index == INVALID_ID)
                     //{
                     //    continue;
@@ -86,7 +128,7 @@ namespace Splash.Parser.ESport
                         }
                     }
                 }
-                ShowLog(string.Format("é¡µé¢è§£ææˆåŠŸï¼Œè§£æä¸ªæ•°ï¼š{0}ï¼", betItems.Count));
+                ShowLog(string.Format("Ò³Ãæ½âÎö³É¹¦£¬½âÎö¸öÊı£º{0}£¡", betItems.Count));
             }
             catch(Exception e)
             {
