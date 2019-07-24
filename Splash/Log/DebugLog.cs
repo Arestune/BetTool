@@ -12,7 +12,7 @@ namespace Splash.Item
         EL_WARNING,
         EL_ERROR
     }
-    public class LogInfo
+    public class DebugLog
     {
         public WebID webID
         {

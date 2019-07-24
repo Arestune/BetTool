@@ -107,10 +107,12 @@ namespace Splash.Parser.ESport
                         //
                         if (array.Length != 2)
                         {
-                            teamIds[i].Add("Tmp_"+teamIndex.ToString(),-1);
-                            teamIndex++;
-                            teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}", i, teamIndex), configFile);
-                            continue;
+                            bIsEffect = false;
+                            return;
+                            //teamIds[i].Add("Tmp_"+teamIndex.ToString(),-1);
+                            //teamIndex++;
+                            //teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}", i, teamIndex), configFile);
+                            //continue;
                         }
                         var teamName = array[0].Trim();
                         var teamLowerName = teamName.ToLower();
@@ -141,7 +143,7 @@ namespace Splash.Parser.ESport
             }
             catch (Exception exp)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_ERROR;
                 error.message = exp.Message;
@@ -171,7 +173,7 @@ namespace Splash.Parser.ESport
             {
                 return gameIds.IndexOf(gameId);
             }
-            gameIds.Add(gameId);
+            //gameIds.Add(gameId);
             return INVALID_INDEX;
         }
         protected override int GetTeamIndex(int gameIndex, string strTeam)

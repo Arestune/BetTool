@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
-using System.Runtime.InteropServices;
 namespace Splash.Tool
 {
     /*

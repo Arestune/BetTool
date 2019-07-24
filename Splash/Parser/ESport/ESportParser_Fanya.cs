@@ -102,6 +102,10 @@ namespace Splash.Parser.ESport
                         }
                         var bo = GetBO(info["Title"].ToString());
                         var gameIndex = GetGameIndex(gameName);
+                        if(gameIndex == INVALID_INDEX)
+                        {
+                            continue;
+                        }
                         var player = JArray.Parse(info["Player"].ToString());
                         if(player.Count == 0) continue;
                         var team_name1 = player[0]["Name"].ToString().Trim();
@@ -165,7 +169,7 @@ namespace Splash.Parser.ESport
                     }
                     catch (Exception e)
                     {
-                        LogInfo error = new LogInfo();
+                        DebugLog error = new DebugLog();
                         error.webID = webID;
                         error.level = ErrorLevel.EL_WARNING;
                         error.message = e.Message;
@@ -175,7 +179,7 @@ namespace Splash.Parser.ESport
             }
             catch (Exception e)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
                 error.message = e.Message;

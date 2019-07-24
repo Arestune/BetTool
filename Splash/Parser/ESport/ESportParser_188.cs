@@ -203,7 +203,7 @@ namespace Splash.Parser.ESport
             }
             catch(Exception e)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
                 error.message = e.Message;

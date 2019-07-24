@@ -31,11 +31,13 @@ namespace Splash.Parser
         public SportID sportID;
         public WebID webID;
         public List<BetItem> betItems = new List<BetItem>();
+        public bool bIsEffect;
 
-        public delegate void ShowLogDelegate(LogInfo message);
+        public delegate void ShowLogDelegate(DebugLog message);
         public ShowLogDelegate showLogEvent;
         public  BaseParser()
         {
+            bIsEffect = true;
             Init();
           //  LoadStaticData();
         }
@@ -124,7 +126,7 @@ namespace Splash.Parser
             }
             catch(Exception e)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_ERROR;
                 error.message = e.Message;
@@ -162,7 +164,8 @@ namespace Splash.Parser
                 {
                     request.AllowWriteStreamBuffering = false;
                 }//禁止缓冲加快载入速度
-                request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate,br");//定义gzip压缩页面支持
+                request.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip,deflate");//定义gzip压缩页面支持
+               // request.AutomaticDecompression = DecompressionMethods.GZip;
                 request.ContentType = options.ContentType;//定义文档类型及编码
                 request.AllowAutoRedirect = options.AllowAutoRedirect;//禁止自动跳转
                 request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36";//设置User-Agent，伪装成Google Chrome浏览器
@@ -224,6 +227,16 @@ namespace Splash.Parser
                             }
                         }
                     }
+                    else if (response.ContentEncoding.ToLower().Contains("br"))//解压
+                    {
+                        using (DeflateStream stream = new DeflateStream(response.GetResponseStream(), CompressionMode.Decompress))
+                        {
+                            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
+                            {
+                                result = reader.ReadToEnd();
+                            }
+                        }
+                    }
                     else
                     {
                         using (Stream stream = response.GetResponseStream())//原始
@@ -239,7 +252,7 @@ namespace Splash.Parser
             }
             catch (WebException exp)
             {
-                LogInfo error = new LogInfo();  
+                DebugLog error = new DebugLog();  
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
                 error.message = exp.Message;
@@ -247,7 +260,7 @@ namespace Splash.Parser
             }
             catch(Exception exp)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_ERROR;
                 error.message = exp.Message;
@@ -294,12 +307,10 @@ namespace Splash.Parser
                     }
                     //时间不能相差太多
                     TimeSpan timeSpan = b1.time-b2.time;
-                    if (timeSpan.Hours > 6 || timeSpan.Hours < -6)
+                    if (timeSpan.TotalHours > 4 || timeSpan.TotalHours < -4)
                     {
                         continue;
                     }
-
-
                     if (b1.type == BetType.BT_TEAM)
                     {
                         double odd1 = 0.0f;
@@ -453,7 +464,7 @@ namespace Splash.Parser
         }
       
  
-        public virtual void ShowLog(LogInfo log)
+        public virtual void ShowLog(DebugLog log)
         {
             if (showLogEvent != null)
             {
@@ -464,7 +475,7 @@ namespace Splash.Parser
         {
             if (showLogEvent != null)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = level;
                 error.message = log;

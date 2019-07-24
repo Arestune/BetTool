@@ -8,7 +8,7 @@ namespace Splash.Parser
 {
     class StaticData
     {
-        public const string SW_Version = "Splash v1.6";
+        public const string SW_Version = "Splash v1.7.1";
         public const string SN_GAME_ID = "GameId";
         public const string SN_GAME_NAME = "GameName";
         public const string SN_URL = "URL";

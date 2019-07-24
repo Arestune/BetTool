@@ -29,5 +29,5 @@ F:\Projects\BetTool\Splash\obj\Debug\Splash.Views.SelectForm.resources
 F:\Projects\BetTool\Splash\obj\Debug\Splash.Views.MainForm.resources
 E:\GitProjects\BetTool\Splash\obj\Debug\Splash.Views.MainForm.resources
 E:\GitProjects\BetTool\Splash\obj\Debug\Splash.Views.SelectForm.resources
-E:\GitProjects\BetTool\Splash\obj\Debug\Splash.Views.UpdateLogForm.resources
 F:\Projects\BetTool\Splash\obj\Debug\Splash.Views.UpdateLogForm.resources
+E:\GitProjects\BetTool\Splash\obj\Debug\Splash.Views.UpdateLogForm.resources

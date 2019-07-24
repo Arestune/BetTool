@@ -67,8 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Item\LogInfo.cs" />
+    <Compile Include="Log\DebugLog.cs" />
     <Compile Include="Item\Item.cs" />
+    <Compile Include="Log\UpdateLog.cs" />
     <Compile Include="Parser\DynamicData.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
@@ -163,9 +164,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Log\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

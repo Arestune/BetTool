@@ -17,6 +17,7 @@ namespace Splash.Parser.ESport
 {
     class ESportParser_UWin:ESportParser
     {
+        string dateTime = "1";
         protected override void Init()
         {
             webID = WebID.WID_UWIN;
@@ -24,12 +25,12 @@ namespace Splash.Parser.ESport
         }
         public override void GrabAndParseHtml()
         {
+            dateTime = "1";
+            int grabDay = Convert.ToInt32(Config.GetString(StaticData.SN_URL, "Days", configFile, "4"));
             //今日
             int i = 0;
             do
             {
-                long dateTime = 1563811200;
-                //long dateTime = Util.GetCurrentTimeStamp();
                 int nTryCount = 0;
                 string uriFormat = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
                 string uri = string.Format(uriFormat, dateTime);
@@ -53,12 +54,10 @@ namespace Splash.Parser.ESport
                 {
                     Parse();
                 }
-                i++; 
-            } while (i== 1);
+                i++;
+            } while (i < grabDay);
 
             //赛前
-
-
             if (betItems.Count > 0)
             {
                 ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
@@ -69,70 +68,97 @@ namespace Splash.Parser.ESport
             try
             {
                 //string fullName = "D:\\1.json";
-                //System.IO.StreamReader sr1 = new StreamReader(fullName);
-                //html = sr1.ReadToEnd();
+               // System.IO.StreamReader sr1 = new StreamReader(fullName);
+               // html = sr1.ReadToEnd();
                 if(string.IsNullOrEmpty(html))
                 {
                     return 0;
                 }
                 JObject main = JObject.Parse(html);
                 JToken data = main["data"];
-                int size = Convert.ToInt32(data["size"]);
+                dateTime = data["next"].ToString();
+                JToken matches = data["matches"];
                 JToken records = data["records"];
                 foreach(var record in records)
                 {
-                    var id = record["id"].ToString();
-                    var gameId = record["gameId"].ToString();
-                    var league = record["league"]["name"].ToString();
+                    string recordId = record.ToString();
+                    JToken match = matches[recordId];
+                   // listRecords.Add(record.ToString());
+                //}
+                //foreach(var match in matches)
+                //{
+                    var bo = int.Parse(match["BO"].ToString());
+                    var gameId = match["Cid"].ToString();
+                    var league = match["LeagueName"].ToString();
                     var gameIndex = GetGameIndex(gameId);
-                    //过滤掉进行中的比赛
-                    if (record["status"].ToString() == "ongoing")
+                    if(gameIndex == INVALID_INDEX)
                     {
                         continue;
                     }
-                    //teams
-                    JToken teams = record["teams"];
-                    var team1_name = teams[0]["name"].ToString().Trim();
-                    var team2_name = teams[1]["name"].ToString().Trim();
-                    var team1_index = GetTeamIndex(gameIndex, team1_name);
-                    var team2_index = GetTeamIndex(gameIndex, team2_name);
-
-                    //若有新的队发现，则暂时不做处理
-                    //if (team1_index == INVALID_ID || team2_index == INVALID_ID)
+                    //过滤掉延期的比赛
+                    //if (Boolean.Parse(match["live_show"].ToString()))
                     //{
                     //    continue;
                     //}
+                    //teams
+                    var team1_name = match["HomeTeamName"].ToString().Trim();
+                    var team2_name = match["AwayTeamName"].ToString().Trim();
+                    var team1_index = GetTeamIndex(gameIndex, team1_name);
+                    var team2_index = GetTeamIndex(gameIndex, team2_name);
+                    var timestamp = Convert.ToInt64(match["StartTimeInt"].ToString());
+                    var time = new DateTime(1970, 1, 1, 8, 0, 0).AddSeconds(timestamp);
                     //odds
-                    JToken odds = record["odds"];
-                    if(odds != null)
+                    JToken match_winner = match["match_winner"];
+                    if (match_winner != null)
                     {
-                        JToken betOptions = odds["betOptions"];
-                        if(betOptions != null)
+                        JArray match_winner_records = JArray.Parse(match_winner["records"].ToString());
+                        JToken match_winner_records_array_0 = match_winner_records[0];
+                        JArray match_winner_records_array_0_0_data = JArray.Parse(match_winner_records_array_0["data"].ToString());
+                        foreach(var market in match_winner_records_array_0_0_data)
                         {
-                            var odd1 = Convert.ToDouble(betOptions[0]["odd"]);
-                            var odd2 = Convert.ToDouble(betOptions[1]["odd"]);
-                            BetItem b = new BetItem();
-                            b.webID = webID;
-                            b.type = BetType.BT_TEAM;
-                            b.pID1 = team1_index;
-                            b.pID2 = team2_index;
-                            b.pName1 = team1_name;
-                            b.pName2 = team2_name;
-                            b.odds1 = odd1;
-                            b.odds2 = odd2;
-                            b.gameID = gameIndex;
-                            b.gameName = gameStaticNames[gameIndex];
-                            b.leagueName1 = league;
-                            b.leagueName2 = league;
-                            betItems.Add(b);
+                            string match_winner_data = market.ToString();
+                            JToken odds = match_winner["markets"][match_winner_data]["odds"];
+                            JArray leftArray = JArray.Parse(odds["left"].ToString());
+                            JArray rightArray = JArray.Parse(odds["right"].ToString());
+                            string left = leftArray[0].ToString();
+                            string right = rightArray[0].ToString();
+                            JToken odd_lists = match_winner["odd_lists"];
+                            if (odd_lists != null)
+                            {
+                                var odd1 = Convert.ToDouble(odd_lists[left]["Value"]);
+                                var odd2 = Convert.ToDouble(odd_lists[right]["Value"]);
+                                BetItem b = new BetItem();
+                                b.webID = webID;
+                                b.sportID = sportID;
+                                b.type = BetType.BT_TEAM;
+                                b.pID1 = team1_index;
+                                b.pID2 = team2_index;
+                                b.pName1 = team1_name;
+                                b.pName2 = team2_name;
+                                b.pAbbr1 = team1_name;
+                                b.pAbbr2 = team2_name;
+                                b.odds1 = odd1;
+                                b.odds2 = odd2;
+                                b.gameID = gameIndex;
+                                b.gameName = gameStaticNames[gameIndex];
+                                b.leagueName1 = league;
+                                b.leagueName2 = league;
+                                b.bo = bo;
+                                b.time = time;
+                                betItems.Add(b);
+                                if(betItems.Count == 10)
+                                {
+                                    int a = 0;
+                                }
+                            }
                         }
                     }
                 }
-                ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
+                //ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
             }
             catch(Exception e)
             {
-                LogInfo error = new LogInfo();
+                DebugLog error = new DebugLog();
                 error.webID = webID;
                 error.level = ErrorLevel.EL_WARNING;
                 error.message = e.Message;

@@ -23,7 +23,7 @@ namespace Splash.Views
     {
         public string configDir = null;
         public List<BetWinPair> listPairs = new List<BetWinPair>();
-        public delegate void ShowLogHandler(LogInfo log);
+        public delegate void ShowLogHandler(DebugLog log);
         public delegate void ShowResultHandler(List<BetWinPair> pairs);
         int time = 0;
         int index = 0;
@@ -48,8 +48,8 @@ namespace Splash.Views
             
             //ESportParser.LoadMainData();
 
-           // TestWeb();
-          //  return;
+            //TestWeb();
+            //return;
            
            // ESportParser.LoadMainData();
             Thread startThread = new Thread(Start);
@@ -184,13 +184,13 @@ namespace Splash.Views
         }
         public void ShowLog(string message,ErrorLevel level = ErrorLevel.EL_NORMAL)
         {
-            LogInfo info = new LogInfo();
+            DebugLog info = new DebugLog();
             info.message = message;
             info.level = level;
             info.webID = WebID.WID_NULL;
             ShowLog(info);
         }
-        public  void ShowLog(LogInfo log)
+        public  void ShowLog(DebugLog log)
         {
             if (textBox.InvokeRequired)
             {
@@ -292,9 +292,16 @@ namespace Splash.Views
                         BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT, webs[x]);
                         bp.showLogEvent = ShowLog;
                         bp.LoadStaticData();
-                        ShowLog(string.Format("线程{0},爬取分析网站:{1}", x.ToString(), StaticData.webNames[(int)bp.webID]));
-                        bp.GrabAndParseHtml();
-                        total.AddRange(bp.betItems);
+                        if(bp.bIsEffect)
+                        {
+                            ShowLog(string.Format("线程{0},爬取分析网站:{1}", x.ToString(), StaticData.webNames[(int)bp.webID]));
+                            bp.GrabAndParseHtml();
+                            total.AddRange(bp.betItems);
+                        }
+                        else
+                        {
+                            ShowLog(string.Format("线程{0},爬取分析网站:{1} 配置读取错误！", x.ToString(), StaticData.webNames[(int)bp.webID]));
+                        }
                     });
                     s.Name = StaticData.webNames[i];
                     s.IsBackground = true;
@@ -324,9 +331,9 @@ namespace Splash.Views
         {
             BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_UWIN]);
             bp.showLogEvent = ShowLog;
+            bp.LoadStaticData();
             ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp.webID]));
             bp.GrabAndParseHtml();
-           
         }
         private void Test()
         {

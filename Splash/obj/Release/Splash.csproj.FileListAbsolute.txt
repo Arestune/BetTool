@@ -1,0 +1,12 @@
+E:\GitProjects\BetTool\Splash\bin\Release\Splash.exe.config
+E:\GitProjects\BetTool\Splash\bin\Release\Splash.exe
+E:\GitProjects\BetTool\Splash\bin\Release\Splash.pdb
+E:\GitProjects\BetTool\Splash\bin\Release\Newtonsoft.Json.dll
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.csprojResolveAssemblyReference.cache
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.Views.MainForm.resources
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.Properties.Resources.resources
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.Views.SelectForm.resources
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.Views.UpdateLogForm.resources
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.csproj.GenerateResource.Cache
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.exe
+E:\GitProjects\BetTool\Splash\obj\Release\Splash.pdb
