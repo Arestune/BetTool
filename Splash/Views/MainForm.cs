@@ -46,10 +46,9 @@ namespace Splash.Views
         private void btnRun_Click(object sender, EventArgs e)
         {
             
-            //ESportParser.LoadMainData();
-
-            //TestWeb();
-            //return;
+           // ESportParser.LoadMainData();
+           // TestWeb();
+          //  return;
            
            // ESportParser.LoadMainData();
             Thread startThread = new Thread(Start);
@@ -225,6 +224,13 @@ namespace Splash.Views
                 {
                     continue;
                 }
+
+                //过滤盈利
+                if (pair.profit < DynamicData.profitLow || pair.profit > DynamicData.profitHigh)
+                {
+                    continue;
+                }
+
                 filter.Add(pair);
             }
             return filter;

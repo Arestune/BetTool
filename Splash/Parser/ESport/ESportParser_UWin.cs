@@ -65,33 +65,33 @@ namespace Splash.Parser.ESport
         }
         public override int Parse()
         {
-            try
+            //string fullName = "D:\\1.json";
+            // System.IO.StreamReader sr1 = new StreamReader(fullName);
+            // html = sr1.ReadToEnd();
+            if (string.IsNullOrEmpty(html))
             {
-                //string fullName = "D:\\1.json";
-               // System.IO.StreamReader sr1 = new StreamReader(fullName);
-               // html = sr1.ReadToEnd();
-                if(string.IsNullOrEmpty(html))
-                {
-                    return 0;
-                }
-                JObject main = JObject.Parse(html);
-                JToken data = main["data"];
-                dateTime = data["next"].ToString();
-                JToken matches = data["matches"];
-                JToken records = data["records"];
-                foreach(var record in records)
+                return 0;
+            }
+            JObject main = JObject.Parse(html);
+            JToken data = main["data"];
+            dateTime = data["next"].ToString();
+            JToken matches = data["matches"];
+            JToken records = data["records"];
+            foreach (var record in records)
+            {
+                try
                 {
                     string recordId = record.ToString();
                     JToken match = matches[recordId];
-                   // listRecords.Add(record.ToString());
-                //}
-                //foreach(var match in matches)
-                //{
+                    // listRecords.Add(record.ToString());
+                    //}
+                    //foreach(var match in matches)
+                    //{
                     var bo = int.Parse(match["BO"].ToString());
                     var gameId = match["Cid"].ToString();
                     var league = match["LeagueName"].ToString();
                     var gameIndex = GetGameIndex(gameId);
-                    if(gameIndex == INVALID_INDEX)
+                    if (gameIndex == INVALID_INDEX)
                     {
                         continue;
                     }
@@ -112,12 +112,20 @@ namespace Splash.Parser.ESport
                     if (match_winner != null)
                     {
                         JArray match_winner_records = JArray.Parse(match_winner["records"].ToString());
+                        if(match_winner_records.Count == 0)
+                        {
+                            continue;
+                        }
                         JToken match_winner_records_array_0 = match_winner_records[0];
                         JArray match_winner_records_array_0_0_data = JArray.Parse(match_winner_records_array_0["data"].ToString());
-                        foreach(var market in match_winner_records_array_0_0_data)
+                        foreach (var market in match_winner_records_array_0_0_data)
                         {
                             string match_winner_data = market.ToString();
                             JToken odds = match_winner["markets"][match_winner_data]["odds"];
+                            if (odds["left"] == null)
+                            {
+                                continue;
+                            }
                             JArray leftArray = JArray.Parse(odds["left"].ToString());
                             JArray rightArray = JArray.Parse(odds["right"].ToString());
                             string left = leftArray[0].ToString();
@@ -146,7 +154,7 @@ namespace Splash.Parser.ESport
                                 b.bo = bo;
                                 b.time = time;
                                 betItems.Add(b);
-                                if(betItems.Count == 10)
+                                if (betItems.Count == 9)
                                 {
                                     int a = 0;
                                 }
@@ -154,17 +162,16 @@ namespace Splash.Parser.ESport
                         }
                     }
                 }
+                catch (Exception e)
+                {
+                    DebugLog error = new DebugLog();
+                    error.webID = webID;
+                    error.level = ErrorLevel.EL_WARNING;
+                    error.message = betItems.Count + ":" + e.Message;
+                    ShowLog(error);
+                }
                 //ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
             }
-            catch(Exception e)
-            {
-                DebugLog error = new DebugLog();
-                error.webID = webID;
-                error.level = ErrorLevel.EL_WARNING;
-                error.message = e.Message;
-                ShowLog(error);
-            }
-
             return betItems.Count;
         }
     }

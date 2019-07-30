@@ -12,5 +12,7 @@ namespace Splash.Parser
         public static bool bFresh = false;
         public static DateTime startDate = DateTime.Now;
         public static DateTime endDate = DateTime.Now.AddDays(7);
+        public static double profitLow = 0;
+        public static double profitHigh = 5;
     }
 }

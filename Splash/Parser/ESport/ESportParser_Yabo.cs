@@ -101,6 +101,10 @@ namespace Splash.Parser.ESport
                         }
                         var team1_abbr = b2[37].ToString();
                         var team2_abbr = b2[38].ToString();
+                        //if(Convert.ToInt32(b2[50].ToString()) == 0 && Convert.ToInt32(b2[52].ToString())  == 0)
+                        //{
+                        //    continue;
+                        //}
                         var team1_index = GetTeamIndex(gameIndex, team1_name);
                         var team2_index = GetTeamIndex(gameIndex, team2_name);
                         JArray b2_10 = JArray.Parse(b2[10].ToString());

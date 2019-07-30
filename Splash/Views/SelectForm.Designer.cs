@@ -34,13 +34,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbOddsThreshold = new System.Windows.Forms.TextBox();
+            this.tbProfitsLow = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbProfitsHigh = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // dtStart
             // 
-            this.dtStart.Location = new System.Drawing.Point(105, 57);
+            this.dtStart.Location = new System.Drawing.Point(124, 57);
             this.dtStart.Name = "dtStart";
             this.dtStart.Size = new System.Drawing.Size(200, 21);
             this.dtStart.TabIndex = 0;
@@ -57,7 +59,7 @@
             // 
             // dtEnd
             // 
-            this.dtEnd.Location = new System.Drawing.Point(352, 57);
+            this.dtEnd.Location = new System.Drawing.Point(370, 57);
             this.dtEnd.Name = "dtEnd";
             this.dtEnd.Size = new System.Drawing.Size(200, 21);
             this.dtEnd.TabIndex = 2;
@@ -65,7 +67,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(313, 62);
+            this.label1.Location = new System.Drawing.Point(331, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 3;
@@ -74,7 +76,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 62);
+            this.label2.Location = new System.Drawing.Point(50, 62);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 4;
@@ -85,16 +87,16 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(45, 102);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.Size = new System.Drawing.Size(71, 12);
             this.label3.TabIndex = 5;
-            this.label3.Text = "赔率阈值";
+            this.label3.Text = "盈利区间(%)";
             // 
-            // tbOddsThreshold
+            // tbProfitsLow
             // 
-            this.tbOddsThreshold.Location = new System.Drawing.Point(104, 98);
-            this.tbOddsThreshold.Name = "tbOddsThreshold";
-            this.tbOddsThreshold.Size = new System.Drawing.Size(100, 21);
-            this.tbOddsThreshold.TabIndex = 6;
+            this.tbProfitsLow.Location = new System.Drawing.Point(124, 99);
+            this.tbProfitsLow.Name = "tbProfitsLow";
+            this.tbProfitsLow.Size = new System.Drawing.Size(45, 21);
+            this.tbProfitsLow.TabIndex = 6;
             // 
             // btnOK
             // 
@@ -106,13 +108,31 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(174, 104);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(11, 12);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "-";
+            // 
+            // tbProfitsHigh
+            // 
+            this.tbProfitsHigh.Location = new System.Drawing.Point(191, 99);
+            this.tbProfitsHigh.Name = "tbProfitsHigh";
+            this.tbProfitsHigh.Size = new System.Drawing.Size(45, 21);
+            this.tbProfitsHigh.TabIndex = 9;
+            // 
             // SelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(618, 238);
+            this.Controls.Add(this.tbProfitsHigh);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.tbOddsThreshold);
+            this.Controls.Add(this.tbProfitsLow);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -135,7 +155,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbOddsThreshold;
+        private System.Windows.Forms.TextBox tbProfitsLow;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbProfitsHigh;
     }
 }

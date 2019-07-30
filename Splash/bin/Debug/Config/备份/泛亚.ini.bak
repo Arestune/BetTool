@@ -248,9 +248,6 @@ T2-201=Ha MaSSe,239
 T2-202=AVANGAR,179
 T2-203=OnlineStars,-1
 T2-204=EOX,143
-T2-205=Thirteen,-1
-T2-206=Orgl3ss,67
-T2-207=Baecon,-1
 [0]
 T0-0=Wisla Plock,49
 T0-1=AVEZ Esport,48
@@ -516,7 +513,6 @@ T0-260=QTV Gaming,172
 T0-261=MVP,117
 T0-262=ASURA,111
 T0-263=Rogue Academy,58
-T0-264=Vitality Bee,102
 [1]
 T1-0=Infamous,24
 T1-1=EgoBoys,25
@@ -761,9 +757,6 @@ T8-73=Unsold Stuff,-1
 T8-74=Team Void,21
 T8-75=GUTS Gaming,22
 T8-76=Lamy Wonderland,23
-T8-77=Attack All Around,75
-T8-78=Real Original Gaming,76
-T8-79=Daivo.Radragon,73
 [10]
 T10-0=T-Wolves Gaming,0
 T10-1=Knicks Gaming,1
@@ -806,7 +799,7 @@ T5-15=Revival,25
 T5-16=Skyfoxes,12
 T5-17=Square One,13
 T5-18=LGD,19
-T5-19=T1w,18
+T5-19=T1w,-1
 T5-20=Wave Check,23
 T5-21=Second Wind,22
 T5-22=Triumph,24
