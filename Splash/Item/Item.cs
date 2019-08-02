@@ -21,7 +21,7 @@ namespace Splash.Item
         WID_FANYA,
         WID_RAY,
         WID_UWIN,
-        WID_365,
+        WID_Pingbo,
     }
 
     public enum BetType

@@ -71,6 +71,7 @@
     <Compile Include="Item\Item.cs" />
     <Compile Include="Log\UpdateLog.cs" />
     <Compile Include="Parser\DynamicData.cs" />
+    <Compile Include="Parser\ESport\ESportParser_Pingbo.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,7 +165,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Parser\Tennis\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

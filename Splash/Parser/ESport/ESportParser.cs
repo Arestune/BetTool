@@ -85,7 +85,7 @@ namespace Splash.Parser.ESport
                 while (!string.IsNullOrEmpty(eItem))
                 {
                     index++;
-                    gameIds.Add(Util.GetCommentString(eItem).ToLower());
+                    gameIds.Add(eItem.ToLower());
                     eItem = Config.GetString(StaticData.SN_GAME_ID, string.Format("G{0}", index), configFile);
                 }
 

@@ -44,7 +44,7 @@ namespace Splash.Views
             else if(log.type == LogType.LT_MODIFY)
             {
                 tbLog.SelectionColor = Color.OrangeRed;
-                tbLog.AppendText("修改：\r\n");
+                tbLog.AppendText("修复：\r\n");
               //  tbLog.SelectionColor = Color.Black;  
             }
             else if (log.type == LogType.LT_OPTIMIZE)
@@ -103,6 +103,23 @@ namespace Splash.Views
             }));
             AddLog(new UpdateLog(LogType.LT_OPTIMIZE, new List<string>{
                 "UTF8配置文件如果读取异常，当前网站不会计入打水网站"
+            }));
+            AddTail();
+
+            //v1.7.2
+            AddTitle("v1.7.2", "2019-07-30");
+            AddLog(new UpdateLog(LogType.LT_NEW, new List<string>{
+                 "新增盈利率筛选",
+            }));
+            AddLog(new UpdateLog(LogType.LT_MODIFY, new List<string>{
+                "修复UWin爬取某一天时遇到错误就不接着爬取当天数据的BUG"
+            }));
+            AddTail();
+
+            //v1.8
+            AddTitle("v1.8", "2019-08-02");
+            AddLog(new UpdateLog(LogType.LT_NEW, new List<string>{
+                 "新增平博体育的电竞爬取",
             }));
         }
     }
