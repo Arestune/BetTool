@@ -121,6 +121,9 @@ namespace Splash.Views
             AddLog(new UpdateLog(LogType.LT_NEW, new List<string>{
                  "新增平博体育的电竞爬取",
             }));
+            AddLog(new UpdateLog(LogType.LT_MODIFY, new List<string>{
+                "UWin会爬出一些隐藏的比赛，过滤掉"
+            }));
         }
     }
 }

@@ -96,10 +96,10 @@ namespace Splash.Parser.ESport
                         continue;
                     }
                     //过滤掉延期的比赛
-                    //if (Boolean.Parse(match["live_show"].ToString()))
-                    //{
-                    //    continue;
-                    //}
+                    if (!Boolean.Parse(match["Visible"].ToString()))
+                    {
+                        continue;
+                    }
                     //teams
                     var team1_name = match["HomeTeamName"].ToString().Trim();
                     var team2_name = match["AwayTeamName"].ToString().Trim();
