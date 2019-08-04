@@ -86,6 +86,10 @@ namespace Splash.Parser.ESport
             {
                 return "绝地求生";
             }
+            if (str.Contains("cs:go"))
+            {
+                return "cs:go";
+            }
             return "NULL";
         }
         protected override int GetBO(string str)
@@ -109,29 +113,34 @@ namespace Splash.Parser.ESport
             {
                 return 4;
             }
+            if (gameName.Contains("cs:go"))
+            {
+                return 2;
+            }
             return INVALID_INDEX;
         }
         public override int Parse()
         {
-            try
-            {
-                if(string.IsNullOrEmpty(html))
-                {
-                    return 0;
-                }
-                JObject main = JObject.Parse(html);
-                JToken n_ot = main["n-ot"];
-                if(n_ot == null)
-                {
-                    return 0;
-                }
-                if(n_ot["egs"] == null)
-                {
-                    return 0;
-                }
-                JArray egs = JArray.Parse(n_ot["egs"].ToString());
 
-                foreach(var eg in egs)
+            if (string.IsNullOrEmpty(html))
+            {
+                return 0;
+            }
+            JObject main = JObject.Parse(html);
+            JToken n_ot = main["n-ot"];
+            if (n_ot == null)
+            {
+                return 0;
+            }
+            if (n_ot["egs"] == null)
+            {
+                return 0;
+            }
+            JArray egs = JArray.Parse(n_ot["egs"].ToString());
+
+            foreach (var eg in egs)
+            {
+                try
                 {
                     var c = eg["c"];
                     var n = c["n"];
@@ -151,24 +160,24 @@ namespace Splash.Parser.ESport
                         string date = null;
                         string strTime = null;
                         DateTime gameTime;
-                        if(monthDay != null)
+                        if (monthDay != null)
                         {
                             var strMonthDay = monthDay.ToString().Split('/');
                             var month = strMonthDay[1].Trim();
                             var day = strMonthDay[0].Trim();
-                            date = DateTime.Now.Year+"-"+month+"-"+day;
+                            date = DateTime.Now.Year + "-" + month + "-" + day;
                         }
                         var time = i[5];
-                        if(time != null)
+                        if (time != null)
                         {
-                            strTime= i[5].ToString()+":00";
+                            strTime = i[5].ToString() + ":00";
                         }
-                        string dateTime = date + " " +strTime;
+                        string dateTime = date + " " + strTime;
                         gameTime = Convert.ToDateTime(dateTime);
 
                         var o = esSingle["o"];
                         var ml = o["ml"];
-                        if(ml == null)
+                        if (ml == null)
                         {
                             continue;
                         }
@@ -194,22 +203,21 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
                         b.bo = bo;
                         betItems.Add(b);
-                        if (betItems.Count == 0)
+                        if (betItems.Count == 9)
                         {
                             int a = 1;
                         }
                     }
                 }
+                catch (Exception e)
+                {
+                    DebugLog error = new DebugLog();
+                    error.webID = webID;
+                    error.level = ErrorLevel.EL_WARNING;
+                    error.message = e.Message;
+                    ShowLog("解析第" + betItems.Count + "个Error:" + error.message);
+                }
             }
-            catch(Exception e)
-            {
-                DebugLog error = new DebugLog();
-                error.webID = webID;
-                error.level = ErrorLevel.EL_WARNING;
-                error.message = e.Message;
-                ShowLog("解析第"+betItems.Count+"个Error:"+error.message);
-            }
-
             return betItems.Count;
         }
     }

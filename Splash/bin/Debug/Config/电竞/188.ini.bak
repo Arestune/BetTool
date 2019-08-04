@@ -4,7 +4,7 @@ Method=POST
 XHRParams={"ifl":true,"ipf":false,"iip":false,"pn":0,"tz":480,"pt":1,"pid":0,"sid":[23],"ubt":"am","dc":null,"dv":-1,"ot":0}
 XHRParams1={"ifl":true,"ipf":false,"iip":false,"pn":0,"tz":480,"pt":2,"pid":0,"sid":[23],"ubt":"am","dc":null,"dv":-1,"ot":0}
 Referer=https://xj-sb-asia-jxf.prdasbbwla1.com/zh-cn/sports
-Cookie=.Xauth=81570AF1D76CD8BBFD5B1A44FABA09D9ADDF959899B5FA6C1101A7153FFC48486533E93DE59EC28766C57AE7F68D7ADF8DA25CC56E716D3A8C78F61A7D130552CDBF22E0B9EB453D6987090D5C786203CA90EBA0BA9D41891D3465C22BCFF472F85642469379E6D077D5C85DC7D1BAB2CDA45DB3EAC3027EE420E058E30BDCC2077EAB1B8DB54E5CF5E060415522FFCAA25343A73F597D422C618D58A1C666A5; path=/; HttpOnly,ASP.NET_SessionId=if41pyt3zur03m3iry1fowgg; path=/; HttpOnly,sbawl3-jxf=34606858.20480.0000; path=/; Httponly; Secure
+Cookie=.Xauth=8A078B3B4379BC23FBB081EC95285A3AAF85B514A3CDF9A6A70B2530D3D502D6AE63DFE7724EB8B2E26430B3ED7ADAD18B724FFE99D01EF34B1E8726D5ECED6C8630293836D3B355B19CB14ECD834AF8B8F2BB26D17425DD8784ABAFC1F2CECE4360CA8A1246467C84017634ECC1582C6D288F56B56C64BF394D3F3A2ABC010F3B6EF3AA464C8AE53BB98C4A74CFDCC1FBDACE49AE58C9C1C5D8BC22BBA99A8D; path=/; HttpOnly,ASP.NET_SessionId=dcbly4d4fu4qbl1o43ahmru5; path=/; HttpOnly,sbawl3-jxf=68161290.20480.0000; path=/; Httponly; Secure
 [GameName]
 G0=英雄联盟
 G1=Dota2
@@ -98,12 +98,12 @@ T1-50=DotaHero,61
 T1-51=Team Vitamin,55
 [2]
 T2-0=HAVU,6
-T2-1=SJ Gaming,59
-T2-2=Copenhagen Flames,60
-T2-3=Vega Squadron,61
-T2-4=DreamEaters,7
-T2-5=G2,20
-T2-6=TRICKED,19
+T2-1=AVANGAR,179
+T2-2=Gambit Youngsters,137
+T2-3=OpTic,241
+T2-4=BPro Gaming,192
+T2-5=Sprout,29
+T2-6=Winstrike,21
 T2-7=CR4ZY,28
 T2-8=Sprout,29
 T2-9=Nordavind,10
@@ -181,6 +181,12 @@ T2-80=Winstrike,21
 T2-81=KOVA,243
 T2-82=Helsinki REDS,245
 T2-83=Offset CS,79
+T2-84=HellRaisers,14
+T2-85=OpTic,241
+T2-86=BPro Gaming,192
+T2-87=Se7en eSports,233
+T2-88=pro100,238
+T2-89=NewBALLS,247
 [0]
 T0-0=KT Rolster,12
 T0-1=Vici Gaming,14
@@ -350,6 +356,8 @@ T6-12=Reynor,38
 T6-13=Neeb,61
 T6-14=GuMiho,4
 T6-15=HeRoMaRinE,39
+T6-16=Dear,66
+T6-17=TIME,70
 [3]
 T3-0=Royal Never Giveup.Mobile,2
 T3-1=RoX,3
@@ -449,15 +457,15 @@ T8-21=GiFu eSports,31
 T8-22=Looking For Org,32
 T8-23=G2,21
 [4]
-T4-0=Team Liquid,-1
-T4-1=FaZe Clan,-1
-T4-2=Tempo Storm,-1
-T4-3=G2,-1
-T4-4=Natus Vincere,-1
-T4-5=The Rumblers,-1
-T4-6=SpaceStation Gaming,-1
-T4-7=Athletico eS,-1
-T4-8=Ghost Gaming,-1
+T4-0=Team Liquid,0
+T4-1=FaZe Clan,1
+T4-2=Tempo Storm,2
+T4-3=G2,3
+T4-4=Natus Vincere,4
+T4-5=The Rumblers,5
+T4-6=SpaceStation Gaming,6
+T4-7=Athletico eS,7
+T4-8=Ghost Gaming,8
 [9]
 T9-0=Infi,4
 T9-1=HawK,6
