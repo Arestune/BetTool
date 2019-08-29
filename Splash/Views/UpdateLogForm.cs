@@ -130,7 +130,8 @@ namespace Splash.Views
             AddTitle("v1.8.1", "2019-08-29");
             AddLog(new UpdateLog(LogType.LT_MODIFY, new List<string>{
                  "修复平博将（Kills）或者（击杀数）作为胜负盘的BUG",
-                 "修复亚游不抓BO1地图一获胜队伍标题的BUG"
+                 "修复亚游不抓BO1地图一获胜队伍标题的BUG",
+                 "平博增加星际争霸2，彩虹六号比赛标题的识别"
             }));
         }
     }

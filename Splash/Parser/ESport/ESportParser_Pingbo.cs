@@ -48,6 +48,14 @@ namespace Splash.Parser.ESport
                 {
                     return 0;
                 }
+                else if(gameId == "ÐÇ¼ÊÕù°Ô2")
+                {
+                    return 6;
+                }
+                else if(gameId == "²ÊºçÁùºÅ")
+                {
+                    return 8;
+                }
             }
             return INVALID_INDEX;
         }
