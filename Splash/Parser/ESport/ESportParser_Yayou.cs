@@ -63,11 +63,23 @@ namespace Splash.Parser.ESport
                         JToken betOptions = odds["betOptions"];
                         var markValue = odds["markValue"];
                         var switchStatus = odds["switchStatus"];
-                        //不是胜负盘
-                        if (groupName.ToString() == "奇偶")
+                        if(bo != 1)
                         {
-                            continue;
+                            //非BO1,不是胜负盘过滤
+                            if (!groupName.ToString().Contains("全场获胜"))
+                            {
+                                continue;
+                            }
                         }
+                        else
+                        {
+                            //BO1,不是胜负盘或者地图一过滤
+                            if (!(groupName.ToString().Contains("全场获胜") || groupName.ToString().Contains("地图一获胜")))
+                            {
+                                continue;
+                            }
+                        }
+                       
                         //未开盘
                         if(!Convert.ToBoolean(switchStatus.ToString()))
                         {

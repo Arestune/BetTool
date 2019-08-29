@@ -27,7 +27,7 @@ namespace Splash.Parser
                 case SportID.SID_ESPORT:
                     if (webName == StaticData.webNames[(int)WebID.WID_YABO])
                     {
-                        return new ESportParser_Yabo();
+                        return new ESportParser_IM();
                     }
                     else if (webName == StaticData.webNames[(int)WebID.WID_YAYOU])
                     {

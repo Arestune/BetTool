@@ -88,7 +88,7 @@
     <Compile Include="Parser\ESport\ESportParser_188.cs" />
     <Compile Include="Parser\ESport\ESportParser_UWin.cs" />
     <Compile Include="Parser\ESport\ESportParser_Yayou.cs" />
-    <Compile Include="Parser\ESport\ESportParser_Yabo.cs" />
+    <Compile Include="Parser\ESport\ESportParser_IM.cs" />
     <Compile Include="Parser\ParseFactory.cs" />
     <Compile Include="Parser\StaticData.cs" />
     <Compile Include="Program.cs" />

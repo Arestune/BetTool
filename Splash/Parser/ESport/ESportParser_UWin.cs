@@ -128,6 +128,10 @@ namespace Splash.Parser.ESport
                             }
                             JArray leftArray = JArray.Parse(odds["left"].ToString());
                             JArray rightArray = JArray.Parse(odds["right"].ToString());
+                            if(leftArray.Count == 0 || rightArray.Count == 0)
+                            {
+                                continue;
+                            }
                             string left = leftArray[0].ToString();
                             string right = rightArray[0].ToString();
                             JToken odd_lists = match_winner["odd_lists"];
@@ -154,7 +158,7 @@ namespace Splash.Parser.ESport
                                 b.bo = bo;
                                 b.time = time;
                                 betItems.Add(b);
-                                if (betItems.Count == 9)
+                                if (betItems.Count == 37)
                                 {
                                     int a = 0;
                                 }

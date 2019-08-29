@@ -15,7 +15,7 @@ using Splash.Parser;
 using Splash.Tool;
 namespace Splash.Parser.ESport
 {
-    class ESportParser_Yabo:ESportParser
+    class ESportParser_IM:ESportParser
     {
         protected override void Init()
         {

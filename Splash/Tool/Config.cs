@@ -116,8 +116,6 @@ namespace Splash.Tool
         }
         */
 
-
-
         [DllImport("kernel32")]
         public static extern bool WritePrivateProfileString(byte[] section, byte[] key, byte[] val, string filePath);
         [DllImport("kernel32")]

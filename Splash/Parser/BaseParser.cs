@@ -169,7 +169,7 @@ namespace Splash.Parser
                 request.ContentType = options.ContentType;//定义文档类型及编码
                 request.AllowAutoRedirect = options.AllowAutoRedirect;//禁止自动跳转
                 request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36";//设置User-Agent，伪装成Google Chrome浏览器
-                request.Timeout = options.Timeout;//定义请求超时时间为5秒
+                request.Timeout = options.Timeout;//定义请求超时时间
                 request.KeepAlive = options.KeepAlive;//启用长连接
                 if (!string.IsNullOrEmpty(options.Referer))
                 {

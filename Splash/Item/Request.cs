@@ -49,7 +49,7 @@ namespace Splash.Item
         /// <summary>
         /// 超时时间（毫秒）
         /// </summary>
-        public int Timeout = 3000;
+        public int Timeout = 8000;
         /// <summary>
         /// 启用长连接
         /// </summary>

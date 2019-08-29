@@ -109,12 +109,16 @@ namespace Splash.Parser.ESport
                     string gameId = GetGameID(title);
                     string league = GetLeague1Name(title);
                     int gameIndex = GetGameIndex(gameId);
+                    if(gameIndex == INVALID_INDEX)
+                    {
+                        continue;
+                    }
                     var matches = record[2].ToArray();
                     foreach (var match in matches)
                     {
                         string team_name1 = match[1].ToString();
                         string team_name2 = match[2].ToString();
-                        if (team_name1.Contains("»÷É±Êý") || team_name2.Contains("»÷É±Êý"))
+                        if (team_name1.Contains("»÷É±Êý") || team_name2.Contains("»÷É±Êý") || team_name2.Contains("Kills") || team_name1.Contains("Kills"))
                         {
                             continue;
                         }
@@ -156,7 +160,7 @@ namespace Splash.Parser.ESport
                         b.bo = bo;
                         b.time = time;
                         betItems.Add(b);
-                        if (betItems.Count == 33)
+                        if (betItems.Count == 36)
                         {
                             int a = 0;
                         }

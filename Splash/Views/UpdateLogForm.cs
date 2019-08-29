@@ -124,6 +124,14 @@ namespace Splash.Views
             AddLog(new UpdateLog(LogType.LT_MODIFY, new List<string>{
                 "UWin会爬出一些隐藏的比赛，过滤掉"
             }));
+            AddTail();
+
+            //v1.8.1
+            AddTitle("v1.8.1", "2019-08-29");
+            AddLog(new UpdateLog(LogType.LT_MODIFY, new List<string>{
+                 "修复平博将（Kills）或者（击杀数）作为胜负盘的BUG",
+                 "修复亚游不抓BO1地图一获胜队伍标题的BUG"
+            }));
         }
     }
 }

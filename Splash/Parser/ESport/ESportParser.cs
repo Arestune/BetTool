@@ -57,11 +57,18 @@ namespace Splash.Parser.ESport
                         while (!string.IsNullOrEmpty(teamAndId))
                         {
                             var array = teamAndId.Split(',');
-                            var teamName = array[0].Trim().ToLower();
-                            var id = Convert.ToInt32(array[1].Trim());
-                            if (!mainTeamIds[i].ContainsKey(teamName) && id != INVALID_INDEX)
+                            if(array.Length != 2)
                             {
-                                mainTeamIds[i].Add(teamName, id);  //这边都要小写
+                                mainTeamIds[i].Add("TMP_" + teamIndex.ToString(), i);
+                            }
+                            else
+                            {
+                                var teamName = array[0].Trim().ToLower();
+                                var id = Convert.ToInt32(array[1].Trim());
+                                if (!mainTeamIds[i].ContainsKey(teamName) && id != INVALID_INDEX)
+                                {
+                                    mainTeamIds[i].Add(teamName, id);  //这边都要小写
+                                }
                             }
                             teamIndex++;
                             teamAndId = Config.GetString(i.ToString(), string.Format("T{0}-{1}", i, teamIndex), fileNames[fileIndex]);
@@ -90,6 +97,7 @@ namespace Splash.Parser.ESport
                 }
 
                 //Teams create empty
+                teamIds.Clear();
                 for (int i = 0; i < gameStaticNames.Count; i++)
                 {
                     Dictionary<string, int> teamList = new Dictionary<string, int>();
