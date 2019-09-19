@@ -72,6 +72,7 @@
     <Compile Include="Log\UpdateLog.cs" />
     <Compile Include="Parser\DynamicData.cs" />
     <Compile Include="Parser\ESport\ESportParser_Pingbo.cs" />
+    <Compile Include="Parser\ESport\ESportParser_CMD.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

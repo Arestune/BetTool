@@ -38,6 +38,9 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.tbProfitsHigh = new System.Windows.Forms.TextBox();
+            this.tbWarning = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbSound = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // dtStart
@@ -124,11 +127,40 @@
             this.tbProfitsHigh.Size = new System.Drawing.Size(45, 21);
             this.tbProfitsHigh.TabIndex = 9;
             // 
+            // tbWarning
+            // 
+            this.tbWarning.Location = new System.Drawing.Point(124, 138);
+            this.tbWarning.Name = "tbWarning";
+            this.tbWarning.Size = new System.Drawing.Size(45, 21);
+            this.tbWarning.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(45, 143);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(71, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "盈利提醒(%)";
+            // 
+            // cbSound
+            // 
+            this.cbSound.AutoSize = true;
+            this.cbSound.Location = new System.Drawing.Point(136, 23);
+            this.cbSound.Name = "cbSound";
+            this.cbSound.Size = new System.Drawing.Size(48, 16);
+            this.cbSound.TabIndex = 12;
+            this.cbSound.Text = "声音";
+            this.cbSound.UseVisualStyleBackColor = true;
+            // 
             // SelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(618, 238);
+            this.Controls.Add(this.cbSound);
+            this.Controls.Add(this.tbWarning);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.tbProfitsHigh);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnOK);
@@ -159,5 +191,8 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbProfitsHigh;
+        private System.Windows.Forms.TextBox tbWarning;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox cbSound;
     }
 }

@@ -23,7 +23,8 @@ namespace Splash.Views
             dtEnd.Value = DynamicData.endDate;
             tbProfitsLow.Text = (DynamicData.profitLow *100.0f).ToString();
             tbProfitsHigh.Text = (DynamicData.profitHigh*100.0f).ToString();
-            
+            tbWarning.Text = (DynamicData.profitWarning * 100.0f).ToString();
+            cbSound.Checked = DynamicData.bPlaySound;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -33,6 +34,8 @@ namespace Splash.Views
             DynamicData.endDate = dtEnd.Value;
             DynamicData.profitLow =Convert.ToDouble(tbProfitsLow.Text)/100.0f;
             DynamicData.profitHigh = Convert.ToDouble(tbProfitsHigh.Text) / 100.0f;
+            DynamicData.profitWarning = Convert.ToDouble(tbWarning.Text) / 100.0f;
+            DynamicData.bPlaySound = cbSound.Checked;
             Close();
         }
     }

@@ -53,6 +53,10 @@ namespace Splash.Parser
                     {
                         return new ESportParser_Pingbo();
                     }
+                    else if (webName == StaticData.webNames[(int)WebID.WID_CMD])
+                    {
+                        return new ESportParser_CMD();
+                    }
                     break;
             }
             return new BaseParser();

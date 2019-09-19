@@ -12,6 +12,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using System.Media;
 using Splash.Tool;
 using Splash.Item;
 using Splash.Parser;
@@ -45,11 +46,11 @@ namespace Splash.Views
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            
+
             //ESportParser.LoadMainData();
             //TestWeb();
             //return;
-           
+   
            // ESportParser.LoadMainData();
             Thread startThread = new Thread(Start);
             startThread.Name = "Main";
@@ -231,6 +232,12 @@ namespace Splash.Views
                     continue;
                 }
 
+                //盈利音乐提醒
+                if (pair.profit >= DynamicData.profitWarning)
+                {
+                    PlayMusic();
+                }
+
                 filter.Add(pair);
             }
             return filter;
@@ -335,7 +342,7 @@ namespace Splash.Views
   
         private void TestWeb()
         {
-            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_Pingbo]);
+            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_CMD]);
             bp.showLogEvent = ShowLog;
             bp.LoadStaticData();
             ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp.webID]));
@@ -383,6 +390,15 @@ namespace Splash.Views
             logForm.Show();
         }
 
- 
+        private void PlayMusic()
+        {
+            if(DynamicData.bPlaySound)
+            {
+                SoundPlayer player = new SoundPlayer();
+                player.SoundLocation = @"Music\1.WAV";
+                player.Load();
+                player.Play();
+            }
+        }
     }
 }

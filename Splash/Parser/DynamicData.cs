@@ -10,9 +10,11 @@ namespace Splash.Parser
     class DynamicData
     {
         public static bool bFresh = false;
+        public static bool bPlaySound = false;
         public static DateTime startDate = DateTime.Now;
         public static DateTime endDate = DateTime.Now.AddDays(7);
         public static double profitLow = 0;
         public static double profitHigh = 5;
+        public static double profitWarning = 0.01;
     }
 }

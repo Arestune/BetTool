@@ -123,6 +123,8 @@ namespace Splash.Parser
                 {
                     Parse();
                 }
+
+ 
             }
             catch(Exception e)
             {
