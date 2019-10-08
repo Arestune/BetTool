@@ -57,6 +57,10 @@ namespace Splash.Parser
                     {
                         return new ESportParser_CMD();
                     }
+                    else if (webName == StaticData.webNames[(int)WebID.WID_BTI])
+                    {
+                        return new ESportParser_BTI();
+                    }
                     break;
             }
             return new BaseParser();

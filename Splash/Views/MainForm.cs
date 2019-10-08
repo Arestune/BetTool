@@ -342,7 +342,7 @@ namespace Splash.Views
   
         private void TestWeb()
         {
-            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_CMD]);
+            BaseParser bp = ParseFactory.GetParser(SportID.SID_ESPORT,StaticData.webNames[(int)WebID.WID_BTI]);
             bp.showLogEvent = ShowLog;
             bp.LoadStaticData();
             ShowLog(string.Format("爬取分析网站:{0}", StaticData.webNames[(int)bp.webID]));
