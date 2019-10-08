@@ -365,7 +365,7 @@ namespace Splash.Views
             b1.handicap = 0;
                 
             BetItem b2 = new BetItem();
-            b2.webID = WebID.WID_YABO;
+            b2.webID = WebID.WID_IM;
             b2.sportID = SportID.SID_ESPORT;
             b2.type = BetType.BT_TEAM;
             b2.gameName = "SB联赛";
@@ -392,7 +392,7 @@ namespace Splash.Views
 
         private void PlayMusic()
         {
-            if(DynamicData.bPlaySound)
+            if (DynamicData.bPlaySound)
             {
                 SoundPlayer player = new SoundPlayer();
                 player.SoundLocation = @"Music\1.WAV";

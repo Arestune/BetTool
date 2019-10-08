@@ -19,7 +19,7 @@ namespace Splash.Parser.ESport
     {
         protected override void Init()
         {
-            webID = WebID.WID_YABO;
+            webID = WebID.WID_IM;
             base.Init();
         }
         protected override int GetTeamIndex(int gameIndex, string strTeam)

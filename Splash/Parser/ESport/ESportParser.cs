@@ -27,7 +27,7 @@ namespace Splash.Parser.ESport
         {
             try
             {
-                staticConfigFile = System.IO.Directory.GetCurrentDirectory() + @"\Config\电竞\亚博.ini";
+                staticConfigFile = System.IO.Directory.GetCurrentDirectory() + @"\Config\电竞\IM.ini";
                 //GameNames
                 int index = 0;
                 gameStaticNames.Clear();
@@ -158,7 +158,7 @@ namespace Splash.Parser.ESport
                 ShowLog(error);
             }
         }
-        protected virtual int GetBO(string str)
+        protected override int GetBO(string str)
         {
             return 1;
         }

@@ -22,7 +22,7 @@ namespace Splash.Parser.Basketball
         protected string xauth;
         protected override void Init()
         {
-            webID = WebID.WID_YABO;
+            webID = WebID.WID_IM;
             base.Init();
         }
         protected override System.Net.IWebProxy GetProxy()

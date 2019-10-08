@@ -193,8 +193,17 @@ namespace Splash.Parser
                         byte[] buffer = Encoding.UTF8.GetBytes(options.XHRParams);
                         if (buffer != null)
                         {
-                            request.ContentLength = buffer.Length;
-                            request.GetRequestStream().Write(buffer, 0, buffer.Length);
+                            try
+                            {
+                                 
+                                request.ContentLength = buffer.Length;
+                                 request.GetRequestStream().Write(buffer, 0, buffer.Length);
+                            }
+                            catch (WebException ex)
+                            {
+                                response = (HttpWebResponse)ex.Response;
+                                return null;
+                            }
                         }
                     }
                     else
@@ -250,7 +259,14 @@ namespace Splash.Parser
                         }
                     }
                 }
-                request.Abort();
+                if (request != null)
+                {
+                    request.Abort();
+                }
+                if (response != null)
+                {
+                    response.Close();
+                }
             }
             catch (WebException exp)
             {
@@ -268,6 +284,7 @@ namespace Splash.Parser
                 error.message = exp.Message;
                 ShowLog(error);
             }
+            
             return result;
         }
 

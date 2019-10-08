@@ -139,6 +139,12 @@ namespace Splash.Parser.ESport
                             {
                                 var odd1 = Convert.ToDouble(odd_lists[left]["Value"]);
                                 var odd2 = Convert.ToDouble(odd_lists[right]["Value"]);
+                                //过滤掉不可见的赔率
+                                if (!Boolean.Parse(odd_lists[left]["Visible"].ToString()))
+                                {
+                                    continue;
+                                }
+
                                 BetItem b = new BetItem();
                                 b.webID = webID;
                                 b.sportID = sportID;

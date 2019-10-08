@@ -24,15 +24,35 @@ namespace Splash.Parser.ESport
         }
         protected override string GetLeague1Name(string str)
         {
+            string league = null;
             var pair = str.Split('-');
-            string league = pair[1].ToString().Trim();
+            if (pair.Length == 1)
+            {
+                return league;
+            }
+            else
+            {
+                league = pair[0].ToString().Trim();
+            }
+            league = pair[1].ToString().Trim();
             return league;
         }
 
         protected override string GetGameID(string str)
         {
             var pair = str.Split('-');
-            string league = pair[0].ToString().Trim();
+            string league = null;
+            if(pair.Length == 1)
+            {
+                if(str.Contains("Ó¢ÐÛÁªÃË"))
+                {
+                    return "Ó¢ÐÛÁªÃË";
+                }
+            }
+            else
+            {
+                league = pair[0].ToString().Trim();
+            }
             return league;
         }
         protected override int GetGameIndex(string gameId)
@@ -55,6 +75,10 @@ namespace Splash.Parser.ESport
                 else if(gameId == "²ÊºçÁùºÅ")
                 {
                     return 8;
+                }
+                else if (gameId == "Â¯Ê¯´«Ëµ")
+                {
+                    return 11;
                 }
             }
             return INVALID_INDEX;

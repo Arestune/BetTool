@@ -116,82 +116,82 @@ namespace Splash.Tool
         }
         */
 
-        [DllImport("kernel32")]
-        public static extern bool WritePrivateProfileString(byte[] section, byte[] key, byte[] val, string filePath);
-        [DllImport("kernel32")]
-        public static extern int GetPrivateProfileString(byte[] section, byte[] key, byte[] def, byte[] retVal, int size, string filePath);
-        //与ini交互必须统一编码格式
-        private static byte[] getBytes(string s, string encodingName)
-        {
-            return null == s ? null : Encoding.GetEncoding(encodingName).GetBytes(s);
-        }
-        public static string GetString(string section, string key, string fileName, string def = "", string encodingName = "utf-8", int size = 2048)
-        {
-            byte[] buffer = new byte[size];
-            int count = GetPrivateProfileString(getBytes(section, encodingName), getBytes(key, encodingName), getBytes(def, encodingName), buffer, size, fileName);
-            return Encoding.GetEncoding(encodingName).GetString(buffer, 0, count).Trim();
-        }
-        public static bool WriteString(string section, string key, string value, string fileName, string encodingName = "utf-8")
-        {
-            return WritePrivateProfileString(getBytes(section, encodingName), getBytes(key, encodingName), getBytes(value, encodingName), fileName);
-        }
-
-
-
-        //#region API函数声明
-
-        //[DllImport("kernel32")]//返回0表示失败，非0为成功
-        //private static extern long WritePrivateProfileString(string section, string key,
-        //    string val, string filePath);
-
-        //[DllImport("kernel32")]//返回取得字符串缓冲区的长度
-        //private static extern long GetPrivateProfileString(string section, string key,
-        //    string def, StringBuilder retVal, int size, string filePath);
-
-
-        //#endregion
-
-        //#region 读Ini文件
-
-        //public static string GetString(string Section, string Key,string iniFilePath, string NoText = "")
+        //[DllImport("kernel32")]
+        //public static extern bool WritePrivateProfileString(byte[] section, byte[] key, byte[] val, string filePath);
+        //[DllImport("kernel32")]
+        //public static extern int GetPrivateProfileString(byte[] section, byte[] key, byte[] def, byte[] retVal, int size, string filePath);
+        ////与ini交互必须统一编码格式
+        //private static byte[] getBytes(string s, string encodingName)
         //{
-        //    if (File.Exists(iniFilePath))
-        //    {
-        //        StringBuilder temp = new StringBuilder(1024);
-        //        GetPrivateProfileString(Section, Key, NoText, temp, 1024, iniFilePath);
-        //        return temp.ToString();
-        //    }
-        //    else
-        //    {
-        //        return String.Empty;
-        //    }
+        //    return null == s ? null : Encoding.GetEncoding(encodingName).GetBytes(s);
+        //}
+        //public static string GetString(string section, string key, string fileName, string def = "", string encodingName = "utf-8", int size = 2048)
+        //{
+        //    byte[] buffer = new byte[size];
+        //    int count = GetPrivateProfileString(getBytes(section, encodingName), getBytes(key, encodingName), getBytes(def, encodingName), buffer, size, fileName);
+        //    return Encoding.GetEncoding(encodingName).GetString(buffer, 0, count).Trim();
+        //}
+        //public static bool WriteString(string section, string key, string value, string fileName, string encodingName = "utf-8")
+        //{
+        //    return WritePrivateProfileString(getBytes(section, encodingName), getBytes(key, encodingName), getBytes(value, encodingName), fileName);
         //}
 
-        //#endregion
 
-        //#region 写Ini文件
 
-        //public static bool WriteString(string Section, string Key, string Value, string iniFilePath)
-        //{
-        //    if (File.Exists(iniFilePath))
-        //    {
-        //        long OpStation = WritePrivateProfileString(Section, Key, Value, iniFilePath);
-        //        if (OpStation == 0)
-        //        {
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        #region API函数声明
 
-        //#endregion
+        [DllImport("kernel32")]//返回0表示失败，非0为成功
+        private static extern long WritePrivateProfileString(string section, string key,
+            string val, string filePath);
+
+        [DllImport("kernel32")]//返回取得字符串缓冲区的长度
+        private static extern long GetPrivateProfileString(string section, string key,
+            string def, StringBuilder retVal, int size, string filePath);
+
+
+        #endregion
+
+        #region 读Ini文件
+
+        public static string GetString(string Section, string Key, string iniFilePath, string NoText = "")
+        {
+            if (File.Exists(iniFilePath))
+            {
+                StringBuilder temp = new StringBuilder(1024);
+                GetPrivateProfileString(Section, Key, NoText, temp, 1024, iniFilePath);
+                return temp.ToString();
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        #endregion
+
+        #region 写Ini文件
+
+        public static bool WriteString(string Section, string Key, string Value, string iniFilePath)
+        {
+            if (File.Exists(iniFilePath))
+            {
+                long OpStation = WritePrivateProfileString(Section, Key, Value, iniFilePath);
+                if (OpStation == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        #endregion
     }
 
 }

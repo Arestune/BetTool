@@ -61,7 +61,7 @@ namespace Splash.Parser.ESport
                 op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
                 //ªÒ»°Õ¯“≥
                 html = RequestAction(op);
-                while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
+                 while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
                 {
                     html = RequestAction(op);
                     nTryCount++;

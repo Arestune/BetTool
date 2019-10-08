@@ -15,7 +15,7 @@ namespace Splash.Item
     public enum WebID
     {
         WID_NULL = -1,
-        WID_YABO = 0,
+        WID_IM = 0,
         WID_YAYOU,
         WID_188,
         WID_FANYA,

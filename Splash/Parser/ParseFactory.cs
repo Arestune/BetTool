@@ -15,7 +15,7 @@ namespace Splash.Parser
             switch(sportId)
             {
                 case SportID.SID_BASKETBALL:
-                    if (webName == StaticData.webNames[(int)WebID.WID_YABO])
+                    if (webName == StaticData.webNames[(int)WebID.WID_IM])
                     {
                         return new BasketballParser_Yabo();
                     }
@@ -25,7 +25,7 @@ namespace Splash.Parser
                     }
                     break;
                 case SportID.SID_ESPORT:
-                    if (webName == StaticData.webNames[(int)WebID.WID_YABO])
+                    if (webName == StaticData.webNames[(int)WebID.WID_IM])
                     {
                         return new ESportParser_IM();
                     }

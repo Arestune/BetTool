@@ -90,7 +90,7 @@ namespace Splash.Parser.ESport
             {
                 return "cs:go";
             }
-            return "NULL";
+            return INVALID_VALUE;
         }
         protected override int GetBO(string str)
         {
@@ -146,6 +146,10 @@ namespace Splash.Parser.ESport
                     var n = c["n"];
                     var leagueName = GetLeague1Name(n.ToString());
                     var gameName = GetGameID(n.ToString());
+                    if(gameName == INVALID_VALUE)
+                    {
+                        continue;
+                    }
                     var bo = GetBO(n.ToString());
                     var gameIndex = GetGameIndex(gameName);
                     var es = JArray.Parse(eg["es"].ToString());
@@ -203,7 +207,7 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
                         b.bo = bo;
                         betItems.Add(b);
-                        if (betItems.Count == 9)
+                        if (betItems.Count == 25)
                         {
                             int a = 1;
                         }
