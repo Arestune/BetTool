@@ -320,10 +320,10 @@ namespace Splash.Parser
                         continue;
                     }
                     //过滤bo不同的
-                    if(b1.bo != b2.bo)
-                    {
-                        continue;
-                    }
+                    //if(b1.bo != b2.bo)
+                    //{
+                    //    continue;
+                    //}
                     //时间不能相差太多
                     TimeSpan timeSpan = b1.time-b2.time;
                     if (timeSpan.TotalHours > 4 || timeSpan.TotalHours < -4)

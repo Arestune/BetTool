@@ -186,6 +186,8 @@ namespace Splash.Parser.ESport
         }
         protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
+            strTeam = Util.GetFilterString(strTeam);
+
             if (gameIndex >= teamIds.Count) return INVALID_INDEX;
             string strLowerTeam = strTeam.ToLower().Trim();
 

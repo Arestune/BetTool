@@ -55,10 +55,12 @@ namespace Splash.Parser.ESport
                 string uri = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
                 RequestOptions op = new RequestOptions(uri);
                 op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
-                op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-                op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
+                op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "application/json, text/javascript, */*;");
+                op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "https://avia.fts368.com/Member/BetOdds/HdpDouble.aspx?v=1&m1=Today&sports=ES_");
                 op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
                 op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
+                op.ContentType = "application/json; charset=UTF-8";
+                op.Timeout = 360000;
                 //ªÒ»°Õ¯“≥
                 html = RequestAction(op);
                  while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)

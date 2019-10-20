@@ -68,6 +68,10 @@ namespace Splash.Parser.ESport
                 {
                     return 0;
                 }
+                else if (gameId == "王者荣耀")
+                {
+                    return 3;
+                }
                 else if(gameId == "星际争霸2")
                 {
                     return 6;
@@ -79,6 +83,10 @@ namespace Splash.Parser.ESport
                 else if (gameId == "炉石传说")
                 {
                     return 11;
+                }
+                else if (gameId == "火箭联盟")
+                {
+                    return 7;
                 }
             }
             return INVALID_INDEX;
@@ -150,6 +158,10 @@ namespace Splash.Parser.ESport
                     {
                         string team_name1 = match[1].ToString();
                         string team_name2 = match[2].ToString();
+                        if (team_name1 == "Nemiga")
+                        {
+                            int ax = 1;
+                        }
                         if (team_name1.Contains("击杀数") || team_name2.Contains("击杀数") || team_name2.Contains("Kills") || team_name1.Contains("Kills"))
                         {
                             continue;

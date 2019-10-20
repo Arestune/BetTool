@@ -24,6 +24,7 @@ namespace Splash.Parser.ESport
         }
         protected override int GetTeamIndex(int gameIndex, string strTeam)
         {
+            strTeam = Util.GetFilterString(strTeam);
             string strLowerTeam = strTeam.ToLower();
             if (teamIds[gameIndex].ContainsKey(strLowerTeam))
             {

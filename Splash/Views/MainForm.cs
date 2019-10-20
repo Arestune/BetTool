@@ -28,7 +28,6 @@ namespace Splash.Views
         public delegate void ShowResultHandler(List<BetWinPair> pairs);
         int time = 0;
         int index = 0;
-        
 
         public MainForm()
         {

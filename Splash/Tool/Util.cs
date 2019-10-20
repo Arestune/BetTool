@@ -8,6 +8,12 @@ namespace Splash.Tool
 {
     class Util
     {
+        public static string GetFilterString(string str)
+        {
+            string newString;
+            newString = str.Replace('ł', '?');
+            return newString;
+        }
         public static int GetCommentInt(string str)
         {
             Match match = Regex.Match(str, @"\.*(\d+)\.*");
