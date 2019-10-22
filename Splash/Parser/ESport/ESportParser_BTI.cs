@@ -224,40 +224,43 @@ namespace Splash.Parser.ESport
                         if (oddsArray != null && oddsArray.Count > 0)
                         {
                             JArray oddsArray1 = JArray.Parse(oddsArray[0].ToString());
-                            JArray oddsArray2 = JArray.Parse(oddsArray1[1].ToString());
-                            if (oddsArray2 != null && oddsArray2.Count > 0)
+                            if (oddsArray1 != null && oddsArray1.Count > 0 && oddsArray1[1].ToString().Contains('['))
                             {
-                                string odds1String = oddsArray2[1].ToString();
-                                string odds2String = oddsArray2[5].ToString();
-                                double odds1 = GetOdds(int.Parse(odds1String));
-                                double odds2 = GetOdds(int.Parse(odds2String));
-                                BetItem b = new BetItem();
-                                b.webID = webID;
-                                b.sportID = sportID;
-                                b.type = BetType.BT_TEAM;
-                                b.pID1 = team1_index;
-                                b.pID2 = team2_index;
-                                b.pName1 = team1_name;
-                                b.pName2 = team2_name;
-                                b.pAbbr1 = team1_name;
-                                b.pAbbr2 = team2_name;
-                                b.odds1 = odds1;
-                                b.odds2 = odds2;
-                                b.gameID = gameIndex;
-                                b.gameName = gameStaticNames[gameIndex];
-                                b.leagueName1 = gameLeague;
-                                b.leagueName2 = gameLeague;
-                                b.bo = 1;
-                                b.time = gameTime;
-                                betItems.Add(b);
-                                if (betItems.Count == 37)
+                                JArray oddsArray2 = JArray.Parse(oddsArray1[1].ToString());
+                                if (oddsArray2 != null && oddsArray2.Count > 0)
                                 {
-                                    int a = 0;
+                                    string odds1String = oddsArray2[1].ToString();
+                                    string odds2String = oddsArray2[5].ToString();
+                                    double odds1 = GetOdds(int.Parse(odds1String));
+                                    double odds2 = GetOdds(int.Parse(odds2String));
+                                    BetItem b = new BetItem();
+                                    b.webID = webID;
+                                    b.sportID = sportID;
+                                    b.type = BetType.BT_TEAM;
+                                    b.pID1 = team1_index;
+                                    b.pID2 = team2_index;
+                                    b.pName1 = team1_name;
+                                    b.pName2 = team2_name;
+                                    b.pAbbr1 = team1_name;
+                                    b.pAbbr2 = team2_name;
+                                    b.odds1 = odds1;
+                                    b.odds2 = odds2;
+                                    b.gameID = gameIndex;
+                                    b.gameName = gameStaticNames[gameIndex];
+                                    b.leagueName1 = gameLeague;
+                                    b.leagueName2 = gameLeague;
+                                    b.bo = 1;
+                                    b.time = gameTime;
+                                    betItems.Add(b);
+                                    if (betItems.Count == 8)
+                                    {
+                                        int a = 0;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                continue;
+                                else
+                                {
+                                    continue;
+                                }
                             }
                         }
                         else

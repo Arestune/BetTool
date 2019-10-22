@@ -55,47 +55,44 @@ namespace Splash.Parser.ESport
         }
         public override int Parse()
         {
-            try
+            if (string.IsNullOrEmpty(html))
             {
-                //string fullName = "D:\\1.json";
-                //System.IO.StreamReader sr1 = new StreamReader(fullName);
-                //html = sr1.ReadToEnd();
-                if (string.IsNullOrEmpty(html))
+                return 0;
+            }
+            JObject mObj = JObject.Parse(html);
+            JToken d = mObj["d"];
+            int index = 0;
+            foreach (var b1 in d)
+            {
+                try
                 {
-                    return 0;
-                }
-                JObject mObj = JObject.Parse(html);
-                JToken d = mObj["d"];
-                int index = 0;
-                foreach(var b1 in d)
-                {
-                    var gameIndex= GetGameIndex(b1[8].ToString());
+                    var gameIndex = GetGameIndex(b1[8].ToString());
                     var leagueName1 = b1[5][1].ToString();
                     var leagueName2 = b1[1][1].ToString();
                     //IniUtil.WriteString("Game", string.Format("G{0}", index),gameName, configFile);
-                    foreach(var b2 in b1[10])
+                    foreach (var b2 in b1[10])
                     {
                         var team1_name = b2[5][0].ToString().Trim();
                         var team2_name = b2[6][0].ToString().Trim();
                         var europeTime = DateTime.Parse(b2[7].ToString());
                         var chinaMatchTime = europeTime.AddHours(8);
-                        var localTime = DateTime.Now; 
+                        var localTime = DateTime.Now;
                         //over time
                         if (DateTime.Compare(localTime, chinaMatchTime) > 0)
                         {
                             continue;
                         }
-                        int bo = GetBO(b2[33].ToString()) ;
+                        int bo = GetBO(b2[33].ToString());
                         double betValue = 0.0;
-                        if(bo%2 == 0)
+                        if (bo % 2 == 0)
                         {
                             var winhandcap = b2[28].ToString();
                             int v = Convert.ToInt32(winhandcap.Split('-')[1]);
-                            if(winhandcap.Contains("A"))
+                            if (winhandcap.Contains("A"))
                             {
                                 betValue = -v / 10.0f;
                             }
-                            else if(winhandcap.Contains("B"))
+                            else if (winhandcap.Contains("B"))
                             {
                                 betValue = v / 10.0f;
                             }
@@ -137,19 +134,18 @@ namespace Splash.Parser.ESport
                         b.bo = bo;
                         betItems.Add(b);
                     }
-                    index++;
                 }
-                ShowLog(string.Format("页面解析成功，解析个数：{0}！",betItems.Count));
+                catch (Exception e)
+                {
+                    DebugLog error = new DebugLog();
+                    error.webID = webID;
+                    error.level = ErrorLevel.EL_WARNING;
+                    error.message = e.Message;
+                    ShowLog(error);
+                }
+                index++;
             }
-            catch(Exception e)
-            {
-                DebugLog error = new DebugLog();
-                error.webID = webID;
-                error.level = ErrorLevel.EL_WARNING;
-                error.message = e.Message;
-                ShowLog(error);
-            }
-
+            ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
             return betItems.Count;
         }
     }

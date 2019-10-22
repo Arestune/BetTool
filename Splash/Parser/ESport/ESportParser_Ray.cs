@@ -178,7 +178,8 @@ namespace Splash.Parser.ESport
                     {
                         //odds
                         var odds = result["odds"];
-                        if (odds == null)
+                        //过虑胜负平
+                        if (odds == null || odds.Count() != 2)
                         {
                             continue;
                         }
@@ -189,6 +190,7 @@ namespace Splash.Parser.ESport
                         }
                         var odds1 = Convert.ToDouble(odds[0]["odds"].ToString());
                         var odds2 = Convert.ToDouble(odds[1]["odds"].ToString());
+                     
                         
                         var leagueName = result["tournament_name"].ToString();
                         var gameTime = GetGameTime(result["start_time"].ToString());
@@ -234,10 +236,9 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
                         b.leagueName1 = leagueName;
                         betItems.Add(b);
-                        if(betItems.Count == 135)
+                        if(betItems.Count == 1)
                         {
                             int a = 1;
-                            a++;
                         }
                     }
                     catch (Exception e)
