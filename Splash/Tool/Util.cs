@@ -12,6 +12,7 @@ namespace Splash.Tool
         {
             string newString;
             newString = str.Replace('ł', '?');
+            newString = newString.Replace('æ', '?');
             return newString;
         }
         public static int GetCommentInt(string str)

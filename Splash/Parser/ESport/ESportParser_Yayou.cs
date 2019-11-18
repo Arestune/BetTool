@@ -31,7 +31,7 @@ namespace Splash.Parser.ESport
             {
                 //今日
                 int nTryCount = 0;
-                string uri = Config.GetString(StaticData.SN_URL, "Uri", configFile, "Uri");
+                string uri = Config.GetString(StaticData.SN_URL, "Uri2", configFile, "Uri2");
                 RequestOptions op = new RequestOptions(uri);
                 op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
                 op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
@@ -56,32 +56,32 @@ namespace Splash.Parser.ESport
                     Parse();
                 }
 
-                //早盘
-                nTryCount = 0;
-                uri = Config.GetString(StaticData.SN_URL, "Uri2", configFile, "Uri2");
-                op = new RequestOptions(uri);
-                op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
-                op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-                op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
-                op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
-                op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
-                op.Timeout = 15000;
-                //获取网页
-                html = RequestAction(op);
-                while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
-                {
-                    html = RequestAction(op);
-                    nTryCount++;
-                }
-                if (nTryCount == MAX_TRY_COUNT)
-                {
-                    ShowLog("抓取失败！");
-                    html = "";
-                }
-                else
-                {
-                    Parse();
-                }
+                ////早盘
+                //nTryCount = 0;
+                //uri = Config.GetString(StaticData.SN_URL, "Uri2", configFile, "Uri2");
+                //op = new RequestOptions(uri);
+                //op.Method = Config.GetString(StaticData.SN_URL, "Method", configFile, "GET");
+                //op.Accept = Config.GetString(StaticData.SN_URL, "Accept", configFile, "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+                //op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
+                //op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
+                //op.XHRParams = Config.GetString(StaticData.SN_URL, "XHRParams", configFile, "");
+                //op.Timeout = 15000;
+                ////获取网页
+                //html = RequestAction(op);
+                //while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
+                //{
+                //    html = RequestAction(op);
+                //    nTryCount++;
+                //}
+                //if (nTryCount == MAX_TRY_COUNT)
+                //{
+                //    ShowLog("抓取失败！");
+                //    html = "";
+                //}
+                //else
+                //{
+                //    Parse();
+                //}
 
                 ShowLog(string.Format("页面解析成功，解析个数：{0}！", betItems.Count));
             }
