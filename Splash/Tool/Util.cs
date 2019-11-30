@@ -10,10 +10,10 @@ namespace Splash.Tool
     {
         public static string GetFilterString(string str)
         {
-            string newString;
-            newString = str.Replace('ł', '?');
-            newString = newString.Replace('æ', '?');
-            return newString;
+            str = str.Replace('ł', '?');
+            str = str.Replace('æ', '?');
+            str = str.Replace('і', '?');
+            return str;
         }
         public static int GetCommentInt(string str)
         {

@@ -61,6 +61,10 @@ namespace Splash.Parser
                     {
                         return new ESportParser_BTI();
                     }
+                    else if (webName == StaticData.webNames[(int)WebID.WID_Leihuo])
+                    {
+                        return new ESportParser_Leihuo();
+                    }
                     break;
             }
             return new BaseParser();

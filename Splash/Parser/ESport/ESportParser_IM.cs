@@ -36,6 +36,7 @@ namespace Splash.Parser.ESport
                 teamIds[gameIndex].Add(strLowerTeam, curId);
                 Config.WriteString(gameIndex.ToString(), string.Format("T{0}-{1}", gameIndex, curId), string.Format("{0},{1}",
                     strTeam, curId), configFile);
+                ShowLog(string.Format("新增主列表[{0}]队伍:{1}", gameIndex, strTeam), ErrorLevel.EL_NORMAL);
                 return curId;
             }
         }
