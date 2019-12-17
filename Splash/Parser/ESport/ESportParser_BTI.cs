@@ -224,42 +224,71 @@ namespace Splash.Parser.ESport
                         if (oddsArray != null && oddsArray.Count > 0)
                         {
                             JArray oddsArray1 = JArray.Parse(oddsArray[0].ToString());
-                            if (oddsArray1 != null && oddsArray1.Count > 0 && oddsArray1[1].ToString().Contains('['))
+                            if (oddsArray1 != null && oddsArray1.Count > 0 )
                             {
-                                JArray oddsArray2 = JArray.Parse(oddsArray1[1].ToString());
-                                if (oddsArray2 != null && oddsArray2.Count > 0)
+                                for(int i = 1;i< 3;i++)
                                 {
-                                    string odds1String = oddsArray2[1].ToString();
-                                    string odds2String = oddsArray2[5].ToString();
-                                    double odds1 = GetOdds(int.Parse(odds1String));
-                                    double odds2 = GetOdds(int.Parse(odds2String));
-                                    BetItem b = new BetItem();
-                                    b.webID = webID;
-                                    b.sportID = sportID;
-                                    b.type = BetType.BT_TEAM;
-                                    b.pID1 = team1_index;
-                                    b.pID2 = team2_index;
-                                    b.pName1 = team1_name;
-                                    b.pName2 = team2_name;
-                                    b.pAbbr1 = team1_name;
-                                    b.pAbbr2 = team2_name;
-                                    b.odds1 = odds1;
-                                    b.odds2 = odds2;
-                                    b.gameID = gameIndex;
-                                    b.gameName = gameStaticNames[gameIndex];
-                                    b.leagueName1 = gameLeague;
-                                    b.leagueName2 = gameLeague;
-                                    b.bo = 1;
-                                    b.time = gameTime;
-                                    betItems.Add(b);
-                                    if (betItems.Count == 8)
+                                    double handicap = 0;
+                                    var tmpOdds = oddsArray1[i].ToString();
+                                    if (string.IsNullOrEmpty(tmpOdds))
                                     {
-                                        int a = 0;
+                                        continue;
                                     }
-                                }
-                                else
-                                {
-                                    continue;
+                                    JArray oddsArray2 = JArray.Parse(tmpOdds);
+                                    if (oddsArray2 != null && oddsArray2.Count > 0)
+                                    {
+                                        string odds1String = null;
+                                        string odds2String = null;
+                                        if(oddsArray2.Count == 10)
+                                        {
+                                            odds1String = oddsArray2[1].ToString();
+                                            odds2String = oddsArray2[5].ToString();
+                                        }
+                                        else if(oddsArray2.Count == 8)
+                                        {
+                                            handicap = Convert.ToDouble(oddsArray2[1].ToString());
+                                            odds1String = oddsArray2[2].ToString();
+                                            odds2String = oddsArray2[4].ToString();
+                                        }
+                                        else
+                                        {
+                                            continue;
+                                        }
+                                        if(odds1String == "0" || odds2String == "0")
+                                        {
+                                            continue;
+                                        }
+                                        double odds1 = GetOdds(int.Parse(odds1String));
+                                        double odds2 = GetOdds(int.Parse(odds2String));
+                                        BetItem b = new BetItem();
+                                        b.webID = webID;
+                                        b.sportID = sportID;
+                                        b.type = BetType.BT_TEAM;
+                                        b.pID1 = team1_index;
+                                        b.pID2 = team2_index;
+                                        b.pName1 = team1_name;
+                                        b.pName2 = team2_name;
+                                        b.pAbbr1 = team1_name;
+                                        b.pAbbr2 = team2_name;
+                                        b.odds1 = odds1;
+                                        b.odds2 = odds2;
+                                        b.gameID = gameIndex;
+                                        b.gameName = gameStaticNames[gameIndex];
+                                        b.leagueName1 = gameLeague;
+                                        b.leagueName2 = gameLeague;
+                                        b.bo = 1;
+                                        b.handicap = handicap;
+                                        b.time = gameTime;
+                                        betItems.Add(b);
+                                        if (betItems.Count == 1)
+                                        {
+                                            int a = 0;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
                         }

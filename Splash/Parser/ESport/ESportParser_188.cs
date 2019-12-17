@@ -181,32 +181,62 @@ namespace Splash.Parser.ESport
 
                         var o = esSingle["o"];
                         var ml = o["ml"];
-                        if (ml == null)
+                        var ah = o["ah"];
+                        //胜负盘
+                        if (ml != null)
                         {
-                            continue;
+                            var odds1 = Convert.ToDouble(ml[1]);
+                            var odds2 = Convert.ToDouble(ml[3]);
+                            BetItem b = new BetItem();
+                            b.sportID = sportID;
+                            b.webID = webID;
+                            b.type = BetType.BT_TEAM;
+                            b.pID1 = team1_index;
+                            b.pID2 = team2_index;
+                            b.pName1 = team1_name;
+                            b.pName2 = team2_name;
+                            b.pAbbr1 = team1_name;
+                            b.pAbbr2 = team2_name;
+                            b.odds1 = odds1;
+                            b.odds2 = odds2;
+                            b.gameID = gameIndex;
+                            b.handicap = 0;
+                            b.gameName = gameStaticNames[gameIndex];
+                            b.leagueName1 = leagueName;
+                            b.time = gameTime;
+                            b.bo = bo;
+                            betItems.Add(b);
                         }
-                        var odds1 = Convert.ToDouble(ml[1]);
-                        var odds2 = Convert.ToDouble(ml[3]);
-
-                        BetItem b = new BetItem();
-                        b.sportID = sportID;
-                        b.webID = webID;
-                        b.type = BetType.BT_TEAM;
-                        b.pID1 = team1_index;
-                        b.pID2 = team2_index;
-                        b.pName1 = team1_name;
-                        b.pName2 = team2_name;
-                        b.pAbbr1 = team1_name;
-                        b.pAbbr2 = team2_name;
-                        b.odds1 = odds1;
-                        b.odds2 = odds2;
-                        b.gameID = gameIndex;
-                        b.handicap = 0;
-                        b.gameName = gameStaticNames[gameIndex];
-                        b.leagueName1 = leagueName;
-                        b.time = gameTime;
-                        b.bo = bo;
-                        betItems.Add(b);
+                        //让分盘
+                        if(ah != null)
+                        {
+                            JArray array = JArray.Parse(ah.ToString());
+                            int ahNum = array.Count / 8;
+                            for(int k= 0;k< ahNum;k++)
+                            {
+                                var odds1 = Convert.ToDouble(ah[k * 8 + 5]);
+                                var odds2 = Convert.ToDouble(ah[k * 8 + 7]);
+                                BetItem b = new BetItem();
+                                b.sportID = sportID;
+                                b.webID = webID;
+                                b.type = BetType.BT_TEAM;
+                                b.pID1 = team1_index;
+                                b.pID2 = team2_index;
+                                b.pName1 = team1_name;
+                                b.pName2 = team2_name;
+                                b.pAbbr1 = team1_name;
+                                b.pAbbr2 = team2_name;
+                                b.odds1 = odds1;
+                                b.odds2 = odds2;
+                                b.gameID = gameIndex;
+                                b.handicap = Convert.ToDouble(ah[k * 8 + 1]);
+                                b.gameName = gameStaticNames[gameIndex];
+                                b.leagueName1 = leagueName;
+                                b.time = gameTime;
+                                b.bo = bo;
+                                betItems.Add(b);
+                            }
+                        }
                         if (betItems.Count == 25)
                         {
                             int a = 1;

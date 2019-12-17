@@ -114,12 +114,9 @@ namespace Splash.Parser.ESport
                         var team_abbr2 = player[1]["Code"].ToString().Trim();
                         var team_id1 = GetTeamIndex(gameIndex, team_name1);
                         var team_id2 = GetTeamIndex(gameIndex, team_name2);
-                        if(team_id1 == 160 && team_id2 == 60 ||( team_id1 == 60 && team_id2 == 160))
-                        {
-                            int xx =  0;
-                        }
+                       
                         var bet = JArray.Parse(info["Bet"].ToString());
-                        if(bet[0]["Name"] != null && bet[0]["Name"].ToString() != "比赛获胜" )
+                        if(bet== null || bet.Count == 0 || (bet[0]["Name"] != null && bet[0]["Name"].ToString() != "比赛获胜" ))
                         {
                             continue;
                         }
@@ -162,7 +159,7 @@ namespace Splash.Parser.ESport
                         b.time = gameTime;
                         b.bo = bo;
                         betItems.Add(b);
-                        if (betItems.Count == 10)
+                        if (betItems.Count == 18)
                         {
                             int a = 1;
                         }

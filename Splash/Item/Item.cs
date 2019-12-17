@@ -24,7 +24,8 @@ namespace Splash.Item
         WID_Pingbo,
         WID_CMD,
         WID_BTI,
-        WID_Leihuo
+        WID_Leihuo,
+        WID_1XBet
     }
 
     public enum BetType

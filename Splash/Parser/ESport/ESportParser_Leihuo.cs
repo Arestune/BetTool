@@ -120,36 +120,62 @@ namespace Splash.Parser.ESport
                     var team1_index = GetTeamIndex(gameIndex, team1_name);
                     var team2_index = GetTeamIndex(gameIndex, team2_name);
                     JArray oddsMarket = JArray.Parse(record["markets"].ToString());
-                    JToken odds = oddsMarket[0];
-                    JArray selection = JArray.Parse(odds["selection"].ToString());
-                    JToken odds1Market = selection[0];
-                    JToken odds2Market = selection[1];
-                    var odd1 = Convert.ToDouble(odds1Market["euro_odds"]);
-                    var odd2 = Convert.ToDouble(odds2Market["euro_odds"]);
-                    var betLimit1 = Convert.ToDouble(odds["max_bet_amount"]);
-                    var betLimit2 = betLimit1;
-                    BetItem b = new BetItem();
-                    b.webID = webID;
-                    b.sportID = sportID;
-                    b.type = BetType.BT_TEAM;
-                    b.pID1 = team1_index;
-                    b.pID2 = team2_index;
-                    b.pName1 = team1_name;
-                    b.pName2 = team2_name;
-                    b.pAbbr1 = team1_abbr;
-                    b.pAbbr2 = team2_abbr;
-                    b.odds1 = odd1;
-                    b.odds2 = odd2;
-                    b.gameID = gameIndex;
-                    b.gameName = gameStaticNames[gameIndex];
-                    b.leagueName1 = league;
-                    b.leagueName2 = league;
-                    b.handicap = 0;
-                    b.time = gameTime;
-                    b.bo = bo;
-                    b.betLimit1 = (int)betLimit1;
-                    b.betLimit2 = (int)betLimit2;
-                    betItems.Add(b);
+                    foreach(var odds in oddsMarket)
+                    {
+                        double handicap = 0;
+                        JArray selection = JArray.Parse(odds["selection"].ToString());
+                        var bet_type_name = odds["bet_type_name"].ToString();
+                        if(bet_type_name == "WIN")
+                        {
+                            handicap = 0;
+                        }
+                        else if(bet_type_name == "AH")
+                        {
+                            handicap = Convert.ToDouble(selection[0]["handicap"].ToString());
+                        }
+                        else if (bet_type_name == "1X2")
+                        {
+                            if (selection.Count > 2)
+                            {
+                                continue;
+                            }
+                            handicap = 0;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                       
+                        JToken odds1Market = selection[0];
+                        JToken odds2Market = selection[1];
+                        var odd1 = Convert.ToDouble(odds1Market["euro_odds"]);
+                        var odd2 = Convert.ToDouble(odds2Market["euro_odds"]);
+                        var betLimit1 = Convert.ToDouble(odds["max_bet_amount"]);
+                        var betLimit2 = betLimit1;
+                        BetItem b = new BetItem();
+                        b.webID = webID;
+                        b.sportID = sportID;
+                        b.type = BetType.BT_TEAM;
+                        b.pID1 = team1_index;
+                        b.pID2 = team2_index;
+                        b.pName1 = team1_name;
+                        b.pName2 = team2_name;
+                        b.pAbbr1 = team1_abbr;
+                        b.pAbbr2 = team2_abbr;
+                        b.odds1 = odd1;
+                        b.odds2 = odd2;
+                        b.gameID = gameIndex;
+                        b.gameName = gameStaticNames[gameIndex];
+                        b.leagueName1 = league;
+                        b.leagueName2 = league;
+                        b.handicap = handicap;
+                        b.time = gameTime;
+                        b.bo = bo;
+                        b.betLimit1 = (int)betLimit1;
+                        b.betLimit2 = (int)betLimit2;
+                        betItems.Add(b);
+                    }
+                   
                 }
                 catch (Exception e)
                 {

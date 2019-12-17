@@ -71,6 +71,7 @@
     <Compile Include="Item\Item.cs" />
     <Compile Include="Log\UpdateLog.cs" />
     <Compile Include="Parser\DynamicData.cs" />
+    <Compile Include="Parser\ESport\ESportParser_1XBet.cs" />
     <Compile Include="Parser\ESport\ESportParser_BTI.cs" />
     <Compile Include="Parser\ESport\ESportParser_Leihuo.cs" />
     <Compile Include="Parser\ESport\ESportParser_Pingbo.cs" />
@@ -110,6 +111,12 @@
     <Compile Include="Views\SelectForm.Designer.cs">
       <DependentUpon>SelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\TeamConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TeamConfigForm.Designer.cs">
+      <DependentUpon>TeamConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UpdateLogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SelectForm.resx">
       <DependentUpon>SelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TeamConfigForm.resx">
+      <DependentUpon>TeamConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UpdateLogForm.resx">
       <DependentUpon>UpdateLogForm.cs</DependentUpon>
