@@ -13,6 +13,10 @@ namespace Splash.Tool
             str = str.Replace('ł', '?');
             str = str.Replace('æ', '?');
             str = str.Replace('і', '?');
+            str = str.Replace('Ø', '?');
+            str = str.Replace('ø', '?');
+            str = str.Replace('‏','?');
+            str = str.Replace('ç', '?');
             return str;
         }
         public static int GetCommentInt(string str)

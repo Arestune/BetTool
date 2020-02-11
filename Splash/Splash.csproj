@@ -73,9 +73,11 @@
     <Compile Include="Parser\DynamicData.cs" />
     <Compile Include="Parser\ESport\ESportParser_1XBet.cs" />
     <Compile Include="Parser\ESport\ESportParser_BTI.cs" />
+    <Compile Include="Parser\ESport\ESportParser_HG.cs" />
     <Compile Include="Parser\ESport\ESportParser_Leihuo.cs" />
     <Compile Include="Parser\ESport\ESportParser_Pingbo.cs" />
     <Compile Include="Parser\ESport\ESportParser_CMD.cs" />
+    <Compile Include="Parser\ESport\ESportParser_Shaba.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

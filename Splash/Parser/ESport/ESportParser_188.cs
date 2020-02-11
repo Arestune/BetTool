@@ -214,8 +214,8 @@ namespace Splash.Parser.ESport
                             int ahNum = array.Count / 8;
                             for(int k= 0;k< ahNum;k++)
                             {
-                                var odds1 = Convert.ToDouble(ah[k * 8 + 5]);
-                                var odds2 = Convert.ToDouble(ah[k * 8 + 7]);
+                                var odds1 = Convert.ToDouble(ah[k * 8 + 5])+1;
+                                var odds2 = Convert.ToDouble(ah[k * 8 + 7])+1;
                                 BetItem b = new BetItem();
                                 b.sportID = sportID;
                                 b.webID = webID;

@@ -64,6 +64,7 @@ namespace Splash.Parser.ESport
                 op.Referer = Config.GetString(StaticData.SN_URL, "Referer", configFile, "");
                 op.RequestCookies = Config.GetString(StaticData.SN_URL, "Cookie", configFile, "");
                 op.WebHeader.Add(string.Format("authorization:Token {0}", auth));
+                op.Timeout = 30000;
                 //获取网页
                 html = RequestAction(op);
                 while (string.IsNullOrEmpty(html) && nTryCount < MAX_TRY_COUNT)
@@ -109,6 +110,10 @@ namespace Splash.Parser.ESport
                     var gameId = record["game_name"].ToString();
                     var league = record["competition_name"].ToString();
                     var gameIndex = GetGameIndex(gameId);
+                    if (gameIndex == INVALID_INDEX)
+                    {
+                        continue;
+                    }
                     var bo = 1;
                     var gameTime = Convert.ToDateTime(record["start_datetime"].ToString());
                     JToken team1 = record["home"];

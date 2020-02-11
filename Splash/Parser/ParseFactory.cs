@@ -69,6 +69,14 @@ namespace Splash.Parser
                     {
                         return new ESportParser_1XBet();
                     }
+                    else if(webName == StaticData.webNames[(int)WebID.WID_Shaba])
+                    {
+                        return new ESportParser_Shaba();
+                    }
+                    else if (webName == StaticData.webNames[(int)WebID.WID_HG])
+                    {
+                        return new ESportParser_HG();
+                    }
                     break;
             }
             return new BaseParser();

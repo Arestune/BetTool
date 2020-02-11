@@ -79,6 +79,7 @@ namespace Splash.Parser.ESport
                 {
                     ShowLog("抓取失败！");
                     html = "";
+                    return;
                 }
                 else
                 {
@@ -111,6 +112,7 @@ namespace Splash.Parser.ESport
                 {
                     ShowLog("抓取失败！");
                     html = "";
+                    return;
                 }
                 else
                 {
